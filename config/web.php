@@ -7,9 +7,16 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'Fpk4LPuQY6zcehc1eqzBtLgIN95jXvyk',
+            'cookieValidationKey' => 'Sas2016uady',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
