@@ -89,3 +89,32 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
+.navbar-inverse {
+    background-color: #18016A!important;
+}
+.navbar-brand{
+	color: white!important;
+}
+.navbar-brand:hover{
+	color: white!important;
+	background: #14005B!important;
+}
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus{
+	background: #14005B!important;
+}
+.steps p, .steps h2{
+	text-align: center;
+}
+.home-icon{
+	font-size: 5em;
+}
+.home-icon-small{
+	font-size: 3em;
+}
+footer p a{
+	font-size: .9em;
+	color: #5F97FF;
+}
+.footer{
+	height: 6em!important;
+}
