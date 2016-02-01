@@ -21,6 +21,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_responsable',
+        
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
