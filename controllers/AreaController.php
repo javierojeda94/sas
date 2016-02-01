@@ -253,8 +253,6 @@ class AreaController extends Controller
        
     }
 
-    public function action
-
     /**
      * Finds the Area model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -270,6 +268,4 @@ class AreaController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
-
 }
