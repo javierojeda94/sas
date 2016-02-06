@@ -90,27 +90,22 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 .navbar-inverse {
-    background-color: #18016A!important;
+    background-color: #01063b !important;
 }
 .navbar-brand{
 	color: white!important;
 }
 .navbar-brand:hover{
 	color: white!important;
-	background: #14005B!important;
+	background: #01052b !important;
 }
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus{
-	background: #14005B!important;
+	background: #01052b !important;
 }
 .steps p, .steps h2{
 	text-align: center;
 }
-.home-icon{
-	font-size: 5em;
-}
-.home-icon-small{
-	font-size: 3em;
-}
+/*Footer*/
 footer p a{
 	font-size: .9em;
 	color: #5F97FF;
@@ -118,7 +113,7 @@ footer p a{
 .footer{
 	height: 6em!important;
 }
-
+/*Index*/
 .carousel-control {
     opacity: 0;
 }
@@ -147,3 +142,23 @@ footer p a{
     margin-top: 4em;
 }
 .carousel-indicators li { visibility: hidden; }
+.home-icon{
+    font-size: 5em;
+}
+.home-icon-small{
+    font-size: 3em;
+}
+/* Navbar */
+#logo_nav{
+    height: 2.7em;
+    margin-top: -.7em;
+    float: left;
+    margin-right: .6em;
+}
+/*CRUD panel */
+.panel-default > .panel-heading {
+    color: rgb(243, 255, 246);
+    background-color: #040d57;
+    border-color: #040d57;
+}
+
