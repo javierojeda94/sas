@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -40,8 +41,18 @@ AppAsset::register($this);
             ['label' => 'Inicio', 'url' => Yii::$app->homeUrl],
             // ['label' => 'About', 'url' => ['/site/about']],
             // ['label' => 'Contact', 'url' => ['/site/contact']],
+            [
+                'label' => Yii::t('app', 'Categories'),
+                'url' => ['/category'],
+                'visible' => !Yii::$app->user->isGuest
+            ],
+            [
+                'label' => Yii::t('app', 'Areas'),
+                'url' => ['/area'],
+                'visible' => !Yii::$app->user->isGuest
+            ],
             Yii::$app->user->isGuest ?
-                ['label' => 'Iniciar Sesión', 'url' => ['/site/login']] :
+                ['label' => Yii::t('app','Iniciar Sesión'), 'url' => ['/site/login']] :
                 [
                     'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
                     'url' => ['/site/logout'],
