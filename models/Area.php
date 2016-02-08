@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\User;
 
 /**
  * This is the model class for table "areas".
@@ -55,7 +56,7 @@ class Area extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'area_id' => 'Father Area',
-            'id_responsable' => 'Area Responsable',
+            'id_responsable' => 'Responsable Name',
             'name' => 'Name',
             'description' => 'Description',
         ];
@@ -98,7 +99,7 @@ class Area extends \yii\db\ActiveRecord
      */
     public function getIdResponsable()
     {
-        return $this->hasOne(Users::className(), ['id' => 'id_responsable']);
+        return $this->hasOne(User::className(), ['id' => 'id_responsable']);
     }
 
     /**
