@@ -11,6 +11,7 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
+$logo = "<img id='logo_nav' src='".Yii::$app->homeUrl."../images/UADY_w.png'/>";
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -18,7 +19,7 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href=" <?= Yii::$app->basePath?>/images/favicon.png" type="image/x-png">
+    <link rel="icon" href=" <?= Yii::$app->homeUrl?>../images/favicon.png" type="image/x-png">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -29,7 +30,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' =>  '<img id="logo_nav" src="../images/UADY_w.png"/> SAS',
+        'brandLabel' =>  $logo.'SAS',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
