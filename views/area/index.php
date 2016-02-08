@@ -10,7 +10,7 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel app\models\AreaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Areas';
+$this->title = Yii::t('app', 'Areas');
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -28,14 +28,16 @@ CrudAsset::register($this);
                 ['content'=>
                     Html::a('<i class="glyphicon glyphicon-plus"></i> Create', ['create'],
                     ['role'=>'modal-remote','title'=> 'Create new Areas','class'=>'btn btn-success pull-right'])
+
                 ],
             ],          
-            'striped' => false,
+            'striped' => true,
             'condensed' => true,
             'responsive' => true,          
             'panel' => [
                 'type' => 'default',
-                'heading' => '<h4><i class="glyphicon glyphicon-list"></i> Areas</h4>',
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Areas',
+
 
             ]
         ])?>

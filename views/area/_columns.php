@@ -1,5 +1,7 @@
 <?php
 use yii\helpers\Url;
+use app\models\Area;
+use app\models\User;
 
 return [
     [
@@ -17,11 +19,24 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'area_id',
+        'value' => function($model){
+            $area = Area::findOne($model->area_id);
+            return isset($area)
+                ? $area->name
+                : 'Not set';
+        }
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_responsable',
-        
+        'value'=>function($model){
+            $user = User::findOne($model->id_responsable);
+            return isset($user)
+                ? $user->first_name
+                : 'Not Set';
+        }
+
+
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

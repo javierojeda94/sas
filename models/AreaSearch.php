@@ -11,7 +11,9 @@ use app\models\Area;
  * AreaSearch represents the model behind the search form about `app\models\Area`.
  */
 class AreaSearch extends Area
+
 {
+
     /**
      * @inheritdoc
      */

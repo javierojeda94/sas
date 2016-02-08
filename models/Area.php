@@ -54,8 +54,8 @@ class Area extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'area_id' => 'Area ID',
-            'id_responsable' => 'Id Responsable',
+            'area_id' => 'Father Area',
+            'id_responsable' => 'Area Responsable',
             'name' => 'Name',
             'description' => 'Description',
         ];
