@@ -17,6 +17,7 @@ return [
         // 'attribute'=>'id',
     // ],
     [
+        
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'area_id',
         'value' => function($model){
