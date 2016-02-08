@@ -38,7 +38,7 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['category_id', 'id_area', 'service_level_agreement_asignment', 'service_level_agreement_completion'], 'integer'],
-            [['id_area', 'name'], 'required'],
+            [['id_area', 'name', 'description'], 'required'],
             [['name'], 'string', 'max' => 100],
             [['description'], 'string', 'max' => 150]
         ];
@@ -51,8 +51,8 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'category_id' => 'Category ID',
-            'id_area' => 'Id Area',
+            'category_id' => 'Father category',
+            'id_area' => 'Area',
             'name' => 'Name',
             'description' => 'Description',
             'service_level_agreement_asignment' => 'Service Level Agreement Asignment',
@@ -81,7 +81,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getIdArea()
     {
-        return $this->hasOne(Areas::className(), ['id' => 'id_area']);
+        return $this->hasOne(Area::className(), ['id' => 'id_area']);
     }
 
     /**

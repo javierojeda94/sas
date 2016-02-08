@@ -1,5 +1,7 @@
 <?php
 use yii\helpers\Url;
+use app\models\Area;
+use app\models\Category;
 
 return [
     [
@@ -14,13 +16,22 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
-        // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'category_id',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'category_id',
+        'value' => function($model){
+            $category = Category::findOne($model->category_id);
+            return isset($category)
+                        ? $category->name
+                        : 'Not set';
+        }
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_area',
+        'value' => function($model){
+            return Area::findOne($model->id_area)->name;
+        }
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

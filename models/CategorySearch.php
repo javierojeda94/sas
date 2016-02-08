@@ -18,7 +18,7 @@ class CategorySearch extends Category
     public function rules()
     {
         return [
-            [['id', 'category_id', 'id_area', 'service_level_agreement_asignment', 'service_level_agreement_completion'], 'integer'],
+            [['id', 'category_id', 'id_area','service_level_agreement_asignment', 'service_level_agreement_completion'], 'integer'],
             [['name', 'description'], 'safe'],
         ];
     }
@@ -41,6 +41,7 @@ class CategorySearch extends Category
      */
     public function search($params)
     {
+
         $query = Category::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -53,6 +54,27 @@ class CategorySearch extends Category
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
+        }
+
+        if($this->service_level_agreement_asignment){
+            $asignment_level = intval($this->service_level_agreement_asignment);
+            if($asignment_level <= 0) {
+                $asignment_level = 1;
+            }
+            if($asignment_level > 5) {
+                $asignment_level = 5;
+            }
+            $this->service_level_agreement_asignment = strval($asignment_level);
+        }
+        if($this->service_level_agreement_completion){
+            $completion_level = intval($this->service_level_agreement_completion);
+            if($completion_level <= 0){
+                $completion_level = 1;
+            }
+            if($completion_level > 5){
+                $completion_level = 5;
+            }
+            $this->service_level_agreement_completion = strval($completion_level);
         }
 
         $query->andFilterWhere([
