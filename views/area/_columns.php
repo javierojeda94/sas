@@ -17,26 +17,31 @@ return [
         // 'attribute'=>'id',
     // ],
     [
-        
+
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'area_id',
+        'attribute'=>'father_area',
+        'value'=>'area.name'
+        /*
         'value' => function($model){
             $area = Area::findOne($model->area_id);
             return isset($area)
                 ? $area->name
                 : 'Not set';
-        }
+        }*/
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_responsable',
+        'attribute'=>'responsable_name',
+        'value'=>'idResponsable.first_name'
+
+        /*
         'value'=>function($model){
             $user = User::findOne($model->id_responsable);
             return isset($user)
                 ? $user->first_name
                 : 'Not Set';
         }
-
+        */
 
     ],
     [

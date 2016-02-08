@@ -14,6 +14,9 @@ class AreaSearch extends Area
 
 {
 
+    public $responsable_name;
+    public $father_area;
+
     /**
      * @inheritdoc
      */
@@ -21,7 +24,7 @@ class AreaSearch extends Area
     {
         return [
             [['id', 'area_id', 'id_responsable'], 'integer'],
-            [['name', 'description'], 'safe'],
+            [['name', 'description', 'responsable_name', 'father_area'], 'safe'],
         ];
     }
 
@@ -44,10 +47,20 @@ class AreaSearch extends Area
     public function search($params)
     {
         $query = Area::find();
+        $query->joinWith(['idResponsable']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+
+        $dataProvider->sort->attributes['responsable_name'] = [
+            'asc' => ['users.first_name' => SORT_ASC],
+            'desc' => ['users.first_name' => SORT_DESC],
+        ];
+
+
+
 
         $this->load($params);
 
@@ -61,10 +74,14 @@ class AreaSearch extends Area
             'id' => $this->id,
             'area_id' => $this->area_id,
             'id_responsable' => $this->id_responsable,
+            'father_area' => $this->id_responsable,
+
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'description', $this->description])
+             ->andFilterWhere(['like', 'Users.first_name', $this->responsable_name]);
+
 
         return $dataProvider;
     }
