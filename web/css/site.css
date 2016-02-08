@@ -161,4 +161,12 @@ footer p a{
     background-color: #040d57;
     border-color: #040d57;
 }
+.btn-success {
+    background-color: #baa409;
+    border-color: #baa409;
+}
 
+.btn-success:hover {
+    background-color: #a59214;
+    border-color: #a59214;
+}

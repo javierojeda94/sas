@@ -36,7 +36,7 @@ CrudAsset::register($this);
             'responsive' => true,          
             'panel' => [
                 'type' => 'default',
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Areas',
+                'heading' => '<h4><i class="glyphicon glyphicon-list"></i> Areas</h4>',
 
 
             ]
