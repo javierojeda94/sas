@@ -12,6 +12,8 @@ use app\models\Category;
  */
 class CategorySearch extends Category
 {
+    public $area_name;
+    public $category_name;
     /**
      * @inheritdoc
      */
@@ -19,7 +21,7 @@ class CategorySearch extends Category
     {
         return [
             [['id', 'category_id', 'id_area','service_level_agreement_asignment', 'service_level_agreement_completion'], 'integer'],
-            [['name', 'description'], 'safe'],
+            [['name', 'description' ,'area_name', 'category_name'], 'safe'],
         ];
     }
 
@@ -77,6 +79,19 @@ class CategorySearch extends Category
             $this->service_level_agreement_completion = strval($completion_level);
         }
 
+        $query->joinWith('idArea');
+
+        $dataProvider->sort->attributes['area_name'] = [
+            'asc' => ['Areas.name' => SORT_ASC],
+            'desc' => ['Areas.name' => SORT_DESC],
+        ];
+
+        /*
+        $dataProvider->sort->attributes['category_name'] = [
+            'asc' => ['Categories.name' => SORT_ASC],
+            'desc' => ['Categories.name' => SORT_DESC],
+        ];*/
+
         $query->andFilterWhere([
             'id' => $this->id,
             'category_id' => $this->category_id,
@@ -86,7 +101,9 @@ class CategorySearch extends Category
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'areas.name', $this->area_name]);
+            //->andFilterWhere(['like', 'categories.name', $this->category_name]);
 
         return $dataProvider;
     }

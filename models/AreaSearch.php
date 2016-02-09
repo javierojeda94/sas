@@ -10,9 +10,7 @@ use app\models\Area;
 /**
  * AreaSearch represents the model behind the search form about `app\models\Area`.
  */
-class AreaSearch extends Area
-
-{
+class AreaSearch extends Area{
 
     public $responsable_name;
     public $father_area;
@@ -47,20 +45,23 @@ class AreaSearch extends Area
     public function search($params)
     {
         $query = Area::find();
-        $query->joinWith(['idResponsable']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
+        $query->joinWith(['idResponsable']);
 
         $dataProvider->sort->attributes['responsable_name'] = [
             'asc' => ['users.first_name' => SORT_ASC],
             'desc' => ['users.first_name' => SORT_DESC],
         ];
 
-
-
+        /*
+        $dataProvider->sort->attributes['father_area'] = [
+            'asc' => ['areas.name' => SORT_ASC],
+            'desc' => ['areas.name' => SORT_DESC],
+        ];*/
 
         $this->load($params);
 
@@ -74,8 +75,6 @@ class AreaSearch extends Area
             'id' => $this->id,
             'area_id' => $this->area_id,
             'id_responsable' => $this->id_responsable,
-            'father_area' => $this->id_responsable,
-
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

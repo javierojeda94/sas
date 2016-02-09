@@ -14,9 +14,17 @@ use app\models\Category;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()->all(),'id','name')) ?>
+    <?= $form->field($model, 'category_id')->dropDownList(
+        ArrayHelper::map(
+            Category::find()->all(),
+            'id',
+            'name'),array('prompt'=>'')) ?>
 
-    <?= $form->field($model, 'id_area')->dropDownList(ArrayHelper::map(Area::find()->all(),'id','name')) ?>
+    <?= $form->field($model, 'id_area')->dropDownList(
+        ArrayHelper::map(
+            Area::find()->all(),
+            'id',
+            'name'),array('prompt'=>'')) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 

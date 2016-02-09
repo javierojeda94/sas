@@ -18,20 +18,13 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'category_id',
-        'value' => function($model){
-            $category = Category::findOne($model->category_id);
-            return isset($category)
-                        ? $category->name
-                        : 'Not set';
-        }
+        'attribute'=>'category_name',
+        'value' => 'category.name'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_area',
-        'value' => function($model){
-            return Area::findOne($model->id_area)->name;
-        }
+        'attribute'=>'area_name',
+        'value' => 'idArea.name'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

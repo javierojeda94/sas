@@ -17,7 +17,7 @@ use Yii;
  *
  * @property Category $category
  * @property Category[] $categories
- * @property Areas $idArea
+ * @property Area $idArea
  * @property CategoryRequest[] $categoryRequests
  * @property Request[] $requests
  */
