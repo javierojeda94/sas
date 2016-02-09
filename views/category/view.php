@@ -8,13 +8,6 @@ use app\models\Category;
 /* @var $model app\models\Category */
 ?>
 <div class="category-view">
-
-    <?php
-        $category = Category::findOne($model->category_id);
-        $father_category = isset($category)
-                            ? $category->name
-                            : 'Not set';
-    ?>
  
     <?= DetailView::widget([
         'model' => $model,
@@ -22,11 +15,11 @@ use app\models\Category;
             'id',
             [
                 'label' => 'Father Category',
-                'value' => $father_category,
+                'value' => isset($model->category) ? $model->category->name : "",
             ],
             [
                 'label' => 'Area',
-                'value' => Area::findOne($model->id_area)->name,
+                'value' => $model->idArea->name,
             ],
             'name',
             'description',

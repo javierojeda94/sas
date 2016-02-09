@@ -15,13 +15,13 @@ use app\models\User;
  * @property string $description
  *
  * @property AreaPersonal[] $areaPersonals
- * @property Users[] $users
+ * @property User[] $users
  * @property Area $area
  * @property Area[] $areas
- * @property Users $idResponsable
+ * @property User $idResponsable
  * @property AreasRequest[] $areasRequests
  * @property Request[] $requests
- * @property Categories[] $categories
+ * @property Category[] $categories
  * @property Request[] $requests0
  */
 class Area extends \yii\db\ActiveRecord

@@ -11,8 +11,14 @@ use yii\widgets\DetailView;
         'model' => $model,
         'attributes' => [
             'id',
-            'area_id',
-            'id_responsable',
+            [
+                'label' => 'Father Area',
+                'value' => isset($model->area) ? $model->area->name : "" ,
+            ],
+            [
+                'label' => 'Responsable',
+                'value' => $model->idResponsable->first_name . " ". $model->idResponsable->lastname ,
+            ],
             'name',
             'description',
         ],
