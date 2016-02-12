@@ -12,7 +12,7 @@ use yii\widgets\DetailView;
         'attributes' => [
             'id',
             [
-                'label' => 'Father Area',
+                'label' =>Yii::t("app", "Father Area"),
                 'value' => isset($model->area) ? $model->area->name : "" ,
             ],
             [
