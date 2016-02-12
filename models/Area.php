@@ -44,6 +44,7 @@ class Area extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['name'], 'string', 'max' => 100],
             [['description'], 'string', 'max' => 150],
+            [['id_responsable'], 'required'],
             [['id_responsable'], 'unique']
         ];
     }
