@@ -89,3 +89,84 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
+.navbar-inverse {
+    background-color: #01063b !important;
+}
+.navbar-brand{
+	color: white!important;
+}
+.navbar-brand:hover{
+	color: white!important;
+	background: #01052b !important;
+}
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus{
+	background: #01052b !important;
+}
+.steps p, .steps h2{
+	text-align: center;
+}
+/*Footer*/
+footer p a{
+	font-size: .9em;
+	color: #5F97FF;
+}
+.footer{
+	height: 6em!important;
+}
+/*Index*/
+.carousel-control {
+    opacity: 0;
+}
+.carousel-control.left,.carousel-control.right {
+    background-image: none!important;
+}
+
+.carousel {
+    position: relative;
+    width: 99.3vw !important;
+    margin-left: -8em;
+    margin-top: -2em;
+}
+.jumbotron {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.41);
+    color: white;
+    margin-top: -26.5em;
+    position: absolute;
+    width: 100%;
+    margin-left: -7.5em;
+    padding-top: 70px;
+    padding-bottom: 74px;
+}
+.body-content{
+    margin-top: 4em;
+}
+.carousel-indicators li { visibility: hidden; }
+.home-icon{
+    font-size: 5em;
+}
+.home-icon-small{
+    font-size: 3em;
+}
+/* Navbar */
+#logo_nav{
+    height: 2.7em;
+    margin-top: -.7em;
+    float: left;
+    margin-right: .6em;
+}
+/*CRUD panel */
+.panel-default > .panel-heading {
+    color: rgb(243, 255, 246);
+    background-color: #040d57;
+    border-color: #040d57;
+}
+.btn-success {
+    background-color: #baa409;
+    border-color: #baa409;
+}
+
+.btn-success:hover {
+    background-color: #a59214;
+    border-color: #a59214;
+}

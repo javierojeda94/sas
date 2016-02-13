@@ -2,37 +2,84 @@
 
 namespace app\models;
 
-class User extends \yii\base\Object implements \yii\web\IdentityInterface
-{
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
+use Yii;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
+/**
+ * This is the model class for table "users".
+ *
+ * @property int $id
+ * @property string $first_name
+ * @property string $lastname
+ * @property string $hash_password
+ * @property string $user_name
+ * @property string $email
+ * @property string $status
+ */
+class User extends ActiveRecord implements IdentityInterface
+{
+    public $password;
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'users';
+    }
 
     /**
      * @inheritdoc
      */
+    public function rules()
+    {
+        return [
+            [['first_name', 'lastname', 'hash_password', 'user_name', 'email'], 'required'],
+            [['hash_password'], 'required', 'except' => ['update']],
+            [['first_name', 'lastname', 'user_name'], 'string', 'max' => 128],
+            [['hash_password'], 'string', 'max' => 20]
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'first_name' => Yii::t('app', 'Name'),
+            'lastname' => Yii::t('app', 'Lastname'),
+            'hash_password' => Yii::t('app', 'Password'),
+            'user_name' => Yii::t('app', 'UserName'),
+            'email' => Yii::t('app', 'Email'),
+            'status' => Yii::t('app', 'Status'),
+        ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert))
+        {
+            if($this->isNewRecord)
+            {
+                $this->hash_password = Yii::$app->getSecurity()->generatePasswordHash($this->hash_password);
+            }
+            else
+            {
+                if(!empty($this->hash_password))
+                {
+                    $this->hash_password = Yii::$app->getSecurity()->generatePasswordHash($this->hash_password);
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return self::findOne($id);
     }
 
     /**
@@ -40,7 +87,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
+        foreach (self::find()->all() as $user) {
             if ($user['accessToken'] === $token) {
                 return new static($user);
             }
@@ -50,20 +97,18 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
     }
 
     /**
-     * Finds user by username
+     * Finds user by user_name
      *
-     * @param  string      $username
+     * @param  string $user_name
      * @return static|null
      */
-    public static function findByUsername($username)
+    public static function findByUserName($user_name)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
+        return self::findOne(['user_name'=>$user_name]);
+    }
 
-        return null;
+    public static function findIdUserName($id){
+        return User::findOne(['id'=>$id]);
     }
 
     /**
@@ -74,12 +119,16 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
         return $this->id;
     }
 
+    public function getUserName(){
+        return $this->user_name;
+    }
+
     /**
      * @inheritdoc
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+        return $this->hash_password;
     }
 
     /**
@@ -87,7 +136,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return $this->authKey === $authKey;
+        return $this->getAuthKey() === $authKey;
     }
 
     /**
@@ -98,6 +147,6 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return Yii::$app->getSecurity()->validatePassword($password,$this->hash_password);
     }
 }
