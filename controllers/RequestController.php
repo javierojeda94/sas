@@ -272,6 +272,40 @@ class RequestController extends Controller
     }
 
     /**
+     * Reject an existing request model.
+     * For ajax request will return json object
+     * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionReject($id){
+
+        $request = Yii::$app->request;
+
+        if(!Yii::$app->user->isGuest){
+            $specificRequest = $this->findModel($id);
+            $specificRequest->status = "Rechazado";
+            $specificRequest->save();
+
+            if($request->isAjax){
+                /*
+                *   Process for ajax request
+                */
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
+            }else{
+                /*
+                *   Process for non-ajax request
+                */
+                return $this->redirect(['index']);
+            }
+        }else{
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
      * Finds the request model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
