@@ -17,11 +17,6 @@ return [
         // 'attribute'=>'id',
     // ],
     [
-        'class' => 'kartik\grid\DataColumn',
-        'attribute' => 'area_id',
-
-    ],
-    [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'name',
     ],
@@ -30,6 +25,12 @@ return [
         'attribute'=>'email',
     ],
     [
+        'class' => 'kartik\grid\DataColumn',
+        'attribute' => 'area_id',
+
+    ],
+
+    [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'subject',
     ],
@@ -37,18 +38,18 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'description',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-         'attribute'=>'creation_date',
-    ],
+    //[
+      //  'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'creation_date',
+  //  ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'completion_date',
     // ],
-     [
-        'class'=>'\kartik\grid\DataColumn',
-       'attribute'=>'status',
-     ],
+     //[
+      //  'class'=>'\kartik\grid\DataColumn',
+       //'attribute'=>'status',
+     //],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'scheduled_start_date',
