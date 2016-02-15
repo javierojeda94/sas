@@ -39,9 +39,23 @@ $logo = "<img id='logo_nav' src='".Yii::$app->homeUrl."../images/UADY_w.png'/>";
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
+
+
+
             ['label' => 'Inicio', 'url' => Yii::$app->homeUrl],
             // ['label' => 'About', 'url' => ['/site/about']],
             // ['label' => 'Contact', 'url' => ['/site/contact']],
+           Yii::$app->user->isGuest ?
+            [
+                'label' => Yii::t('app','Requests'),
+                'url' => ['/request/create']
+
+            ]:
+            [
+                'label' => Yii::t('app','Requests'),
+                'url' => ['/request']
+            ],
+
             [
                 'label' => Yii::t('app', 'Categories'),
                 'url' => ['/category'],
