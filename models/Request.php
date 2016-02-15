@@ -22,18 +22,20 @@ use Yii;
  * @property string $token
  *
  * @property AreasRequest[] $areasRequests
- * @property Areas[] $areas
+ * @property Area[] $areas
  * @property AttachedFiles[] $attachedFiles
  * @property CategoryRequest[] $categoryRequests
- * @property Categories[] $categories
+ * @property Category[] $categories
  * @property Chat[] $chats
- * @property Areas $area
- * @property Users $user
+ * @property Area $area
+ * @property User $user
  * @property UsersRequest[] $usersRequests
- * @property Users[] $users
+ * @property User[] $users
  */
 class Request extends \yii\db\ActiveRecord
 {
+    public $verifyCode;
+
     /**
      * @inheritdoc
      */
@@ -54,6 +56,7 @@ class Request extends \yii\db\ActiveRecord
             [['creation_date', 'completion_date', 'scheduled_start_date', 'scheduled_end_date'], 'safe'],
             [['name', 'email'], 'string', 'max' => 150],
             [['subject', 'token'], 'string', 'max' => 100],
+            [['verifyCode'], 'captcha', 'on' => 'captchaRequired'],
             [['status'], 'string', 'max' => 50]
         ];
     }
@@ -74,6 +77,7 @@ class Request extends \yii\db\ActiveRecord
             'creation_date' => Yii::t('app', 'Creation Date'),
             'completion_date' => Yii::t('app', 'Completion Date'),
             'status' => Yii::t('app', 'Status'),
+            'verifyCode' => Yii::t('app', 'Verification Code'),
             'scheduled_start_date' => Yii::t('app', 'Scheduled Start Date'),
             'scheduled_end_date' => Yii::t('app', 'Scheduled End Date'),
             'token' => Yii::t('app', 'Token'),

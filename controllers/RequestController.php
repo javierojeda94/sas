@@ -32,6 +32,19 @@ class RequestController extends Controller
         ];
     }
 
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+        ];
+    }
+
     /**
      * Lists all request models.
      * @return mixed
@@ -124,7 +137,12 @@ class RequestController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                if(Yii::$app->user->isGuest){
+                    Yii::$app->session->setFlash('requestFormSubmitted');
+                    return $this->refresh();
+                }else{
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             } else {
                 return $this->render('create', [
                     'model' => $model,
