@@ -79,22 +79,32 @@ return [
                           'data-confirm-message'=>'Are you sure want to delete this item'],
         'buttons' => [
         'rejectOption' => function ($url, $model) {
-            $options = ['role'=>'modal-remote','title'=>'Reject',
+            if($model->status === 'Rechazado'){
+                $options = ['role'=>'modal-remote','title'=>'Authorize',
+                'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                'data-request-method'=>'post',
+                'data-toggle'=>'tooltip',
+                'data-confirm-title'=>'Are you sure?',
+                'data-confirm-message'=>'Are you sure want to authorize this item'];
+                $title = Yii::t('app', 'Authorize Request');
+                $icon = '<span class="glyphicon glyphicon-open"></span>';
+                $label = ArrayHelper::remove($options, 'label', $icon);
+                $options = ArrayHelper::merge(['title' => $title, 'data-pjax' => '0'], $options);
+                $url = Url::toRoute(['authorize','id'=>$model->id]);
+            }else {
+                $options = ['role'=>'modal-remote','title'=>'Reject',
                 'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
                 'data-request-method'=>'post',
                 'data-toggle'=>'tooltip',
                 'data-confirm-title'=>'Are you sure?',
                 'data-confirm-message'=>'Are you sure want to reject this item'];
-            $title = Yii::t('app', 'Reject Request');
-            $icon = '<span class="glyphicon glyphicon-remove"></span>';
-            $label = ArrayHelper::remove($options, 'label', $icon);
-            $options = ArrayHelper::merge(['title' => $title, 'data-pjax' => '0'], $options);
-            $url = Url::toRoute(['reject','id'=>$model->id]);
-            if($model->status === 'Rechazado'){
-                return "";
-            }else {
-                return Html::a($label, $url, $options);
+                $title = Yii::t('app', 'Reject Request');
+                $icon = '<span class="glyphicon glyphicon-remove"></span>';
+                $label = ArrayHelper::remove($options, 'label', $icon);
+                $options = ArrayHelper::merge(['title' => $title, 'data-pjax' => '0'], $options);
+                $url = Url::toRoute(['reject','id'=>$model->id]);
             }
+            return Html::a($label, $url, $options);
         }],
     ],
 

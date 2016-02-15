@@ -3,13 +3,17 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\request;
+use app\models\Request;
+use app\models\User;
+use app\models\UsersRequest;
 use app\models\RequestSearch;
+use app\models\UsersRequestSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 
 /**
  * RequestController implements the CRUD actions for request model.
@@ -303,6 +307,110 @@ class RequestController extends Controller
         }else{
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    /**
+     * Authorize a rejected request model.
+     * For ajax request will return json object
+     * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionAuthorize($id){
+
+        $request = Yii::$app->request;
+
+        if(!Yii::$app->user->isGuest){
+            $specificRequest = $this->findModel($id);
+            $specificRequest->status = "Autorizada";
+            $specificRequest->save();
+
+            if($request->isAjax){
+                /*
+                *   Process for ajax request
+                */
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
+            }else{
+                /*
+                *   Process for non-ajax request
+                */
+                return $this->redirect(['index']);
+            }
+        }else{
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
+     * Show advanced options for a request model.
+     * For ajax request will return json object
+     * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionAdvanced($id){
+
+        $request = Yii::$app->request;
+
+        if(!Yii::$app->user->isGuest){
+            $specificRequest = $this->findModel($id);
+
+            if($request->isAjax){
+                /*
+                *   Process for ajax request
+                */
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
+            }else{
+                /*
+                *   Process for non-ajax request
+                */
+                $users = ArrayHelper::map(User::find()->all(),'id', ['first_name']);
+                $searchModel = new UsersRequestSearch();
+                $dataProvider = $searchModel->search(['request_id' => $id]);
+                return $this->render('advanced', [
+                    'request' => $specificRequest,
+                    'users' => $users,
+                    'dataProvider' => $dataProvider,
+                ]);
+            }
+        }else{
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
+     * Assign a responsible for the request.
+     * For ajax request will return json object
+     * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionAsign(){
+        $request = Yii::$app->request;
+        $model = new UsersRequest();
+        $model->user_id = $request->post()['Request']['user_id'];
+        $model->request_id = $request->post()['Request']['request_id'];
+        $model->save();
+        return $this->redirect('advanced?id='.$model->request_id);
+    }
+
+    /**
+     * Unassign a responsible for the request.
+     * For ajax request will return json object
+     * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionUnasign($u_id, $r_id){
+        $model = UsersRequest::find()->where(['user_id'=>$u_id,'request_id'=>$r_id])->one();
+        $model->delete();
+        return $this->redirect('advanced?id='.$r_id);
     }
 
     /**

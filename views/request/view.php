@@ -6,7 +6,11 @@ use yii\widgets\DetailView;
 /* @var $model app\models\request */
 ?>
 <div class="request-view">
- 
+
+    <a href="advanced?id=<?= $model->id ?>">
+        <button class="btn btn-primary pull-right">Opciones Avanzadas</button>
+    </a>
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
