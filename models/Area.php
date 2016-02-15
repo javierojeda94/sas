@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-use app\models\User;
 
 /**
  * This is the model class for table "areas".
@@ -44,7 +43,6 @@ class Area extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['name'], 'string', 'max' => 100],
             [['description'], 'string', 'max' => 150],
-            [['id_responsable'], 'required'],
             [['id_responsable'], 'unique']
         ];
     }
@@ -55,11 +53,11 @@ class Area extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-              'id' => 'ID',
-            'area_id' => 'Father Area',
-            'id_responsable' => 'Responsable Name',
-            'name' => 'Name',
-            'description' => 'Description',
+            'id' => Yii::t('app', 'ID'),
+            'area_id' => Yii::t('app', 'Father Area'),
+            'id_responsable' => Yii::t('app', 'Responsable'),
+            'name' => Yii::t('app', 'Name'),
+            'description' => Yii::t('app', 'Description'),
         ];
     }
 
@@ -76,7 +74,7 @@ class Area extends \yii\db\ActiveRecord
      */
     public function getUsers()
     {
-        return $this->hasMany(Users::className(), ['id' => 'user_id'])->viaTable('area_personal', ['area_id' => 'id']);
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('area_personal', ['area_id' => 'id']);
     }
 
     /**
@@ -124,7 +122,7 @@ class Area extends \yii\db\ActiveRecord
      */
     public function getCategories()
     {
-        return $this->hasMany(Categories::className(), ['id_area' => 'id']);
+        return $this->hasMany(Category::className(), ['id_area' => 'id']);
     }
 
     /**

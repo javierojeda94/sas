@@ -7,9 +7,9 @@ use Yii;
 /**
  * This is the model class for table "categories".
  *
- * @property integer $id
- * @property integer $category_id
- * @property integer $id_area
+ * @property string $id
+ * @property string $category_id
+ * @property string $id_area
  * @property string $name
  * @property string $description
  * @property integer $service_level_agreement_asignment
@@ -38,7 +38,7 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['category_id', 'id_area', 'service_level_agreement_asignment', 'service_level_agreement_completion'], 'integer'],
-            [['id_area', 'name', 'description'], 'required'],
+            [['id_area', 'name'], 'required'],
             [['name'], 'string', 'max' => 100],
             [['description'], 'string', 'max' => 150]
         ];
@@ -50,13 +50,13 @@ class Category extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'category_id' => 'Father category',
-            'id_area' => 'Area',
-            'name' => 'Name',
-            'description' => 'Description',
-            'service_level_agreement_asignment' => 'Service Level Agreement Asignment',
-            'service_level_agreement_completion' => 'Service Level Agreement Completion',
+            'id' => Yii::t('app', 'ID'),
+            'category_id' => Yii::t('app', 'Father Category'),
+            'id_area' => Yii::t('app', 'Area'),
+            'name' => Yii::t('app', 'Name'),
+            'description' => Yii::t('app', 'Description'),
+            'service_level_agreement_asignment' => Yii::t('app', 'Service Level Agreement Asignment'),
+            'service_level_agreement_completion' => Yii::t('app', 'Service Level Agreement Completion'),
         ];
     }
 
