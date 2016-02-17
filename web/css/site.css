@@ -1,176 +1,228 @@
-html,
-body {
-    height: 100%;
+@media only screen {
+    html, body {
+        height: 100%;
+    }
+
+    .wrap {
+        min-height: 100%;
+        height: auto;
+        margin: 0 auto -60px;
+        padding: 0 0 60px;
+    }
+
+    .wrap > .container {
+        padding: 70px 15px 20px;
+    }
+
+    .footer {
+        height: 60px;
+        background-color: #f5f5f5;
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+    }
+
+    .jumbotron {
+        text-align: center;
+        background-color: transparent;
+    }
+
+    .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+    }
+
+    .not-set {
+        color: #c55;
+        font-style: italic;
+    }
+
+    /* add sorting icons to gridview sort links */
+    a.asc:after, a.desc:after {
+        position: relative;
+        top: 1px;
+        display: inline-block;
+        font-family: 'Glyphicons Halflings';
+        font-style: normal;
+        font-weight: normal;
+        line-height: 1;
+        padding-left: 5px;
+    }
+
+    a.asc:after {
+        content: /*"\e113"*/ "\e151";
+    }
+
+    a.desc:after {
+        content: /*"\e114"*/ "\e152";
+    }
+
+    .sort-numerical a.asc:after {
+        content: "\e153";
+    }
+
+    .sort-numerical a.desc:after {
+        content: "\e154";
+    }
+
+    .sort-ordinal a.asc:after {
+        content: "\e155";
+    }
+
+    .sort-ordinal a.desc:after {
+        content: "\e156";
+    }
+
+    .grid-view th {
+        white-space: nowrap;
+    }
+
+    .hint-block {
+        display: block;
+        margin-top: 5px;
+        color: #999;
+    }
+
+    .error-summary {
+        color: #a94442;
+        background: #fdf7f7;
+        border-left: 3px solid #eed3d7;
+        padding: 10px 20px;
+        margin: 0 0 15px 0;
+    }
+
+    .navbar-inverse {
+        background-color: #2d2558 !important;
+    }
+
+    .navbar-brand {
+        color: white !important;
+    }
+
+    .navbar-brand:hover {
+        color: white !important;
+        background: #211b41 !important;
+    }
+
+    .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+        background: #211b41 !important;
+    }
+
+    .steps p, .steps h2 {
+        text-align: center;
+    }
+
+    /*Footer*/
+    footer p a {
+        font-size: .9em;
+        color: #5F97FF;
+    }
+
+    .footer {
+        height: 6em !important;
+    }
+
+    /*Index*/
+    .carousel-control {
+        opacity: 0;
+    }
+
+    .carousel-control.left, .carousel-control.right {
+        background-image: none !important;
+    }
+
+    .carousel {
+        position: absolute;
+        width: 98.75vw !important;
+        right: 0;
+        left: 0;
+        margin-top: -2em;
+    }
+
+    .jumbotron {
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.31);
+        color: white;
+        position: relative;
+        width: 98.75vw;
+        padding-top: 70px;
+        padding-bottom: 74px;
+    }
+
+    .body-content {
+        margin-top: 4em;
+    }
+
+    .carousel-indicators li {
+        visibility: hidden;
+    }
+
+    .home-icon {
+        font-size: 5em;
+    }
+
+    .home-icon-small {
+        font-size: 3em;
+    }
+
+    /* Navbar */
+    #logo_nav {
+        height: 2.7em;
+        margin-top: -.7em;
+        float: left;
+        margin-right: .6em;
+    }
+
+    /*CRUD panel */
+    .panel-default > .panel-heading {
+        color: rgb(243, 255, 246);
+        background-color: #2d2558;
+        border-color: #2d2558;
+    }
+
+    .btn-success {
+        background-color: #c68d2a;
+        border-color: #c68d2a;
+        padding: .5em 3em;
+    }
+
+    .btn-success:hover, .btn-success:active {
+        background-color: #bc8528;
+        border-color: #bc8528;
+    }
+
+    .users-request-input {
+        margin-bottom: 20px;
+    }
+
+    .btn-primary {
+        background-color: #322961;
+        border-color: #322961;
+        padding: .5em 3em;
+    }
+
+    .btn-primary:hover, .btn-primary:active {
+        background-color: #211b41;
+        border-color: #211b41;
+    }
 }
 
-.wrap {
-    min-height: 100%;
-    height: auto;
-    margin: 0 auto -60px;
-    padding: 0 0 60px;
+@media only screen and (max-width: 40em) {
+
 }
 
-.wrap > .container {
-    padding: 70px 15px 20px;
+@media only screen and (min-width: 40.063em) {
+
 }
 
-.footer {
-    height: 60px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
+@media only screen and (min-width: 40.063em) {
+    .jumbotron{
+        right: 0;
+        left: -104px;
+        top: -25px;
+    }
+
 }
 
-.jumbotron {
-    text-align: center;
-    background-color: transparent;
-}
+@media only screen and (min-width: 64.063em) {
 
-.jumbotron .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-}
-
-.not-set {
-    color: #c55;
-    font-style: italic;
-}
-
-/* add sorting icons to gridview sort links */
-a.asc:after, a.desc:after {
-    position: relative;
-    top: 1px;
-    display: inline-block;
-    font-family: 'Glyphicons Halflings';
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    padding-left: 5px;
-}
-
-a.asc:after {
-    content: /*"\e113"*/ "\e151";
-}
-
-a.desc:after {
-    content: /*"\e114"*/ "\e152";
-}
-
-.sort-numerical a.asc:after {
-    content: "\e153";
-}
-
-.sort-numerical a.desc:after {
-    content: "\e154";
-}
-
-.sort-ordinal a.asc:after {
-    content: "\e155";
-}
-
-.sort-ordinal a.desc:after {
-    content: "\e156";
-}
-
-.grid-view th {
-    white-space: nowrap;
-}
-
-.hint-block {
-    display: block;
-    margin-top: 5px;
-    color: #999;
-}
-
-.error-summary {
-    color: #a94442;
-    background: #fdf7f7;
-    border-left: 3px solid #eed3d7;
-    padding: 10px 20px;
-    margin: 0 0 15px 0;
-}
-.navbar-inverse {
-    background-color: #01063b !important;
-}
-.navbar-brand{
-	color: white!important;
-}
-.navbar-brand:hover{
-	color: white!important;
-	background: #01052b !important;
-}
-.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus{
-	background: #01052b !important;
-}
-.steps p, .steps h2{
-	text-align: center;
-}
-/*Footer*/
-footer p a{
-	font-size: .9em;
-	color: #5F97FF;
-}
-.footer{
-	height: 6em!important;
-}
-/*Index*/
-.carousel-control {
-    opacity: 0;
-}
-.carousel-control.left,.carousel-control.right {
-    background-image: none!important;
-}
-
-.carousel {
-    position: relative;
-    width: 99.3vw !important;
-    margin-left: -8em;
-    margin-top: -2em;
-}
-.jumbotron {
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.41);
-    color: white;
-    margin-top: -26.5em;
-    position: absolute;
-    width: 100%;
-    margin-left: -7.5em;
-    padding-top: 70px;
-    padding-bottom: 74px;
-}
-.body-content{
-    margin-top: 4em;
-}
-.carousel-indicators li { visibility: hidden; }
-.home-icon{
-    font-size: 5em;
-}
-.home-icon-small{
-    font-size: 3em;
-}
-/* Navbar */
-#logo_nav{
-    height: 2.7em;
-    margin-top: -.7em;
-    float: left;
-    margin-right: .6em;
-}
-/*CRUD panel */
-.panel-default > .panel-heading {
-    color: rgb(243, 255, 246);
-    background-color: #040d57;
-    border-color: #040d57;
-}
-.btn-success {
-    background-color: #baa409;
-    border-color: #baa409;
-}
-
-.btn-success:hover {
-    background-color: #a59214;
-    border-color: #a59214;
-}
-
-.users-request-input{
-    margin-bottom: 20px;
 }
