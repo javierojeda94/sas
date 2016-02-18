@@ -52,7 +52,7 @@ class Request extends \yii\db\ActiveRecord
     {
         return [
             [['area_id', 'name', 'email', 'subject', 'description'], 'required'],
-            [['area_id', 'user_id'], 'integer'],
+            [['area_id','category_id' ,'user_id'], 'integer'],
             [['description'], 'string'],
             [['creation_date', 'completion_date', 'scheduled_start_date', 'scheduled_end_date'], 'safe'],
             [['name', 'email'], 'string', 'max' => 150],
@@ -74,6 +74,7 @@ class Request extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'email' => Yii::t('app', 'Email'),
             'subject' => Yii::t('app', 'Subject'),
+            'category_id' => Yii::t('app', 'Category'),
             'description' => Yii::t('app', 'Description'),
             'creation_date' => Yii::t('app', 'Creation Date'),
             'completion_date' => Yii::t('app', 'Completion Date'),
@@ -98,7 +99,7 @@ class Request extends \yii\db\ActiveRecord
      */
     public function getAreas()
     {
-        return $this->hasMany(Areas::className(), ['id' => 'area_id'])->viaTable('areas_request', ['request_id' => 'id']);
+        return $this->hasMany(Area::className(), ['id' => 'area_id'])->viaTable('areas_request', ['request_id' => 'id']);
     }
 
     /**
@@ -122,7 +123,7 @@ class Request extends \yii\db\ActiveRecord
      */
     public function getCategories()
     {
-        return $this->hasMany(Categories::className(), ['id' => 'category_id'])->viaTable('category_request', ['request_id' => 'id']);
+        return $this->hasMany(Category::className(), ['id' => 'category_id'])->viaTable('category_request', ['request_id' => 'id']);
     }
 
     /**
@@ -138,7 +139,7 @@ class Request extends \yii\db\ActiveRecord
      */
     public function getArea()
     {
-        return $this->hasOne(Areas::className(), ['id' => 'area_id']);
+        return $this->hasOne(Area::className(), ['id' => 'area_id']);
     }
 
     /**
@@ -146,7 +147,7 @@ class Request extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -162,7 +163,7 @@ class Request extends \yii\db\ActiveRecord
      */
     public function getUsers()
     {
-        return $this->hasMany(Users::className(), ['id' => 'user_id'])->viaTable('users_request', ['request_id' => 'id']);
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('users_request', ['request_id' => 'id']);
     }
 
     public function beforeSave($insert)

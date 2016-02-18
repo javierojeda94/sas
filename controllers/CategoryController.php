@@ -22,6 +22,36 @@ class CategoryController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['administrator','responsibleArea','executive'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['lists'],
+                        'roles' => ['@', '?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view'],
+                        'roles' => ['employeeArea','executive','responsibleArea','administrator'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update'],
+                        'roles' => ['responsibleArea','executive','administrator'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['administrator','responsibleArea','executive'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -319,6 +349,18 @@ class CategoryController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionLists($id){
+        $rows = \app\models\Category::find()->where(['id_area' => $id])->all();
+        if(count($rows)>0){
+            echo "<option value='0'>Opcional: Selecciona una opcion</option>";
+            foreach($rows as $row){
+                echo "<option value='$row->id'>$row->name</option>";
+            }
+        }else{
+            echo "<option value='0'>No hay categorias en esta área</option>";
         }
     }
 }

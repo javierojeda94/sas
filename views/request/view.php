@@ -6,6 +6,10 @@ use yii\bootstrap\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\request */
 
+$this->title = Yii::t('app', $model->subject);
+$this->params['breadcrumbs'][] = ['label' => 'Requests', 'url' => ['index']];
+$this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
+
 ?>
 <div class="request-view">
 
@@ -13,25 +17,41 @@ use yii\bootstrap\ActiveForm;
 
     <p>
         <?= Html::a(Yii::t('app', 'Advanced options'), ['advanced', 'id' => $model->id],
-            ['class' => 'btn btn-primary pull-right']) ?>
+            ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
-            'area_id',
-            'user_id',
-            'name',
-            'email:email',
-            'subject',
-            'description:ntext',
-            'creation_date',
-            'completion_date',
-            'status',
-            'scheduled_start_date',
-            'scheduled_end_date',
-            'token',
+            [
+                'label' => 'Area',
+                'value' => isset($model->area) ? $model->area->name : "",
+            ],
+            [
+                'label' => 'Name',
+                'value' => $model->name,
+            ],
+            [
+                'label' => 'Email',
+                'value' => $model->email,
+            ],
+            [
+                'label' => 'Subject',
+                'value' => $model->subject,
+            ],
+            [
+                'label' => 'Description',
+                'value' => $model->description,
+            ],
+            [
+                'label' => 'Creation Date',
+                'value' => $model->creation_date,
+            ],
+            [
+                'label' => 'Status',
+                'value' => $model->status,
+            ],
         ],
     ]) ?>
 
