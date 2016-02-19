@@ -11,7 +11,7 @@ use Yii;
  * @property string $category_id
  *
  * @property Request $request
- * @property Categories $category
+ * @property Category $category
  */
 class CategoryRequest extends \yii\db\ActiveRecord
 {
@@ -58,6 +58,6 @@ class CategoryRequest extends \yii\db\ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne(Categories::className(), ['id' => 'category_id']);
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 }

@@ -13,7 +13,7 @@ use app\models\Area;
  */
 class RequestSearch extends request
 {
-   // public $area_name;
+    public $area_name;
     /**
      * @inheritdoc
      */
@@ -22,7 +22,7 @@ class RequestSearch extends request
         return [
             [['id', 'area_id', 'user_id'], 'integer'],
             [['name', 'email', 'subject', 'description', 'creation_date', 'completion_date', 'status',
-                'scheduled_start_date', 'scheduled_end_date', 'token',/*'area_name'*/], 'safe'],
+                'scheduled_start_date', 'scheduled_end_date', 'token','area_name'], 'safe'],
         ];
     }
 
@@ -49,14 +49,14 @@ class RequestSearch extends request
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-        /*
-        $query->joinWith(['areas']);
+
+        $query->joinWith(['area']);
 
         $dataProvider->sort->attributes['area_name'] = [
             'asc' => ['areas.name' => SORT_ASC],
             'desc' => ['areas.name' => SORT_DESC],
         ];
-         */
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -78,8 +78,8 @@ class RequestSearch extends request
             ->andFilterWhere(['like', 'subject', $this->subject])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'token', $this->token]);
-//            ->andFilterWhere(['like', 'areas.name', $this->area_name]);
+            ->andFilterWhere(['like', 'token', $this->token])
+            ->andFilterWhere(['like', 'areas.name', $this->area_name]);
 
         return $dataProvider;
     }

@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 return [
-    [
-        'class' => 'kartik\grid\CheckboxColumn',
-        'width' => '20px',
-    ],
+//    [
+//        'class' => 'kartik\grid\CheckboxColumn',
+//        'width' => '20px',
+//    ],
     [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
@@ -26,10 +26,9 @@ return [
     ],
     [
         'class' => 'kartik\grid\DataColumn',
-        'attribute' => 'area_id',
-
+        'attribute' => 'area_name',
+        'value' => 'area.name',
     ],
-
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'subject',
@@ -37,6 +36,10 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'description',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'status',
     ],
     //[
       //  'class'=>'\kartik\grid\DataColumn',
@@ -69,7 +72,7 @@ return [
         'urlCreator' => function($action, $model, $key, $index) {
                 return Url::to([$action,'id'=>$key]);
         },
-        'template' => '{view}{update}{delete}{rejectOption}',
+        'template' => '{view}{rejectOption}',
         'viewOptions'=>['role'=>'page','title'=>'View','data-toggle'=>'tooltip'],
         'updateOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
         'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete',

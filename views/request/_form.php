@@ -1,6 +1,8 @@
 <?php
+use app\models\Category;
 use yii\captcha\Captcha;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Area;
@@ -19,8 +21,23 @@ use app\models\User;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'area_id')->dropDownList( ArrayHelper::map( Area::find()->all(), 'id', 'name' ),
-        array('prompt' => '')) ?>
+    <?= $form->field($model, 'area_id')->dropDownList( ArrayHelper::map(
+        Area::find()->all(),
+        'id',
+        'name'
+    ), ['prompt' => '', 'onchange'=>'$.get( "'.Url::toRoute('/category/lists').'", { id: $(this).val() } )
+            .done(function( data ) {
+					$( "#'.Html::getInputId($model, 'category_id').'" ).html( data );
+				}
+            );'])
+    ?>
+
+    <?= $form->field($model, 'category_id')->dropDownList(
+        ArrayHelper::map(
+            Category::find()->all(),
+            'id',
+            'name'
+        ), array('prompt'=> "")) ?>
 
     <?= $form->field($model, 'subject')->textInput(['maxlength' => true]) ?>
 

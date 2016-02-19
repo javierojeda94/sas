@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\AreasRequest;
+use app\models\CategoryRequest;
 use Yii;
 use app\models\Request;
 use app\models\User;
@@ -99,7 +101,9 @@ class RequestController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new request();  
+        $areasRequest = new AreasRequest();
+        $categoryRequest = new CategoryRequest();
+        $model = new Request();
 
         if($request->isAjax){
             /*
@@ -107,6 +111,8 @@ class RequestController extends Controller
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
+                $model = $this->completeModel($model);
+
                 return [
                     'title'=> "Create new request",
                     'content'=>$this->renderAjax('create', [
@@ -117,6 +123,18 @@ class RequestController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+                $areasRequest->request_id = $model->id;
+                $areasRequest->area_id = $model->area_id;
+
+                $categoryRequest->request_id = $model->id;
+                $categoryRequest->category_id = $model->category_id;
+
+                if (!empty($model->category_id) || $model->category_id != 0) {
+                    $categoryRequest->save();
+                }
+
+                $areasRequest->save();
+
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new request",
@@ -125,7 +143,9 @@ class RequestController extends Controller
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
-            }else{           
+            }else{
+                $model = $this->completeModel($model);
+
                 return [
                     'title'=> "Create new request",
                     'content'=>$this->renderAjax('create', [
@@ -141,6 +161,18 @@ class RequestController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
+                $areasRequest->request_id = $model->id;
+                $areasRequest->area_id = $model->area_id;
+
+                $categoryRequest->request_id = $model->id;
+                $categoryRequest->category_id = $model->category_id;
+
+                if (!empty($model->category_id) || $model->category_id != 0) {
+                    $categoryRequest->save();
+                }
+
+                $areasRequest->save();
+
                 if(Yii::$app->user->isGuest){
                     Yii::$app->session->setFlash('requestFormSubmitted');
                     return $this->refresh();
@@ -148,6 +180,8 @@ class RequestController extends Controller
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             } else {
+                $model = $this->completeModel($model);
+
                 return $this->render('create', [
                     'model' => $model,
                 ]);
@@ -427,5 +461,35 @@ class RequestController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    /**
+     * @param $id
+     * @return User
+     */
+    protected function findUserModel($id){
+        if (($model = User::findOne($id)) !== null) {
+            return $model;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @param $model Request
+     * @return Request
+     */
+    private function completeModel($model){
+       if(Yii::$app->user->isGuest){
+
+       } else{
+           $user = $this->findUserModel(Yii::$app->user->id);
+           if($user != null) {
+               $model->name = $user->first_name . " " . $user->lastname;
+               $model->email = $user->email;
+           }
+       }
+
+        return $model;
     }
 }
