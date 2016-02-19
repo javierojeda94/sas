@@ -27,6 +27,7 @@ use yii\helpers\Url;
 
         <?php if (!Yii::$app->request->isAjax){ ?>
             <div class="form-group">
+                <br>
                 <?= Html::submitButton('Agregar', ['class' => 'btn btn-success']) ?>
             </div>
         <?php } ?>

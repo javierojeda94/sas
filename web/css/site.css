@@ -92,6 +92,7 @@
 
     .navbar-inverse {
         background-color: #2d2558 !important;
+        border-bottom: .22em solid #c68d2a;
     }
 
     .navbar-brand {
@@ -103,7 +104,9 @@
         background: #211b41 !important;
     }
 
-    .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+    .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover,
+    .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > li > a:active,
+    .navbar-inverse .navbar-nav > li > a:hover {
         background: #211b41 !important;
     }
 
@@ -135,7 +138,7 @@
         width: 98.75vw !important;
         right: 0;
         left: 0;
-        margin-top: -2em;
+        margin-top: -1.4em;
     }
 
     .jumbotron {
@@ -144,12 +147,17 @@
         color: white;
         position: relative;
         width: 98.75vw;
-        padding-top: 70px;
-        padding-bottom: 74px;
+        padding-top: 90px;
+        padding-bottom: 63px;
     }
 
+    /*Index content*/
     .body-content {
-        margin-top: 4em;
+        margin-top: 1em;
+    }
+
+    .body-content .steps h3 {
+        text-align: center;
     }
 
     .carousel-indicators li {
@@ -185,9 +193,10 @@
         padding: .5em 3em;
     }
 
-    .btn-success:hover, .btn-success:active {
+    .btn-success:hover, .btn-success:active:focus, .btn-success:active, .btn-success:focus {
         background-color: #bc8528;
         border-color: #bc8528;
+        outline: none;
     }
 
     .users-request-input {
@@ -200,14 +209,57 @@
         padding: .5em 3em;
     }
 
-    .btn-primary:hover, .btn-primary:active {
+    .btn-primary:hover, .btn-primary:active:focus, .btn-primary:active, .btn-primary:focus {
         background-color: #211b41;
         border-color: #211b41;
+        outline: none;
+    }
+
+    a i.glyphicon {
+        padding-right: .2em;
     }
 }
 
 @media only screen and (max-width: 40em) {
+    /*Navbar*/
+    .navbar-inverse .navbar-toggle{
+        border: none;
+    }
+    .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus{
+        background-color: #211b41 ;
+    }
 
+    /*Carousel*/
+    .jumbotron {
+        text-align: center;
+        background-color: #211b41;
+        color: white;
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 10.5em;
+        width: 96vw;
+        padding-top: 0;
+        padding-bottom: 0;
+        border-radius: 0px;
+    }
+    .jumbotron p{
+        font-size: 1em;
+        font-weight: normal;
+    }
+
+    /*Index content*/
+    .body-content {
+        margin-top: 20em;
+        position: relative;
+    }
+    .home-icon {
+        font-size: 3.5em;
+    }
+
+    .home-icon-small {
+        font-size: 2em;
+    }
 }
 
 @media only screen and (min-width: 40.063em) {
@@ -215,7 +267,7 @@
 }
 
 @media only screen and (min-width: 40.063em) {
-    .jumbotron{
+    .jumbotron {
         right: 0;
         left: -104px;
         top: -25px;
