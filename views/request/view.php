@@ -18,6 +18,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
     <p>
         <?= Html::a(Yii::t('app', 'Advanced options'), ['advanced', 'id' => $model->id],
             ['class' => 'btn btn-primary']) ?>
+        <?php if($model->status != 'Rechazado'){ ?>
+        <?= Html::a(Yii::t('app', 'Rechazar Solicitud'), ['reject', 'id' => $model->id],
+            ['class' => 'btn btn-primary']) ?>
+        <?php } ?>
     </p>
 
     <?= DetailView::widget([
