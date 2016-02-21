@@ -18,6 +18,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
     <p>
         <?= Html::a(Yii::t('app', 'Advanced options'), ['advanced', 'id' => $model->id],
             ['class' => 'btn btn-primary']) ?>
+        <?php if($model->status != 'Rechazado'){ ?>
+        <?= Html::a(Yii::t('app', 'Rechazar Solicitud'), ['reject', 'id' => $model->id],
+            ['class' => 'btn btn-primary']) ?>
+        <?php } ?>
     </p>
 
     <?= DetailView::widget([
@@ -54,5 +58,38 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
             ],
         ],
     ]) ?>
+    <?php if($model->status != 'Atendiendo' && $model->status != 'Finalizado'){?>
+        <p>
+            <?php $form = ActiveForm::begin(['action' => "attend"]); ?>
+
+                <?= $form->field($model, 'request_id')->hiddenInput(['value'=> $model->id])->label(false) ?>
+
+            <?php if (!Yii::$app->request->isAjax){ ?>
+                <div class="form-group">
+                    <?= Html::submitButton('Atender', ['class' => 'btn btn-info']) ?>
+                 </div>
+            <?php } ?>
+
+            <?php ActiveForm::end(); ?>
+        </p>
+    <?php } ?>
+
+    <?php if($model->status == 'Atendiendo' && $model->status != 'Finalizado'){?>
+        <p>
+            <?php $form = ActiveForm::begin(['action' => "complete"]); ?>
+
+            <?= $form->field($model, 'request_id')->hiddenInput(['value'=> $model->id])->label(false) ?>
+
+            <?php if (!Yii::$app->request->isAjax){ ?>
+                <div class="form-group">
+                    <?= Html::submitButton('Finalizar', ['class' => 'btn btn-success']) ?>
+                </div>
+            <?php } ?>
+
+            <?php ActiveForm::end(); ?>
+        </p>
+    <?php } ?>
+
+
 
 </div>

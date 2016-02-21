@@ -447,6 +447,44 @@ class RequestController extends Controller
         return $this->redirect('advanced?id='.$r_id);
     }
 
+    public function actionAttend()
+    {
+        $request = Yii::$app->request;
+        $id=$request->post()['Request']['request_id'];
+        $model = $this->findModel($id);
+        $model->status='Atendiendo';
+        $model->save();
+
+        $areaRequest = AreasRequest::findOne([
+            'request_id' => $id,
+            'area_id' => $model->area_id,
+        ]);
+        $formatedDateTime = date_format( date_create(),"Y/m/d H:i:s");
+        $areaRequest->assignment_date=$formatedDateTime;
+        $areaRequest->save();
+
+        return $this->redirect('view?id='.$id);
+    }
+
+    public function actionComplete(){
+
+        $request = Yii::$app->request;
+        $id=$request->post()['Request']['request_id'];
+        $model = $this->findModel($id);
+        $model->status='Finalizado';
+        $model->save();
+
+        $areaRequest = AreasRequest::findOne([
+            'request_id' => $id,
+            'area_id' => $model->area_id,
+        ]);
+        $formatedDateTime = date_format( date_create(),"Y/m/d H:i:s");
+        $areaRequest -> completion_date = $formatedDateTime;
+        $areaRequest -> save();
+
+        return $this->redirect('view?id='.$id);
+    }
+
     /**
      * Finds the request model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

@@ -84,26 +84,6 @@ return array (
       '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid',
     ),
   ),
-  'johnitvn/yii2-ajaxcrud' => 
-  array (
-    'name' => 'johnitvn/yii2-ajaxcrud',
-    'version' => '2.0.8.0',
-    'alias' => 
-    array (
-      '@johnitvn/ajaxcrud' => $vendorDir . '/johnitvn/yii2-ajaxcrud/src',
-    ),
-    'bootstrap' => 'johnitvn\\ajaxcrud\\Bootstrap',
-  ),
-  'johnitvn/yii2-rbac-plus' => 
-  array (
-    'name' => 'johnitvn/yii2-rbac-plus',
-    'version' => '1.0.5.0',
-    'alias' => 
-    array (
-      '@johnitvn/rbacplus' => $vendorDir . '/johnitvn/yii2-rbac-plus/src',
-    ),
-    'bootstrap' => 'johnitvn\\rbacplus\\Bootstrap',
-  ),
   'yiisoft/yii2-bootstrap' => 
   array (
     'name' => 'yiisoft/yii2-bootstrap',
@@ -121,5 +101,25 @@ return array (
     array (
       '@yii/debug' => $vendorDir . '/yiisoft/yii2-debug',
     ),
+  ),
+  'johnitvn/yii2-ajaxcrud' => 
+  array (
+    'name' => 'johnitvn/yii2-ajaxcrud',
+    'version' => '2.1.0.0',
+    'alias' => 
+    array (
+      '@johnitvn/ajaxcrud' => $vendorDir . '/johnitvn/yii2-ajaxcrud/src',
+    ),
+    'bootstrap' => 'johnitvn\\ajaxcrud\\Bootstrap',
+  ),
+  'johnitvn/yii2-rbac-plus' => 
+  array (
+    'name' => 'johnitvn/yii2-rbac-plus',
+    'version' => '1.0.6.0',
+    'alias' => 
+    array (
+      '@johnitvn/rbacplus' => $vendorDir . '/johnitvn/yii2-rbac-plus/src',
+    ),
+    'bootstrap' => 'johnitvn\\rbacplus\\Bootstrap',
   ),
 );
