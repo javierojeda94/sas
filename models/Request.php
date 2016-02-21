@@ -174,10 +174,6 @@ class Request extends \yii\db\ActiveRecord
                 $formatedDateTime = date_format(date_create(),"Y/m/d H:i:s");
                 $this -> completion_date = $formatedDateTime;
             }
-            if($this->status == 'Atendiendo'){
-                $formatedDateTime = date_format(date_create(),"Y/m/d H:i:s");
-                $this -> scheduled_start_date = $formatedDateTime;
-            }
             if($this->isNewRecord){
                 $formatedDateTime = date_format(date_create(),"Y/m/d H:i:s");
                 $this->creation_date = $formatedDateTime;

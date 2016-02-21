@@ -60,33 +60,21 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
     ]) ?>
     <?php if($model->status != 'Atendiendo' && $model->status != 'Finalizado'){?>
         <p>
-            <?php $form = ActiveForm::begin(['action' => "attend"]); ?>
-
-                <?= $form->field($model, 'request_id')->hiddenInput(['value'=> $model->id])->label(false) ?>
-
-            <?php if (!Yii::$app->request->isAjax){ ?>
-                <div class="form-group">
-                    <?= Html::submitButton('Atender', ['class' => 'btn btn-info']) ?>
-                 </div>
-            <?php } ?>
-
-            <?php ActiveForm::end(); ?>
+            <?= Html::a(Yii::t('app', 'Atender Solicitud'), ['attend', 'id' => $model->id],
+                [
+                    'class' => 'btn btn-info',
+                    'data-confirm' => 'Seguro que quieres atender esta solicitud?',
+                ]) ?>
         </p>
     <?php } ?>
 
     <?php if($model->status == 'Atendiendo' && $model->status != 'Finalizado'){?>
         <p>
-            <?php $form = ActiveForm::begin(['action' => "complete"]); ?>
-
-            <?= $form->field($model, 'request_id')->hiddenInput(['value'=> $model->id])->label(false) ?>
-
-            <?php if (!Yii::$app->request->isAjax){ ?>
-                <div class="form-group">
-                    <?= Html::submitButton('Finalizar', ['class' => 'btn btn-success']) ?>
-                </div>
-            <?php } ?>
-
-            <?php ActiveForm::end(); ?>
+            <?= Html::a(Yii::t('app', 'Finalizar Solicitud'), ['complete', 'id' => $model->id],
+                [
+                    'class' => 'btn btn-success',
+                    'data-confirm' => 'Seguro que quieres finalizar esta solicitud?',
+                ]) ?>
         </p>
     <?php } ?>
 

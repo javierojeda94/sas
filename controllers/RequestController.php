@@ -447,32 +447,30 @@ class RequestController extends Controller
         return $this->redirect('advanced?id='.$r_id);
     }
 
-    public function actionAttend()
+    public function actionAttend($id)
     {
-        $request = Yii::$app->request;
-        $id=$request->post()['Request']['request_id'];
-        $model = $this->findModel($id);
-        $model->status='Atendiendo';
-        $model->save();
+        $request = Yii::$app -> request;
+        $model = $this -> findModel($id);
+        $model -> status = 'Atendiendo';
+        $model -> save();
 
         $areaRequest = AreasRequest::findOne([
             'request_id' => $id,
             'area_id' => $model->area_id,
         ]);
-        $formatedDateTime = date_format( date_create(),"Y/m/d H:i:s");
-        $areaRequest->assignment_date=$formatedDateTime;
-        $areaRequest->save();
+        $formatedDateTime = date_format( date_create(), "Y/m/d H:i:s");
+        $areaRequest -> acceptance_date=$formatedDateTime;
+        $areaRequest -> save();
 
         return $this->redirect('view?id='.$id);
     }
 
-    public function actionComplete(){
+    public function actionComplete($id){
 
-        $request = Yii::$app->request;
-        $id=$request->post()['Request']['request_id'];
+        $request = Yii::$app -> request;
         $model = $this->findModel($id);
-        $model->status='Finalizado';
-        $model->save();
+        $model -> status = 'Finalizado';
+        $model -> save();
 
         $areaRequest = AreasRequest::findOne([
             'request_id' => $id,
@@ -482,7 +480,7 @@ class RequestController extends Controller
         $areaRequest -> completion_date = $formatedDateTime;
         $areaRequest -> save();
 
-        return $this->redirect('view?id='.$id);
+        return $this -> redirect( 'view?id='.$id );
     }
 
     /**
