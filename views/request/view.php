@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
             ['class' => 'btn btn-primary']) ?>
         <?php if($model->status != 'Rechazado'){ ?>
         <?= Html::a(Yii::t('app', 'Rechazar Solicitud'), ['reject', 'id' => $model->id],
-            ['class' => 'btn btn-primary']) ?>
+            ['data-confirm' => 'Are you sure you want to reject this request?','class' => 'btn btn-primary']) ?>
         <?php } ?>
     </p>
 
