@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\AreasRequest;
 use app\models\CategoryRequest;
 use Yii;
+use yii\data\SqlDataProvider;
 use app\models\Request;
 use app\models\User;
 use app\models\UsersRequest;
@@ -76,6 +77,12 @@ class RequestController extends Controller
     public function actionView($id)
     {   
         $request = Yii::$app->request;
+        $responsibleArray = UsersRequest::find()->where(['request_id' => $id])->all();
+        $responsible = '';
+        foreach($responsibleArray as $resp){
+            $user = User::findOne($resp->user_id);
+            $responsible = $responsible . " $user->first_name $user->lastname,";
+        }
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
@@ -89,6 +96,7 @@ class RequestController extends Controller
         }else{
             return $this->render('view', [
                 'model' => $this->findModel($id),
+                'responsible' => $responsible,
             ]);
         }
     }
@@ -405,17 +413,21 @@ class RequestController extends Controller
                 */
                 $availableUsersQuery = new Query;
                 $availableUsersQuery->select('*')->from('users')->
-                    leftJoin('users_request','`users`.`id` = `users_request`.`user_id`')->
+                    leftJoin('users_request','`users`.`id` = `users_request`.`user_id`
+                    and `users_request`.`request_id` = '.$id)->
                     where(['users_request.user_id' => null]);
                 $command = $availableUsersQuery->createCommand();
                 $availableUsers = $command->queryAll();
                 $users = ArrayHelper::map($availableUsers,'id', 'first_name');
-                $searchModel = new UsersRequestSearch();
-                $dataProvider = $searchModel->search(['request_id' => $id]);
+                $dataProvider = new SqlDataProvider([
+                    'sql' => 'SELECT * FROM users_request WHERE request_id=:id',
+                    'params' => [':id' => $id]
+                ]);
+                $models = $dataProvider->getModels();
                 return $this->render('advanced', [
                     'request' => $specificRequest,
                     'users' => $users,
-                    'dataProvider' => $dataProvider,
+                    'responsible' => $models,
                 ]);
             }
         }else{
@@ -448,7 +460,7 @@ class RequestController extends Controller
      * @return mixed
      * @throws NotFoundHttpException
      */
-    public function actionUnasign($u_id, $r_id){
+    public function actionUnasign($r_id,$u_id){
         $model = UsersRequest::find()->where(['user_id'=>$u_id,'request_id'=>$r_id])->one();
         $model->delete();
         return $this->redirect('advanced?id='.$r_id);

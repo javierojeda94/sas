@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Request */
 $this->title = $request->subject;
@@ -13,6 +14,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Advanced Options');
 
     <?= $this->render('formAdvancedOptions', [
         'request' => $request,
+        'users' => $users,
     ]) ?>
 
 </div>

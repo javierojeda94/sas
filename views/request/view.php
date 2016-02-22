@@ -21,6 +21,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
         <?php if($model->status != 'Rechazado'){ ?>
         <?= Html::a(Yii::t('app', 'Rechazar Solicitud'), ['reject', 'id' => $model->id],
             ['data-confirm' => 'Are you sure you want to reject this request?','class' => 'btn btn-primary']) ?>
+        <?php } else { ?>
+            <?= Html::a(Yii::t('app', 'Autorizar Solicitud'), ['authorize','id'=>$model->id],
+            ['data-confirm' => 'Are you sure you want to authorize this request?','class' => 'btn btn-primary']) ?>
         <?php } ?>
     </p>
 
@@ -39,6 +42,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
             [
                 'label' => 'Email',
                 'value' => $model->email,
+            ],
+            [
+                'label' => 'Responsible',
+                'value' => $responsible,
             ],
             [
                 'label' => 'Subject',

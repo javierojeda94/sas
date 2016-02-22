@@ -92,6 +92,26 @@ $logo = "<img id='logo_nav' src='".Yii::$app->homeUrl."../images/UADY_w.png'/>";
     </div>
 </footer>
 <?php $this->endBody() ?>
+<script>
+    var button = document.getElementById('unasign_several');
+    button.addEventListener('click',function(e){
+        e.preventDefault();
+        if(confirm('Seguro que quieres deasignar estos usuarios?')){
+            var checkboxes = document.getElementsByClassName('checkbox');
+            var r_id = document.getElementById('unasign_several').getAttribute('data-request');
+            var url = 'unasign?r_id='+r_id;
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    var ajax_url = url + '&u_id=' + checkboxes[i].value;
+                    $.ajax({
+                        url: ajax_url,
+                        method: 'get',
+                    });
+                }
+            }
+        }
+    });
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>
