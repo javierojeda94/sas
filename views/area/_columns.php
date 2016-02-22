@@ -1,4 +1,6 @@
 <?php
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use app\models\Area;
 use app\models\User;
@@ -59,14 +61,23 @@ return [
         'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
         },
+        'template' => '{view}{update}{delete}{addPersonalOption}',
         'viewOptions'=>['role'=>'modal-remote','title'=>'View','data-toggle'=>'tooltip'],
         'updateOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
-        'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete', 
+        'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete',
                           'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
                           'data-request-method'=>'post',
                           'data-toggle'=>'tooltip',
                           'data-confirm-title'=>'Are you sure?',
-                          'data-confirm-message'=>'Are you sure want to delete this item'], 
+                          'data-confirm-message'=>'Are you sure want to delete this item'],
+        'buttons' => [
+            'addPersonalOption'=>function($url, $model){
+                $icon = '<span class="glyphicon glyphicon-open"></span>';
+                $label = ArrayHelper::remove($options, 'label', $icon);
+                $url = Url::toRoute(['modify','id'=>$model->id]);
+                return Html::a($label, $url, ['data-pjax' => '0']);
+            }
+        ],
     ],
 
 ];   

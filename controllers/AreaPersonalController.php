@@ -3,23 +3,18 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Area;
 use app\models\AreaPersonal;
-use app\models\AreaSearch;
-use yii\data\SqlDataProvider;
+use app\models\AreaPersonalSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
-use yii\db\Query;
-
 
 /**
- * AreaController implements the CRUD actions for Area model.
+ * AreaPersonalController implements the CRUD actions for AreaPersonal model.
  */
-class AreaController extends Controller
+class AreaPersonalController extends Controller
 {
     /**
      * @inheritdoc
@@ -38,12 +33,12 @@ class AreaController extends Controller
     }
 
     /**
-     * Lists all Area models.
+     * Lists all AreaPersonal models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new AreaSearch();
+        $searchModel = new AreaPersonalSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -54,32 +49,33 @@ class AreaController extends Controller
 
 
     /**
-     * Displays a single Area model.
-     * @param string $id
+     * Displays a single AreaPersonal model.
+     * @param integer $area_id
+     * @param integer $user_id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($area_id, $user_id)
     {   
         $request = Yii::$app->request;
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Area #".$id,
+                    'title'=> "AreaPersonal #".$area_id, $user_id,
                     'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
+                        'model' => $this->findModel($area_id, $user_id),
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                            Html::a('Edit',['update','area_id, $user_id'=>$area_id, $user_id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
-                'model' => $this->findModel($id),
+                'model' => $this->findModel($area_id, $user_id),
             ]);
         }
     }
 
     /**
-     * Creates a new Area model.
+     * Creates a new AreaPersonal model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -87,7 +83,7 @@ class AreaController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new Area();  
+        $model = new AreaPersonal();  
 
         if($request->isAjax){
             /*
@@ -96,7 +92,7 @@ class AreaController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new Area",
+                    'title'=> "Create new AreaPersonal",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -107,15 +103,15 @@ class AreaController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new Area",
-                    'content'=>'<span class="text-success">Create Area success</span>',
+                    'title'=> "Create new AreaPersonal",
+                    'content'=>'<span class="text-success">Create AreaPersonal success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new Area",
+                    'title'=> "Create new AreaPersonal",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -129,7 +125,7 @@ class AreaController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'area_id' => $model->area_id, 'user_id' => $model->user_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -140,16 +136,17 @@ class AreaController extends Controller
     }
 
     /**
-     * Updates an existing Area model.
+     * Updates an existing AreaPersonal model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param integer $area_id
+     * @param integer $user_id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($area_id, $user_id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($area_id, $user_id);       
 
         if($request->isAjax){
             /*
@@ -158,7 +155,7 @@ class AreaController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update Area #".$id,
+                    'title'=> "Update AreaPersonal #".$area_id, $user_id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -168,16 +165,16 @@ class AreaController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Area #".$id,
+                    'title'=> "AreaPersonal #".$area_id, $user_id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                            Html::a('Edit',['update','area_id, $user_id'=>$area_id, $user_id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
-                    'title'=> "Update Area #".$id,
+                    'title'=> "Update AreaPersonal #".$area_id, $user_id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -190,7 +187,7 @@ class AreaController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'area_id' => $model->area_id, 'user_id' => $model->user_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -200,16 +197,17 @@ class AreaController extends Controller
     }
 
     /**
-     * Delete an existing Area model.
+     * Delete an existing AreaPersonal model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $area_id
+     * @param integer $user_id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($area_id, $user_id)
     {
         $request = Yii::$app->request;
-        $this->findModel($id)->delete();
+        $this->findModel($area_id, $user_id)->delete();
 
         if($request->isAjax){
             /*
@@ -228,20 +226,21 @@ class AreaController extends Controller
     }
 
      /**
-     * Delete multiple existing Area model.
+     * Delete multiple existing AreaPersonal model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $area_id
+     * @param integer $user_id
      * @return mixed
      */
     public function actionBulkDelete()
     {        
         $request = Yii::$app->request;
-        $pks = $request->post('pks'); // Array or selected records primary keys
-        foreach (Area::findAll(json_decode($pks)) as $model) {
+        $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
+        foreach ( $pks as $pk ) {
+            $model = $this->findModel($pk);
             $model->delete();
         }
-        
 
         if($request->isAjax){
             /*
@@ -259,74 +258,19 @@ class AreaController extends Controller
     }
 
     /**
-     * Finds the Area model based on its primary key value.
+     * Finds the AreaPersonal model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Area the loaded model
+     * @param integer $area_id
+     * @param integer $user_id
+     * @return AreaPersonal the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($area_id, $user_id)
     {
-        if (($model = Area::findOne($id)) !== null) {
+        if (($model = AreaPersonal::findOne(['area_id' => $area_id, 'user_id' => $user_id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    public function actionModify($id){
-        $request = Yii::$app->request;
-
-        if(!Yii::$app->user->isGuest){
-            $area = $this->findModel($id);
-
-            if($request->isAjax){
-                /*
-                *   Process for ajax request
-                */
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
-            }else{
-                /*
-                *   Process for non-ajax request
-                */
-                $availableUsersQuery = new Query;
-                $availableUsersQuery->select('*')->from('users')->
-                leftJoin('area_personal','`users`.`id` = `area_personal`.`user_id`
-                    and `area_personal`.`area_id` = '.$id)->
-                where(['area_personal.user_id' => null]);
-                $command = $availableUsersQuery->createCommand();
-                $availableUsers = $command->queryAll();
-                $available_users = ArrayHelper::map($availableUsers,'id', 'first_name');
-                $dataProvider = new SqlDataProvider([
-                    'sql' => 'SELECT * FROM area_personal WHERE area_id=:id',
-                    'params' => [':id' => $id]
-                ]);
-                $personal = $dataProvider->getModels();
-                return $this->render('advanced', [
-                    'area' => $area,
-                    'available_users' => $available_users,
-                    'personal' => $personal,
-                ]);
-            }
-        }else{
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-
-    public function actionAdd(){
-        $request = Yii::$app->request;
-        $model = new AreaPersonal();
-        $model->user_id = $request->post()['Area']['id_responsable'];
-        $model->area_id = $request->post()['Area']['area_id'];
-        $model->permission = 1;
-        $model->save();
-        return $this->redirect('modify?id='.$model->area_id);
-    }
-
-    public function actionRemove($a_id,$u_id){
-        $model = AreaPersonal::find()->where(['user_id'=>$u_id,'area_id'=>$a_id])->one();
-        $model->delete();
-        return $this->redirect('modify?id='.$a_id);
     }
 }
