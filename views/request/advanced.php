@@ -8,13 +8,33 @@ use yii\bootstrap\Modal;
 use app\models\User;
 use kartik\grid\GridView;
 use yii\helpers\Url;
-
+use yii\jui\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\request */
 ?>
 <div class="request-advanced">
 
     <h1>Opciones avanzadas de solicitud: <?= $request->id ?></h1>
+
+    <div class="users-request-input request-form row">
+    <?php $form = ActiveForm::begin(['action' => "scheduling"]); ?>
+        <?= $form->field($request, 'request_id')->hiddenInput(['value'=> $request->id])->label(false) ?>
+
+        <?= $form->field($request, 'scheduled_start_date')->widget(DatePicker::classname(), [
+            'dateFormat' => 'yyyy-MM-dd',
+        ]) ?>
+        <?= $form->field($request, 'scheduled_end_date')->widget(DatePicker::classname(), [
+            'dateFormat' => 'yyyy-MM-dd',
+        ]) ?>
+
+        <?php if (!Yii::$app->request->isAjax){ ?>
+            <div class="form-group">
+                <?= Html::submitButton('Calendarizar', ['class' => 'btn btn-success']) ?>
+            </div>
+        <?php } ?>
+        <?php ActiveForm::end(); ?>
+
+    </div>
 
     <div class="users-request-input request-form row">
 
@@ -86,4 +106,4 @@ use yii\helpers\Url;
         ?>
     </div>
 
-</div>
+</>

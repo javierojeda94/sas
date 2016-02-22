@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
             ],
             [
                 'label' => 'Responsible',
-                'value' => $responsible,
+                'value' => strlen($responsible)>0 ? $responsible : 'Sin asignar',
             ],
             [
                 'label' => 'Subject',

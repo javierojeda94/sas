@@ -502,6 +502,17 @@ class RequestController extends Controller
         return $this -> redirect( 'view?id='.$id );
     }
 
+    public function actionScheduling()
+    {
+        $request = Yii::$app->request;
+        $id=$request->post()['Request']['request_id'];
+        $model=$this->findModel($id);
+        $model->scheduled_start_date = $request->post()['Request']['scheduled_start_date'];
+        $model->scheduled_end_date = $request->post()['Request']['scheduled_end_date'];
+        $model->save();
+
+        return $this->redirect('advanced?id='.$id);
+    }
     /**
      * Finds the request model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
