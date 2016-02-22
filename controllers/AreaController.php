@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Area;
+use app\models\User;
 use app\models\AreaPersonal;
 use app\models\AreaSearch;
 use yii\data\SqlDataProvider;
@@ -312,6 +313,27 @@ class AreaController extends Controller
         }else{
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionPermissions($u_id,$a_id){
+        $user = User::findOne($u_id);
+        $relationship = AreaPersonal::find()->where(['user_id'=>$u_id,'area_id'=>$a_id])->one();
+        $area = $this->findModel($a_id);
+        return $this->render('permissions', [
+            'area' => $area,
+            'user' => $user,
+            'relationship' => $relationship,
+        ]);
+    }
+
+    public function actionAddpermission(){
+        $request = Yii::$app->request;
+        $a_id = $request->post()['AreaPersonal']['area_id'];
+        $u_id = $request->post()['AreaPersonal']['user_id'];
+        $model = AreaPersonal::find()->where(['user_id'=>$u_id,'area_id'=>$a_id])->one();
+        $model->permission = intval($request->post()['AreaPersonal']['permission']);
+        $model->save();
+        return $this->redirect('modify?id='.$a_id);
     }
 
     public function actionAdd(){

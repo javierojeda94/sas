@@ -58,7 +58,9 @@ use yii\jui\DatePicker;
                     <td class="skip-export kv-align-center kv-align-middle">
                         <?php
                         $user = User::findOne($pers["user_id"]);
-                        echo $user->first_name . ' ' . $user->lastname;
+                        echo Html::a(Yii::t('app', $user->first_name . ' ' . $user->lastname),
+                            ['permissions', 'u_id' => $user->id,'a_id' => $area->id]);
+                        $user->first_name . ' ' . $user->lastname;
                         ?>
                     </td>
                     <td class="skip-export kv-align-center kv-align-middle">
