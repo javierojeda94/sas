@@ -18,6 +18,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
     <p>
         <?= Html::a(Yii::t('app', 'Advanced options'), ['advanced', 'id' => $model->id],
             ['class' => 'btn btn-primary']) ?>
+        <?php if($model->status != 'Rechazado'){ ?>
+        <?= Html::a(Yii::t('app', 'Rechazar Solicitud'), ['reject', 'id' => $model->id],
+            ['data-confirm' => 'Are you sure you want to reject this request?','class' => 'btn btn-primary']) ?>
+        <?php } ?>
     </p>
 
     <?= DetailView::widget([
@@ -54,5 +58,26 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
             ],
         ],
     ]) ?>
+    <?php if($model->status != 'Atendiendo' && $model->status != 'Finalizado'){?>
+        <p>
+            <?= Html::a(Yii::t('app', 'Atender Solicitud'), ['attend', 'id' => $model->id],
+                [
+                    'class' => 'btn btn-info',
+                    'data-confirm' => 'Seguro que quieres atender esta solicitud?',
+                ]) ?>
+        </p>
+    <?php } ?>
+
+    <?php if($model->status == 'Atendiendo' && $model->status != 'Finalizado'){?>
+        <p>
+            <?= Html::a(Yii::t('app', 'Finalizar Solicitud'), ['complete', 'id' => $model->id],
+                [
+                    'class' => 'btn btn-success',
+                    'data-confirm' => 'Seguro que quieres finalizar esta solicitud?',
+                ]) ?>
+        </p>
+    <?php } ?>
+
+
 
 </div>

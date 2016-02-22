@@ -30,7 +30,7 @@ $logo = "<img id='logo_nav' src='".Yii::$app->homeUrl."../images/UADY_w.png'/>";
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' =>  $logo.'SAS',
+        'brandLabel' =>  $logo.' SAS',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -43,8 +43,6 @@ $logo = "<img id='logo_nav' src='".Yii::$app->homeUrl."../images/UADY_w.png'/>";
 
 
             ['label' => 'Inicio', 'url' => Yii::$app->homeUrl],
-            // ['label' => 'About', 'url' => ['/site/about']],
-            // ['label' => 'Contact', 'url' => ['/site/contact']],
            Yii::$app->user->isGuest ?
             [
                 'label' => Yii::t('app','Requests'),
@@ -88,7 +86,7 @@ $logo = "<img id='logo_nav' src='".Yii::$app->homeUrl."../images/UADY_w.png'/>";
 
 <footer class="footer">
     <div class="container">
-        <p><a href="/site/about">Acerca &nbsp; </a> | &nbsp;<a href="/site/contact">Contactanos</a></p>
+        <p><a href="http://www.matematicas.uady.mx/">Facultad de Matemáticas </a>&nbsp;  | &nbsp;<a href="/site/contact">Contactanos</a></p>
         <p class="pull-left">&copy; SAS <?= date('Y') ?></p>
 
     </div>
