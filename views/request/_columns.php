@@ -53,14 +53,14 @@ return [
       //  'class'=>'\kartik\grid\DataColumn',
        //'attribute'=>'status',
      //],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'scheduled_start_date',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'scheduled_end_date',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'scheduled_start_date',
+    ],
+    [
+         'class'=>'\kartik\grid\DataColumn',
+         'attribute'=>'scheduled_end_date',
+     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'token',

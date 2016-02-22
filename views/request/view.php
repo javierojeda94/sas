@@ -63,6 +63,14 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                 'label' => 'Status',
                 'value' => $model->status,
             ],
+            [
+                'label' => 'Start Date',
+                'value' => $model->scheduled_start_date,
+            ],
+            [
+                'label' => 'End Date',
+                'value' => $model->scheduled_end_date,
+            ],
         ],
     ]) ?>
     <?php if($model->status != 'Atendiendo' && $model->status != 'Finalizado'){?>
