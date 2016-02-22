@@ -16,6 +16,7 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\db\Query;
 
 /**
  * RequestController implements the CRUD actions for request model.
@@ -402,7 +403,13 @@ class RequestController extends Controller
                 /*
                 *   Process for non-ajax request
                 */
-                $users = ArrayHelper::map(User::find()->all(),'id', ['first_name']);
+                $availableUsersQuery = new Query;
+                $availableUsersQuery->select('*')->from('users')->
+                    leftJoin('users_request','`users`.`id` = `users_request`.`user_id`')->
+                    where(['users_request.user_id' => null]);
+                $command = $availableUsersQuery->createCommand();
+                $availableUsers = $command->queryAll();
+                $users = ArrayHelper::map($availableUsers,'id', 'first_name');
                 $searchModel = new UsersRequestSearch();
                 $dataProvider = $searchModel->search(['request_id' => $id]);
                 return $this->render('advanced', [
