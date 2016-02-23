@@ -1143,39 +1143,6 @@
         "description": "Database role base access control manager for yii2"
     },
     {
-        "name": "bower-asset/jquery",
-        "version": "2.2.0",
-        "version_normalized": "2.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/jquery/jquery-dist.git",
-            "reference": "6fc01e29bdad0964f62ef56d01297039cdcadbe5"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/6fc01e29bdad0964f62ef56d01297039cdcadbe5",
-            "reference": "6fc01e29bdad0964f62ef56d01297039cdcadbe5",
-            "shasum": ""
-        },
-        "type": "bower-asset-library",
-        "extra": {
-            "bower-asset-main": "dist/jquery.js",
-            "bower-asset-ignore": [
-                "package.json"
-            ]
-        },
-        "installation-source": "dist",
-        "license": [
-            "MIT"
-        ],
-        "keywords": [
-            "browser",
-            "javascript",
-            "jquery",
-            "library"
-        ]
-    },
-    {
         "name": "bower-asset/jquery-ui",
         "version": "1.11.4",
         "version_normalized": "1.11.4.0",
@@ -1441,6 +1408,135 @@
             "mobile-first",
             "responsive",
             "web"
+        ]
+    },
+    {
+        "name": "bower-asset/jquery",
+        "version": "2.2.1",
+        "version_normalized": "2.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jquery/jquery-dist.git",
+            "reference": "788eaba2f83e7b7445c7a83a50c81c0704423874"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/788eaba2f83e7b7445c7a83a50c81c0704423874",
+            "reference": "788eaba2f83e7b7445c7a83a50c81c0704423874",
+            "shasum": ""
+        },
+        "type": "bower-asset-library",
+        "extra": {
+            "bower-asset-main": "dist/jquery.js",
+            "bower-asset-ignore": [
+                "package.json"
+            ]
+        },
+        "installation-source": "dist",
+        "license": [
+            "MIT"
+        ],
+        "keywords": [
+            "browser",
+            "javascript",
+            "jquery",
+            "library"
+        ]
+    },
+    {
+        "name": "kartik-v/yii2-helpers",
+        "version": "v1.3.5",
+        "version_normalized": "1.3.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kartik-v/yii2-helpers.git",
+            "reference": "f16003c8c9cfdaa50b4c9574cae9f0310946696c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/f16003c8c9cfdaa50b4c9574cae9f0310946696c",
+            "reference": "f16003c8c9cfdaa50b4c9574cae9f0310946696c",
+            "shasum": ""
+        },
+        "require": {
+            "yiisoft/yii2-bootstrap": "*"
+        },
+        "time": "2015-12-12 18:47:11",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "kartik\\helpers\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Kartik Visweswaran",
+                "email": "kartikv2@gmail.com",
+                "homepage": "http://www.krajee.com/"
+            }
+        ],
+        "description": "A collection of useful helper functions for Yii Framework 2.0",
+        "homepage": "https://github.com/kartik-v/yii2-helpers",
+        "keywords": [
+            "bootstrap",
+            "extension",
+            "helper",
+            "utilities",
+            "yii",
+            "yii2"
+        ]
+    },
+    {
+        "name": "sintret/yii2-chat-adminlte",
+        "version": "v1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sintret/yii2-chat-adminlte.git",
+            "reference": "6bd1774d16078e77296c5488c0017b01ad3ff7c0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sintret/yii2-chat-adminlte/zipball/6bd1774d16078e77296c5488c0017b01ad3ff7c0",
+            "reference": "6bd1774d16078e77296c5488c0017b01ad3ff7c0",
+            "shasum": ""
+        },
+        "require": {
+            "kartik-v/yii2-helpers": "*",
+            "yiisoft/yii2": "*"
+        },
+        "time": "2015-01-14 13:46:53",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "sintret\\chat\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andy Fitria",
+                "homepage": "http://sintret.com"
+            }
+        ],
+        "description": "Yii2 extension for Chat plugin with admin lte",
+        "homepage": "https://github.com/sintret/yii2-chat-adminlte",
+        "keywords": [
+            "AdminLTE",
+            "ajax",
+            "chat",
+            "jquery",
+            "plugin",
+            "yii2"
         ]
     }
 ]

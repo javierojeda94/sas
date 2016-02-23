@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\AreasRequest;
 use app\models\CategoryRequest;
+use sintret\chat\ChatRoom;
 use Yii;
 use yii\data\SqlDataProvider;
 use app\models\Request;
@@ -513,6 +514,23 @@ class RequestController extends Controller
 
         return $this->redirect('advanced?id='.$id);
     }
+
+    public function actionChat()
+    {
+        if (!empty($_POST)) {
+            ChatRoom::sendChat($_POST);
+
+            if (isset($_POST['message']))
+                $message = $_POST['message'];
+            if (isset($post['idRequest']))
+                $idRequest = $_POST['idRequest'];
+            if (isset($post['userName']))
+                $userName = $_POST['userName'];
+
+            //Estas variables seran requeridas por el que haga el envio de correos se las dejos
+        }
+    }
+
     /**
      * Finds the request model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

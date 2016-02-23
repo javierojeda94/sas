@@ -131,4 +131,22 @@ return array (
       '@yii/jui' => $vendorDir . '/yiisoft/yii2-jui',
     ),
   ),
+  'kartik-v/yii2-helpers' => 
+  array (
+    'name' => 'kartik-v/yii2-helpers',
+    'version' => '1.3.5.0',
+    'alias' => 
+    array (
+      '@kartik/helpers' => $vendorDir . '/kartik-v/yii2-helpers',
+    ),
+  ),
+  'sintret/yii2-chat-adminlte' => 
+  array (
+    'name' => 'sintret/yii2-chat-adminlte',
+    'version' => '1.0.0.0',
+    'alias' => 
+    array (
+      '@sintret/chat' => $vendorDir . '/sintret/yii2-chat-adminlte',
+    ),
+  ),
 );

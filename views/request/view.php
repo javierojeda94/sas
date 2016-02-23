@@ -1,4 +1,5 @@
 <?php
+use sintret\chat\ChatRoom;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\bootstrap\ActiveForm;
@@ -18,12 +19,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
     <p>
         <?= Html::a(Yii::t('app', 'Advanced options'), ['advanced', 'id' => $model->id],
             ['class' => 'btn btn-primary']) ?>
-        <?php if($model->status != 'Rechazado'){ ?>
-        <?= Html::a(Yii::t('app', 'Rechazar Solicitud'), ['reject', 'id' => $model->id],
-            ['data-confirm' => 'Are you sure you want to reject this request?','class' => 'btn btn-primary']) ?>
+        <?php if ($model->status != 'Rechazado') { ?>
+            <?= Html::a(Yii::t('app', 'Rechazar Solicitud'), ['reject', 'id' => $model->id],
+                ['data-confirm' => 'Are you sure you want to reject this request?', 'class' => 'btn btn-primary']) ?>
         <?php } else { ?>
-            <?= Html::a(Yii::t('app', 'Autorizar Solicitud'), ['authorize','id'=>$model->id],
-            ['data-confirm' => 'Are you sure you want to authorize this request?','class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('app', 'Autorizar Solicitud'), ['authorize', 'id' => $model->id],
+                ['data-confirm' => 'Are you sure you want to authorize this request?', 'class' => 'btn btn-primary']) ?>
         <?php } ?>
     </p>
 
@@ -45,7 +46,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
             ],
             [
                 'label' => 'Responsible',
-                'value' => strlen($responsible)>0 ? $responsible : 'Sin asignar',
+                'value' => strlen($responsible) > 0 ? $responsible : 'Sin asignar',
             ],
             [
                 'label' => 'Subject',
@@ -73,7 +74,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
             ],
         ],
     ]) ?>
-    <?php if($model->status != 'Atendiendo' && $model->status != 'Finalizado'){?>
+    <?php if ($model->status != 'Atendiendo' && $model->status != 'Finalizado') { ?>
         <p>
             <?= Html::a(Yii::t('app', 'Atender Solicitud'), ['attend', 'id' => $model->id],
                 [
@@ -83,7 +84,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
         </p>
     <?php } ?>
 
-    <?php if($model->status == 'Atendiendo' && $model->status != 'Finalizado'){?>
+    <?php if ($model->status == 'Atendiendo' && $model->status != 'Finalizado') { ?>
         <p>
             <?= Html::a(Yii::t('app', 'Finalizar Solicitud'), ['complete', 'id' => $model->id],
                 [
@@ -93,6 +94,15 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
         </p>
     <?php } ?>
 
-
+    <?= ChatRoom::widget([
+            'url' => \yii\helpers\Url::toRoute(['/request/chat']),
+            //'requestModel'=> \app\models\Request::className(),
+            'userModel' => \app\models\User::className(),
+            'userField' => 'avatarImage',
+            'idRequest' => $model->id,
+            'userName' => $model->name
+        ]
+    );
+    ?>
 
 </div>

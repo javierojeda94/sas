@@ -19,7 +19,8 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "johnitvn/yii2-rbac-plus": "*",
-        "yiisoft/yii2-jui": "2.0.0"
+        "yiisoft/yii2-jui": "2.0.0",
+        "sintret/yii2-chat-adminlte": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
