@@ -73,10 +73,10 @@ class RequestSearch extends request
 
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'request.name', $this->name])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'subject', $this->subject])
-            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'request.description', $this->description])
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'token', $this->token])
             ->andFilterWhere(['like', 'areas.name', $this->area_name]);

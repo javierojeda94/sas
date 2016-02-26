@@ -82,8 +82,8 @@ class CategorySearch extends Category
         $query->joinWith('idArea');
 
         $dataProvider->sort->attributes['area_name'] = [
-            'asc' => ['Areas.name' => SORT_ASC],
-            'desc' => ['Areas.name' => SORT_DESC],
+            'asc' => ['areas.name' => SORT_ASC],
+            'desc' => ['areas.name' => SORT_DESC],
         ];
 
         /*
@@ -100,8 +100,8 @@ class CategorySearch extends Category
             'service_level_agreement_completion' => $this->service_level_agreement_completion,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
+        $query->andFilterWhere(['like', 'categories.name', $this->name])
+            ->andFilterWhere(['like', 'categories.description', $this->description])
             ->andFilterWhere(['like', 'areas.name', $this->area_name]);
             //->andFilterWhere(['like', 'categories.name', $this->category_name]);
 
