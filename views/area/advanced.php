@@ -38,6 +38,11 @@ use yii\jui\DatePicker;
 
     <div>
 
+        <div class="input-group">
+            <span class="input-group-addon">Filtro</span>
+            <input id="filter" type="text" class="form-control" placeholder="Busca a un usuario...">
+        </div>
+
         <table width="100%" border="1px solid grey" class="kv-grid-table table table-bordered table-striped table-condensed kv-table-wrap">
             <thead>
                 <th class="kv-align-center kv-align-middle kv-merged-header"></th>
@@ -45,7 +50,7 @@ use yii\jui\DatePicker;
                 <th class="kv-align-center kv-align-middle kv-merged-header">Nombre</th>
                 <th class="kv-align-center kv-align-middle kv-merged-header">Actions</th>
             </thead>
-            <tbody>
+            <tbody class="searchable">
                 <?php foreach($personal as $pers){
                      ?>
                 <tr>
@@ -90,4 +95,4 @@ use yii\jui\DatePicker;
         -->
     </div>
 
-</>
+</div>

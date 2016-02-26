@@ -79,7 +79,7 @@ class AreaSearch extends Area{
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'description', $this->description])
-             ->andFilterWhere(['like', 'Users.first_name', $this->responsable_name]);
+             ->andFilterWhere(['like', 'users.first_name', $this->responsable_name]);
 
 
         return $dataProvider;
