@@ -90,4 +90,4 @@ use yii\jui\DatePicker;
         -->
     </div>
 
-</>
+</div>
