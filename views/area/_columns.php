@@ -72,10 +72,13 @@ return [
                           'data-confirm-message'=>'Are you sure want to delete this item'],
         'buttons' => [
             'addPersonalOption'=>function($url, $model){
-                $icon = '<span class="glyphicon glyphicon-open"></span>';
+                $options = ['data-toggle'=>'tooltip'];
+                $title = Yii::t('app', 'Advanced Options');
+                $icon = '<span class="glyphicon glyphicon-wrench"></span>';
                 $label = ArrayHelper::remove($options, 'label', $icon);
+                $options = ArrayHelper::merge(['title' => $title, 'data-pjax' => '0'], $options);
                 $url = Url::toRoute(['modify','id'=>$model->id]);
-                return Html::a($label, $url, ['data-pjax' => '0']);
+                return Html::a($label, $url, $options);
             }
         ],
     ],
