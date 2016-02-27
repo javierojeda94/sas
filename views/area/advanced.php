@@ -103,17 +103,16 @@ use yii\jui\DatePicker;
                 <?php } ?>
             </tbody>
         </table>
-        <!--
-        <?=
-        Html::a(Yii::t('app', 'Unasign '),
-            ['add', 'r_id' => $area->id],
-            [
-                'id' => 'unasign_several',
+        <?php
+        if(!empty($personal)){
+            echo Html::a(Yii::t('app', 'Unasign '),
+                ['remove', 'r_id' => $area->id],
+                ['id' => 'unasign_several-from-area',
                 'data-request' => $area->id,
-                'class' => 'btn btn-info',
-            ])
+                'class' => 'btn btn-info',]
+            );
+        }
         ?>
-        -->
     </div>
 
 </div>
