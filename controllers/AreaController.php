@@ -319,11 +319,19 @@ class AreaController extends Controller
         $user = User::findOne($u_id);
         $relationship = AreaPersonal::find()->where(['user_id'=>$u_id,'area_id'=>$a_id])->one();
         $area = $this->findModel($a_id);
-        return $this->render('permissions', [
-            'area' => $area,
-            'user' => $user,
-            'relationship' => $relationship,
-        ]);
+        $items = [
+            'user' => [
+                'id' => $user->id,
+                'name' => "$user->first_name $user->lastname"
+            ],
+            'area' => [
+                'id' => $area->id,
+                'name' => $area->name
+            ],
+            'permission' => $relationship->permission
+        ];
+        \Yii::$app->response->format = 'json';
+        return $items;
     }
 
     public function actionAddpermission(){

@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Modal;
 use app\models\User;
+use app\models\AreaPersonal;
 use kartik\grid\GridView;
 use yii\helpers\Url;
 use yii\jui\DatePicker;
@@ -53,10 +54,13 @@ use yii\jui\DatePicker;
                 <th class="kv-align-center kv-align-middle kv-merged-header"></th>
                 <th class="kv-align-center kv-align-middle kv-merged-header">Id</th>
                 <th class="kv-align-center kv-align-middle kv-merged-header">Nombre</th>
+                <th class="kv-align-center kv-align-middle kv-merged-header">Apellido</th>
+                <th class="kv-align-center kv-align-middle kv-merged-header">Permisos</th>
                 <th class="kv-align-center kv-align-middle kv-merged-header">Actions</th>
             </thead>
             <tbody class="searchable">
                 <?php foreach($personal as $pers){
+
                      ?>
                 <tr>
                     <td>
@@ -68,20 +72,32 @@ use yii\jui\DatePicker;
                     <td class="skip-export kv-align-center kv-align-middle">
                         <?php
                         $user = User::findOne($pers["user_id"]);
-                        echo Html::a(Yii::t('app', $user->first_name . ' ' . $user->lastname),
-                            ['permissions', 'u_id' => $user->id,'a_id' => $area->id]);
-                        $user->first_name . ' ' . $user->lastname;
+                        echo $user->first_name;
                         ?>
                     </td>
                     <td class="skip-export kv-align-center kv-align-middle">
-                        <?=
-                            Html::a(Yii::t('app', 'Remove '),
-                                ['remove', 'u_id' => $user->id,'a_id' => $area->id],
-                            [
-                                'class' => 'btn btn-danger',
-                                'data-confirm' => 'Seguro que quieres remover este usuario?',
-                            ])
+                        <?php
+                        echo $user->lastname;
                         ?>
+                    </td>
+                    <td class="skip-export kv-align-center kv-align-middle">
+                        <?php
+                        $relationship = AreaPersonal::find()->where(['user_id'=>$pers['user_id'],
+                            'area_id'=>$area->id])->one();
+                        echo $relationship->permission;
+                        ?>
+                    </td>
+                    <td class="skip-export kv-align-center kv-align-middle">
+                        <a data-toggle="modal" data-target="#permissionsModal"
+                           data-user-id="<?= $user->id ?>" data-area-id="<?= $area->id ?>">
+                            <span data-toggle="tooltip" title="Modify permission"
+                                  class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a href="remove?u_id=<?=$user->id?>&a_id=<?=$area->id?>"
+                           data-toggle="tooltip" title="Remove user"
+                           data-confirm="Seguro que quieres remover este usuario?">
+                           <span class="glyphicon glyphicon-remove"></span>
+                        </a>
                     </td>
                 </tr>
                 <?php } ?>
@@ -101,3 +117,7 @@ use yii\jui\DatePicker;
     </div>
 
 </div>
+
+<?php
+    require('permissions.php');
+?>

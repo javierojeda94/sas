@@ -12,32 +12,34 @@ use yii\jui\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\request */
 ?>
-<div class="request-advanced">
-
-    <h1>Modificar permisos de usuario <?= $user->first_name ?> en area: <?= $area->id ?></h1>
-
-    <div class="permissions-request-input request-form row">
-
-        <?php $form = ActiveForm::begin(['action' => "addpermission"]); ?>
-
-        <?= $form->field($relationship, 'area_id')->hiddenInput(['value'=> $area->id])->label(false) ?>
-        <?= $form->field($relationship, 'user_id')->hiddenInput(['value'=> $user->id])->label(false) ?>
-
-        <div class="col-md-4">
-            <?= $form->field($relationship, 'permission')->dropDownList(
-                ['Seleccion',1,2,3,4,5],
-                ['class' => 'form-control']
-            ) ?>
-        </div>
-
-        <?php if (!Yii::$app->request->isAjax){ ?>
-            <div class="form-group">
-                <br>
+<div class="modal fade" id="permissionsModal" tabindex="-1" role="dialog" aria-labelledby="permissionsModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="permissionsModalLabel">asdasdasdasd</h4>
+            </div>
+            <?php $form = ActiveForm::begin(['action' => "addpermission"]); ?>
+            <div class="modal-body">
+                <h4 id="area_name">Area:</h4>
+                <h4 id="personal_name">Personal:</h4>
+                <input type="hidden" id="areapersonal-user_id" name="AreaPersonal[user_id]">
+                <input type="hidden" id="areapersonal-area_id" name="AreaPersonal[area_id]">
+                <label for="areapersonal-permission">Permission</label>
+                <select required id="areapersonal-permission" class="form-control" name="AreaPersonal[permission]">
+                    <option value="0" selected disabled>Selecction</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
             </div>
-        <?php } ?>
-
-        <?php ActiveForm::end(); ?>
+            <?php ActiveForm::end(); ?>
+        </div>
     </div>
-
 </div>
