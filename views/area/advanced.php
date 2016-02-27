@@ -14,7 +14,7 @@ use yii\jui\DatePicker;
 ?>
 <div class="request-advanced">
 
-    <h1>Opciones avanzadas del area: <?= $area->id ?></h1>
+    <h1>Area's personal: <?= $area->id ?></h1>
 
     <div class="users-request-input request-form row">
 
@@ -26,10 +26,15 @@ use yii\jui\DatePicker;
             <?= $form->field($area, 'id_responsable')->dropDownList($available_users,['class' => 'form-control']) ?>
         </div>
 
-        <?php if (!Yii::$app->request->isAjax){ ?>
+        <?php if (empty($available_users)){ ?>
             <div class="form-group">
                 <br>
-                <?= Html::submitButton('Agregar', ['class' => 'btn btn-success']) ?>
+                <?= Html::button('Add', ['class' => 'btn btn-success disabled']) ?>
+            </div>
+        <?php }else{ ?>
+            <div class="form-group">
+                <br>
+                <?= Html::submitButton('Add', ['class' => 'btn btn-success']) ?>
             </div>
         <?php } ?>
 
