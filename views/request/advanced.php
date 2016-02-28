@@ -22,14 +22,24 @@ use yii\jui\DatePicker;
 
         <?= $form->field($request, 'scheduled_start_date')->widget(DatePicker::classname(), [
             'dateFormat' => 'yyyy-MM-dd',
+            'clientOptions' => [
+                'minDate' =>'0',
+            ],
         ]) ?>
         <?= $form->field($request, 'scheduled_end_date')->widget(DatePicker::classname(), [
             'dateFormat' => 'yyyy-MM-dd',
+            'clientOptions' => [
+                'minDate' =>'0',
+            ],
         ]) ?>
 
         <?php if (!Yii::$app->request->isAjax){ ?>
             <div class="form-group">
-                <?= Html::submitButton('Calendarizar', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('Calendarizar',
+                    [
+                        'class' => 'btn btn-success',
+                        'data-confirm' => 'Estás seguro que quiere calendarizar está solicitud?',
+                    ]) ?>
             </div>
         <?php } ?>
         <?php ActiveForm::end(); ?>

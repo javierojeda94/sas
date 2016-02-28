@@ -510,9 +510,10 @@ class RequestController extends Controller
         $model=$this->findModel($id);
         $model->scheduled_start_date = $request->post()['Request']['scheduled_start_date'];
         $model->scheduled_end_date = $request->post()['Request']['scheduled_end_date'];
+        $model->status="Calendarizada";
         $model->save();
 
-        return $this->redirect('advanced?id='.$id);
+        return $this->redirect('view?id='.$id);
     }
 
     public function actionChat()
