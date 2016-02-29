@@ -1,16 +1,15 @@
 <?php
 
-use yii\widgets\DetailView;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\bootstrap\Modal;
 use app\models\User;
-use kartik\grid\GridView;
-use yii\helpers\Url;
 use yii\jui\DatePicker;
 /* @var $this yii\web\View */
-/* @var $model app\models\request */
+/* @var $request app\models\request */
+
+$this->title = Yii::t('app', 'Advanced Options');
+$this->params['breadcrumbs'][] = ['label' => 'Requests', 'url' => ['index']];
+$this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
 ?>
 <div class="request-advanced">
 

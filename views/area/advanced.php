@@ -12,6 +12,10 @@ use yii\helpers\Url;
 use yii\jui\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\request */
+
+$this->title = Yii::t('app', 'Advanced Options');
+$this->params['breadcrumbs'][] = ['label' => 'Areas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
 ?>
 <div class="request-advanced">
 
