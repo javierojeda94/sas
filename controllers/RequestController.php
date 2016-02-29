@@ -542,9 +542,8 @@ class RequestController extends Controller
                 $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
                 $html = $this->renderPartial('GridViewRequestForArea', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
                 break;
-            case 4:
-                $query = Request::find()->all();
-                $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
+            case 4:;
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams, null);
                 $html = $this->renderPartial('GridViewAllRequest', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
                 break;
             case 5:
