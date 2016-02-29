@@ -170,6 +170,10 @@ class Request extends \yii\db\ActiveRecord
     {
         if(parent::beforeSave($insert))
         {
+            if(!Yii::$app->user->isGuest){
+                $this->user_id = Yii::$app->user->id;
+            }
+
             if($this -> status == 'Finalizado'){
                 $formatedDateTime = date_format(date_create(),"Y/m/d H:i:s");
                 $this -> completion_date = $formatedDateTime;

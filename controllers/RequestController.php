@@ -2,16 +2,19 @@
 
 namespace app\controllers;
 
+use app\models\Area;
 use app\models\AreasRequest;
 use app\models\CategoryRequest;
 use sintret\chat\ChatRoom;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\data\SqlDataProvider;
 use app\models\Request;
 use app\models\User;
 use app\models\UsersRequest;
 use app\models\RequestSearch;
 use app\models\UsersRequestSearch;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,7 +64,8 @@ class RequestController extends Controller
     public function actionIndex()
     {    
         $searchModel = new RequestSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $query = Request::find()->where(['user_id' => Yii::$app->user->id]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -151,8 +155,8 @@ class RequestController extends Controller
                     'content'=>'<span class="text-success">Create request success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
+
+                ];
             }else{
                 $model = $this->completeModel($model);
 
@@ -514,6 +518,43 @@ class RequestController extends Controller
         $model->save();
 
         return $this->redirect('view?id='.$id);
+    }
+
+    public function actionTab($tab){
+
+        $searchModel = new RequestSearch();
+
+        $html = null;
+        switch($tab){
+            case 1:
+                $query = Request::find()->where(['user_id' => Yii::$app->user->id]);
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
+                $html = $this->renderPartial('GridViewMyRequest', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
+                break;
+            case 2:
+                $query = Request::find()->joinWith('usersRequests')->where(['users_request.user_id' => Yii::$app->user->id]);
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
+                $html = $this->renderPartial('GridViewRequestAssigned', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
+                break;
+            case 3:
+                $area = Area::find()->where(['id_responsable' => Yii::$app->user->id])->one();
+                $query = Request::find()->joinWith('areasRequests')->where(['areas_request.area_id' => $area->id]);
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
+                $html = $this->renderPartial('GridViewRequestForArea', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
+                break;
+            case 4:
+                $query = Request::find()->all();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
+                $html = $this->renderPartial('GridViewAllRequest', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
+                break;
+            case 5:
+                $query = Request::find()->where(['status' => 'Calendarizada']);
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
+                $html = $this->renderPartial('GridViewRequestScheduled', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
+                break;
+        }
+
+        return JSON::encode($html);
     }
 
     public function actionChat()

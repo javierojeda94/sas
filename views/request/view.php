@@ -92,17 +92,18 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                     'data-confirm' => 'Seguro que quieres finalizar esta solicitud?',
                 ]) ?>
         </p>
+        <div>
+            <?= ChatRoom::widget([
+                    'url' => \yii\helpers\Url::toRoute(['/request/chat']),
+                    //'requestModel'=> \app\models\Request::className(),
+                    'userModel' => \app\models\User::className(),
+                    'userField' => 'avatarImage',
+                    'idRequest' => $model->id,
+                    'userName' => $model->name
+                ]
+            );
+            ?>
+        </div>
     <?php } ?>
-
-    <?= ChatRoom::widget([
-            'url' => \yii\helpers\Url::toRoute(['/request/chat']),
-            //'requestModel'=> \app\models\Request::className(),
-            'userModel' => \app\models\User::className(),
-            'userField' => 'avatarImage',
-            'idRequest' => $model->id,
-            'userName' => $model->name
-        ]
-    );
-    ?>
 
 </div>

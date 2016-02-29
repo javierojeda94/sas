@@ -1,10 +1,10 @@
 <?php
+use kartik\tabs\TabsX;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use kartik\grid\GridView;
-use johnitvn\ajaxcrud\CrudAsset; 
-use johnitvn\ajaxcrud\BulkButtonWidget;
+use johnitvn\ajaxcrud\CrudAsset;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RequestSearch */
@@ -17,27 +17,36 @@ CrudAsset::register($this);
 
 ?>
 <div class="request-index">
-    <div id="ajaxCrudDatatable">
-        <?=GridView::widget([
-            'id'=>'crud-datatable',
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'pjax'=>true,
-            'columns' => require(__DIR__.'/_columns.php'),
-            'toolbar'=> [
-                ['content'=>
-                    Html::a('<i class="glyphicon glyphicon-plus"></i> Create', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Create new Requests','class'=>'btn btn-success pull-right'])
-
+    <div id="tab">
+        <?= TabsX::widget([
+            'items' => [
+                [
+                    'label'=>'<i class="glyphicon glyphicon-home"></i> My request',
+                    'content'=>$this->render('GridViewMyRequest', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]),
+                    'active'=>true,
+                    'linkOptions'=>['data-url'=>Url::to(['/request/tab?tab=1'])]
                 ],
-            ],          
-            'striped' => true,
-            'condensed' => true,
-            'responsive' => true,          
-            'panel' => [
-                'type' => 'default',
-                'heading' => '<h4><i class="glyphicon glyphicon-list"></i> Requests</h4>',
-
+                [
+                    'label'=>'<i class="glyphicon glyphicon-user"></i> Request Assigned',
+                    'linkOptions'=>['data-url'=>Url::to(['/request/tab?tab=2'])]
+                ],
+                [
+                    'label'=>'<i class="glyphicon glyphicon-user"></i> Request For My Area',
+                    'linkOptions'=>['data-url'=>Url::to(['/request/tab?tab=3'])]
+                ],
+                [
+                    'label'=>'<i class="glyphicon glyphicon-user"></i> All Request',
+                    'linkOptions'=>['data-url'=>Url::to(['/request/tab?tab=4'])]
+                ],
+                [
+                    'label'=>'<i class="glyphicon glyphicon-user"></i> Scheduled Request',
+                    'linkOptions'=>['data-url'=>Url::to(['/request/tab?tab=5'])]
+                ],
+            ],
+            'position' => TabsX::POS_ABOVE,
+            'encodeLabels' => false,
+            'pluginOptions' => [
+                'enableCache' => true,
             ]
         ])?>
     </div>

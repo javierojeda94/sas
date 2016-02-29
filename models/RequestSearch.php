@@ -7,6 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Request;
 use app\models\Area;
+use yii\db\QueryInterface;
 
 /**
  * RequestSearch represents the model behind the search form about `app\models\request`.
@@ -40,11 +41,18 @@ class RequestSearch extends request
      *
      * @param array $params
      *
+     * @param $query QueryInterface
+     *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $queryBuild)
     {
-        $query = request::find();
+
+        if($queryBuild != null){
+            $query = $queryBuild;
+        }else{
+            $query = request::find();
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

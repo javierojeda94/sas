@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "*",
         "johnitvn/yii2-rbac-plus": "*",
         "yiisoft/yii2-jui": "2.0.0",
-        "sintret/yii2-chat-adminlte": "^1.0"
+        "sintret/yii2-chat-adminlte": "^1.0",
+        "kartik-v/yii2-tabs-x": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
