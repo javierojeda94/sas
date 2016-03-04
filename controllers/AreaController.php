@@ -28,6 +28,31 @@ class AreaController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['administrator','executive'],//responsibleArea (solo subareas)
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['modify','permission', 'addpermission','add','remove'],
+                        'roles' => ['administrator','executive','responsibleArea'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view'],
+                        'roles' => ['administrator', 'executive', 'employeeArea','responsibleArea'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update', 'delete'],
+                        'roles' => ['administrator', 'responsibleArea', 'executive']
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

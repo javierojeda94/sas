@@ -34,6 +34,36 @@ class RequestController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['advanced','reject', 'authorize','asign', 'unasign', 'complete', 'attend'],
+                        'roles' => ['administrator', 'responsibleArea','executive','employeeArea'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create','view','chat','tab'],
+                        'roles' => ['administrator', 'responsibleArea','executive','employeeArea','@','?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update'],
+                        'roles' => ['responsibleArea', 'administrator', 'employeeArea','executive'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete', 'scheduling'],
+                        'roles' => ['responsibleArea', 'administrator','executive'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
