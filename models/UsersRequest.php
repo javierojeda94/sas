@@ -11,7 +11,7 @@ use Yii;
  * @property integer $user_id
  *
  * @property Request $request
- * @property Users $user
+ * @property User $user
  */
 class UsersRequest extends \yii\db\ActiveRecord
 {

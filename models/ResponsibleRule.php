@@ -16,6 +16,7 @@ class ResponsibleRule extends Rule{
 
     public function execute($user, $item, $params)
     {
-        return $params['area']->id_responsable == $user->id;
+        $area = Area::find()->where(['id_responsable' => \Yii::$app->user->id])->one();
+        return isset($area);
     }
 }

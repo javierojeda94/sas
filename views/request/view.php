@@ -17,15 +17,20 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Advanced options'), ['advanced', 'id' => $model->id],
-            ['class' => 'btn btn-primary']) ?>
-        <?php if ($model->status != 'Rechazado') { ?>
-            <?= Html::a(Yii::t('app', 'Rechazar Solicitud'), ['reject', 'id' => $model->id],
-                ['data-confirm' => 'Are you sure you want to reject this request?', 'class' => 'btn btn-primary']) ?>
-        <?php } else { ?>
-            <?= Html::a(Yii::t('app', 'Autorizar Solicitud'), ['authorize', 'id' => $model->id],
-                ['data-confirm' => 'Are you sure you want to authorize this request?', 'class' => 'btn btn-primary']) ?>
-        <?php } ?>
+        <?= (Yii::$app->user->can('create_scheduled_requests') || Yii::$app->user->can('assign_request_to_personal_of_own_area') && $model->status != 'Finalizado') ?
+            Html::a(Yii::t('app', 'Advanced options'), ['advanced', 'id' => $model->id], ['class' => 'btn btn-primary']) : "" ?>
+
+        <?php if ((Yii::$app->user->can('reject_requests_in_own_area') || Yii::$app->user->can('reject_requests_assigned_to_self', ['request' => $model])) &&
+            $model->status != 'Finalizado'
+        ) {
+            if ($model->status != 'Rechazado') { ?>
+                <?= Html::a(Yii::t('app', 'Rechazar Solicitud'), ['reject', 'id' => $model->id],
+                    ['data-confirm' => 'Are you sure you want to reject this request?', 'class' => 'btn btn-primary']) ?>
+            <?php } else { ?>
+                <?= Html::a(Yii::t('app', 'Autorizar Solicitud'), ['authorize', 'id' => $model->id],
+                    ['data-confirm' => 'Are you sure you want to authorize this request?', 'class' => 'btn btn-primary']) ?>
+            <?php }
+        } ?>
     </p>
 
     <?= DetailView::widget([
@@ -74,7 +79,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
             ],
         ],
     ]) ?>
-    <?php if ($model->status != 'Atendiendo' && $model->status != 'Finalizado') { ?>
+    <?php if ($model->status != 'Atendiendo' && $model->status != 'Finalizado' &&
+            Yii::$app->user->can('attend_requests_assigned_to_self', ['request' => $model])) { ?>
         <p>
             <?= Html::a(Yii::t('app', 'Atender Solicitud'), ['attend', 'id' => $model->id],
                 [
@@ -84,7 +90,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
         </p>
     <?php } ?>
 
-    <?php if ($model->status == 'Atendiendo' && $model->status != 'Finalizado') { ?>
+    <?php if ($model->status == 'Atendiendo' && $model->status != 'Finalizado' &&
+        Yii::$app->user->can('attend_requests_assigned_to_self', ['request' => $model])) { ?>
         <p>
             <?= Html::a(Yii::t('app', 'Finalizar Solicitud'), ['complete', 'id' => $model->id],
                 [

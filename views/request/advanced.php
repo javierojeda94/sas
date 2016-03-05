@@ -16,7 +16,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
     <h1>Opciones avanzadas de solicitud: <?= $request->id ?></h1>
 
     <div class="users-request-input request-form row">
-    <?php $form = ActiveForm::begin(['action' => "scheduling"]); ?>
+    <?php if(Yii::$app->user->can('create_scheduled_requests')){
+
+    $form = ActiveForm::begin(['action' => "scheduling"]); ?>
         <?= $form->field($request, 'request_id')->hiddenInput(['value'=> $request->id])->label(false) ?>
 
         <?= $form->field($request, 'scheduled_start_date')->widget(DatePicker::classname(), [
@@ -30,7 +32,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
             'clientOptions' => [
                 'minDate' =>'0',
             ],
-        ]) ?>
+        ])  ?>
 
         <?php if (!Yii::$app->request->isAjax){ ?>
             <div class="form-group">
@@ -41,7 +43,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                     ]) ?>
             </div>
         <?php } ?>
-        <?php ActiveForm::end(); ?>
+        <?php ActiveForm::end(); }?>
 
     </div>
 

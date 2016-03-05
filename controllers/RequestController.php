@@ -49,18 +49,23 @@ class RequestController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['create','view','chat','tab'],
+                        'actions' => ['create','view','chat','tab-my-request'],
                         'roles' => ['administrator', 'responsibleArea','executive','employeeArea','@','?'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['update'],
+                        'actions' => ['update', 'tab-request-assigned'],
                         'roles' => ['responsibleArea', 'administrator', 'employeeArea','executive'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['delete', 'scheduling'],
+                        'actions' => ['delete', 'scheduling','tab-request-area'],
                         'roles' => ['responsibleArea', 'administrator','executive'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['tab-all-request', 'tab-scheduled'],
+                        'roles' => ['administrator','executive'],
                     ],
                 ],
             ],
@@ -110,12 +115,12 @@ class RequestController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {   
+    {
         $request = Yii::$app->request;
         $responsibleArray = UsersRequest::find()->where(['request_id' => $id])->all();
         $responsible = '';
         foreach($responsibleArray as $resp){
-            $user = User::findOne($resp->user_id);
+            $user = $resp->getRelation('user')->one();
             $responsible = $responsible . " $user->first_name $user->lastname,";
         }
         if($request->isAjax){
@@ -322,37 +327,6 @@ class RequestController extends Controller
 
     }
 
-     /**
-     * Delete multiple existing request model.
-     * For ajax request will return json object
-     * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionBulkDelete()
-    {        
-        $request = Yii::$app->request;
-        $pks = $request->post('pks'); // Array or selected records primary keys
-        foreach (request::findAll(json_decode($pks)) as $model) {
-            $model->delete();
-        }
-        
-
-        if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
-        }else{
-            /*
-            *   Process for non-ajax request
-            */
-            return $this->redirect(['index']);
-        }
-       
-    }
-
     /**
      * Reject an existing request model.
      * For ajax request will return json object
@@ -430,6 +404,18 @@ class RequestController extends Controller
      * @throws NotFoundHttpException
      */
     public function actionAdvanced($id){
+
+        if(!(Yii::$app->user->can('create_scheduled_requests' || Yii::$app->user->can('assign_personal_to_area')
+            || Yii::$app->user->can('autoassign_request_to_self')))){
+            $searchModel = new RequestSearch();
+            $query = Request::find()->where(['user_id' => Yii::$app->user->id]);
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
 
         $request = Yii::$app->request;
 
@@ -548,42 +534,6 @@ class RequestController extends Controller
         $model->save();
 
         return $this->redirect('view?id='.$id);
-    }
-
-    public function actionTab($tab){
-
-        $searchModel = new RequestSearch();
-
-        $html = null;
-        switch($tab){
-            case 1:
-                $query = Request::find()->where(['user_id' => Yii::$app->user->id]);
-                $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
-                $html = $this->renderPartial('GridViewMyRequest', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
-                break;
-            case 2:
-                $query = Request::find()->joinWith('usersRequests')->where(['users_request.user_id' => Yii::$app->user->id]);
-                $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
-                $html = $this->renderPartial('GridViewRequestAssigned', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
-                break;
-            case 3:
-                $area = Area::find()->where(['id_responsable' => Yii::$app->user->id])->one();
-                $query = Request::find()->joinWith('areasRequests')->where(['areas_request.area_id' => $area->id]);
-                $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
-                $html = $this->renderPartial('GridViewRequestForArea', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
-                break;
-            case 4:;
-                $dataProvider = $searchModel->search(Yii::$app->request->queryParams, null);
-                $html = $this->renderPartial('GridViewAllRequest', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
-                break;
-            case 5:
-                $query = Request::find()->where(['status' => 'Calendarizada']);
-                $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
-                $html = $this->renderPartial('GridViewRequestScheduled', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]);
-                break;
-        }
-
-        return JSON::encode($html);
     }
 
     public function actionChat()

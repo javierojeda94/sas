@@ -19,7 +19,7 @@ class AssignedRule extends Rule{
         $assigned = UsersRequest::find()
             ->where([
                 'request_id'=>$params['request']->id,
-                'user_id'=>$user->id // marca un error aqui diciendo que el objeto $user es nulo
+                'user_id'=>$user // marca un error aqui diciendo que el objeto $user es nulo
             ])->one();
         return $assigned;
     }
