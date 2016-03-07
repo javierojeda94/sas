@@ -50,7 +50,7 @@ class RequestController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['create','view','chat','tab-my-request'],
+                        'actions' => ['create','view','chat','tab-my-request','follow'],
                         'roles' => ['administrator', 'responsibleArea','executive','employeeArea','@','?'],
                     ],
                     [
@@ -126,6 +126,20 @@ class RequestController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionFollow($token){
+        $request = Request::find()->where(['token' => $token])->one();
+        $responsibleArray = UsersRequest::find()->where(['request_id' => $request->id])->all();
+        $responsible = '';
+        foreach($responsibleArray as $resp){
+            $user = $resp->getRelation('user')->one();
+            $responsible = $responsible . " $user->first_name $user->lastname,";
+        }
+        return $this->render('view', [
+            'model' => $request,
+            'responsible' => $responsible,
         ]);
     }
 
