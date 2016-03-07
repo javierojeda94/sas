@@ -90,14 +90,15 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
         </p>
     <?php } ?>
 
-    <?php if ($model->status == 'Atendiendo' && $model->status != 'Finalizado' &&
-        Yii::$app->user->can('attend_requests_assigned_to_self', ['request' => $model])) { ?>
+    <?php if ($model->status == 'Atendiendo' && $model->status != 'Finalizado') { ?>
         <p>
+            <?php if(Yii::$app->user->can('attend_requests_assigned_to_self', ['request' => $model])){ ?>
             <?= Html::a(Yii::t('app', 'Finalizar Solicitud'), ['complete', 'id' => $model->id],
                 [
                     'class' => 'btn btn-success',
                     'data-confirm' => 'Seguro que quieres finalizar esta solicitud?',
                 ]) ?>
+            <?php } ?>
         </p>
         <div>
             <?= ChatRoom::widget([
