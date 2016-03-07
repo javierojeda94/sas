@@ -22,6 +22,7 @@ use \yii\web\Response;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\db\Query;
+use yii\helpers\Url;
 
 /**
  * RequestController implements the CRUD actions for request model.
@@ -202,8 +203,8 @@ class RequestController extends Controller
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
+
+                ];
             }
         }else{
             /*
@@ -222,9 +223,24 @@ class RequestController extends Controller
 
                 $areasRequest->save();
 
+                $model->token = $this->tokenGenerator();
+                $model->save();
+                $url = 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/follow?token=' . $model->token;
+                Yii::$app->mailer->compose()
+                    ->setFrom('sistemasolicitudesfmat@gmail.com')
+                    ->setTo($model->email)
+                    ->setSubject('URL de seguimiento de la solicitud')
+                    ->setTextBody('')
+                    ->setHtmlBody("
+                        <p>Gracias por registrar tu solicitud. La url para que le des seguimiento es esta:</p>
+                        <a href='$url'><strong>$url</strong></a>")
+                    ->send();
+
                 if(Yii::$app->user->isGuest){
                     Yii::$app->session->setFlash('requestFormSubmitted');
-                    return $this->refresh();
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
                 }else{
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
@@ -237,6 +253,17 @@ class RequestController extends Controller
             }
         }
        
+    }
+
+    private function tokenGenerator($length = 20) {
+        $str = "";
+        $characters = array_merge(range('A','Z'), range('a','z'), range('0','9'));
+        $max = count($characters) - 1;
+        for ($i = 0; $i < $length; $i++) {
+            $rand = mt_rand(0, $max);
+            $str .= $characters[$rand];
+        }
+        return $str;
     }
 
     /**
