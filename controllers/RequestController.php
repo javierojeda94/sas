@@ -586,14 +586,30 @@ class RequestController extends Controller
         if (!empty($_POST)) {
             ChatRoom::sendChat($_POST);
 
-            if (isset($_POST['message']))
-                $message = $_POST['message'];
-            if (isset($post['idRequest']))
-                $idRequest = $_POST['idRequest'];
-            if (isset($post['userName']))
-                $userName = $_POST['userName'];
-
-            //Estas variables seran requeridas por el que haga el envio de correos se las dejos
+            $message = $_POST['message'];
+            $request = Request::findOne(intval($_POST['idRequest']));
+            $userName = $_POST['userName'];
+            $responsibleArray = UsersRequest::find()->where(['request_id' => $request->id])->all();
+            $destinataries = array();
+            array_push($destinataries,$request->email);
+            foreach($responsibleArray as $resp){
+                $user = $resp->getRelation('user')->one();
+                array_push($destinataries,$user->email);
+            }
+            $url_nouser = 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/follow?token=' . $request->token;
+            $url_user = 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/view?id=' . $request->id;
+            $mailBody = "<p>El usuario $userName ha enviado el siguiente mensaje en la solicitud: $message</p>
+                        <p>Para enviar una respuesta, entra a la siguiente url:</p>
+                        <a href='$url_user'><strong>$url_user</strong></a>
+                        <p>O si no tienes cuenta de usuario, utiliza la siguiente:</p>
+                        <a href='$url_nouser'><strong>$url_nouser</strong></a>
+                        ";
+            Yii::$app->mailer->compose()
+                ->setFrom('sistemasolicitudesfmat@gmail.com')
+                ->setTo($destinataries)
+                ->setSubject('Mensaje enviado')
+                ->setHtmlBody($mailBody)
+                ->send();
         }
     }
 
