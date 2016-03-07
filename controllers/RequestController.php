@@ -22,6 +22,7 @@ use \yii\web\Response;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\db\Query;
+use yii\web\UploadedFile;
 
 /**
  * RequestController implements the CRUD actions for request model.
@@ -192,6 +193,9 @@ class RequestController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+                $model->requestFiles=UploadedFile::getInstances( $model, 'requestFiles' );
+                $model->upload();
+
                 $areasRequest->request_id = $model->id;
                 $areasRequest->area_id = $model->area_id;
 
@@ -230,6 +234,9 @@ class RequestController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
+                $model->requestFiles=UploadedFile::getInstances( $model, 'requestFiles' );
+                $model->upload();
+
                 $areasRequest->request_id = $model->id;
                 $areasRequest->area_id = $model->area_id;
 

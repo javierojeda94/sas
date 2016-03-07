@@ -15,7 +15,7 @@ use app\models\User;
 
 <div class="request-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
@@ -42,6 +42,9 @@ use app\models\User;
     <?= $form->field($model, 'subject')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'requestFiles[]')->fileInput(['multiple' => true]) ?>
+
 
     <?php if(Yii::$app->user->isGuest) {
         $model->setScenario('captchaRequired');
