@@ -22,7 +22,8 @@ use \yii\web\Response;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\db\Query;
-
+use yii\helpers\Url;
+use yii\web\UploadedFile;
 /**
  * RequestController implements the CRUD actions for request model.
  */
@@ -49,7 +50,7 @@ class RequestController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['create','view','chat','tab-my-request'],
+                        'actions' => ['create','view','chat','tab-my-request','follow'],
                         'roles' => ['administrator', 'responsibleArea','executive','employeeArea','@','?'],
                     ],
                     [
@@ -128,6 +129,20 @@ class RequestController extends Controller
         ]);
     }
 
+    public function actionFollow($token){
+        $request = Request::find()->where(['token' => $token])->one();
+        $responsibleArray = UsersRequest::find()->where(['request_id' => $request->id])->all();
+        $responsible = '';
+        foreach($responsibleArray as $resp){
+            $user = $resp->getRelation('user')->one();
+            $responsible = $responsible . " $user->first_name $user->lastname,";
+        }
+        return $this->render('view', [
+            'model' => $request,
+            'responsible' => $responsible,
+        ]);
+    }
+
 
     /**
      * Displays a single request model.
@@ -192,6 +207,9 @@ class RequestController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+                $model->requestFiles=UploadedFile::getInstances( $model, 'requestFiles' );
+                $model->upload();
+
                 $areasRequest->request_id = $model->id;
                 $areasRequest->area_id = $model->area_id;
 
@@ -222,14 +240,17 @@ class RequestController extends Controller
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
+
+                ];
             }
         }else{
             /*
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
+                $model->requestFiles=UploadedFile::getInstances( $model, 'requestFiles' );
+                $model->upload();
+
                 $areasRequest->request_id = $model->id;
                 $areasRequest->area_id = $model->area_id;
 
@@ -242,9 +263,24 @@ class RequestController extends Controller
 
                 $areasRequest->save();
 
+                $model->token = $this->tokenGenerator();
+                $model->save();
+                $url = 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/follow?token=' . $model->token;
+                Yii::$app->mailer->compose()
+                    ->setFrom('sistemasolicitudesfmat@gmail.com')
+                    ->setTo($model->email)
+                    ->setSubject('URL de seguimiento de la solicitud')
+                    ->setTextBody('')
+                    ->setHtmlBody("
+                        <p>Gracias por registrar tu solicitud. La url para que le des seguimiento es esta:</p>
+                        <a href='$url'><strong>$url</strong></a>")
+                    ->send();
+
                 if(Yii::$app->user->isGuest){
                     Yii::$app->session->setFlash('requestFormSubmitted');
-                    return $this->refresh();
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
                 }else{
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
@@ -257,6 +293,17 @@ class RequestController extends Controller
             }
         }
        
+    }
+
+    private function tokenGenerator($length = 20) {
+        $str = "";
+        $characters = array_merge(range('A','Z'), range('a','z'), range('0','9'));
+        $max = count($characters) - 1;
+        for ($i = 0; $i < $length; $i++) {
+            $rand = mt_rand(0, $max);
+            $str .= $characters[$rand];
+        }
+        return $str;
     }
 
     /**
@@ -478,6 +525,16 @@ class RequestController extends Controller
         $model->user_id = $request->post()['Request']['user_id'];
         $model->request_id = $request->post()['Request']['request_id'];
         $model->save();
+        $url = 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/view?id=' . $model->request_id;
+        $user = User::findOne($model->user_id);
+        Yii::$app->mailer->compose()
+            ->setFrom('sistemasolicitudesfmat@gmail.com')
+            ->setTo($user->email)
+            ->setSubject('Asignado!')
+            ->setHtmlBody("
+                        <p>Te han asignado a la siguiente solicitud para que atiendas:</p>
+                        <a href='$url'><strong>$url</strong></a>")
+            ->send();
         return $this->redirect('advanced?id='.$model->request_id);
     }
 
@@ -549,14 +606,30 @@ class RequestController extends Controller
         if (!empty($_POST)) {
             ChatRoom::sendChat($_POST);
 
-            if (isset($_POST['message']))
-                $message = $_POST['message'];
-            if (isset($post['idRequest']))
-                $idRequest = $_POST['idRequest'];
-            if (isset($post['userName']))
-                $userName = $_POST['userName'];
-
-            //Estas variables seran requeridas por el que haga el envio de correos se las dejos
+            $message = $_POST['message'];
+            $request = Request::findOne(intval($_POST['idRequest']));
+            $userName = $_POST['userName'];
+            $responsibleArray = UsersRequest::find()->where(['request_id' => $request->id])->all();
+            $destinataries = array();
+            array_push($destinataries,$request->email);
+            foreach($responsibleArray as $resp){
+                $user = $resp->getRelation('user')->one();
+                array_push($destinataries,$user->email);
+            }
+            $url_nouser = 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/follow?token=' . $request->token;
+            $url_user = 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/view?id=' . $request->id;
+            $mailBody = "<p>El usuario $userName ha enviado el siguiente mensaje en la solicitud: $message</p>
+                        <p>Para enviar una respuesta, entra a la siguiente url:</p>
+                        <a href='$url_user'><strong>$url_user</strong></a>
+                        <p>O si no tienes cuenta de usuario, utiliza la siguiente:</p>
+                        <a href='$url_nouser'><strong>$url_nouser</strong></a>
+                        ";
+            Yii::$app->mailer->compose()
+                ->setFrom('sistemasolicitudesfmat@gmail.com')
+                ->setTo($destinataries)
+                ->setSubject('Mensaje enviado')
+                ->setHtmlBody($mailBody)
+                ->send();
         }
     }
 
