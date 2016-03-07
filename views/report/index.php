@@ -21,13 +21,45 @@ CrudAsset::register($this);
             <?= TabsX::widget([
                 'items' => [
                     [
-                        'label'=>'<i class="glyphicon glyphicon-home"></i> Reports by request',
+                        'label'=>'<i class="glyphicon glyphicon-home"></i> Reports based on requests',
+                        'items'=>[
+                            [
+                                'label'=>'Reports attended by personal of an area',
+                                'encode'=>false,
+                                'content'=>"",
+                            ],
+                            [
+                                'label'=>'Reports by users',
+                                'encode'=>false,
+                                'content'=> "",
+                            ],
+                            [
+                                'label' => 'Reports by area',
+                                'encode' => false,
+                                'content' => "",
+                            ],
+                            [
+                                'label' => 'Reports by area',
+                                'encode' => false,
+                                'content' => "",
+                            ],
+                            [
+                                'label' => 'Reports by category of an area',
+                                'encode' => false,
+                                'content' => "",
+                            ],
+                            [
+                                'label' => 'Reports by area',
+                                'encode' => false,
+                                'content' => "",
+                            ],
+                        ],
                         'content'=>"", //$this->render('exportCSV', ['model' => new ReportForm()]),
                         'active'=>true,
                         'linkOptions'=>['data-url'=>Url::to(['/report/request-report'])]
                     ],
                     [
-                        'label'=>'<i class="glyphicon glyphicon-user"></i> Reporst by poll',
+                        'label'=>'<i class="glyphicon glyphicon-user"></i> Reporst based on polls',
                         'linkOptions'=>['data-url'=>Url::to(['/report/report-poll'])],
                         //'visible' => Yii::$app->user->can('read_requests_created'),
                     ],

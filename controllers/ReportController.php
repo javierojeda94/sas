@@ -11,8 +11,11 @@ namespace app\controllers;
 
 use app\models\ReportForm;
 use app\models\Request;
+use app\models\UsersRequest;
+use app\models\UsersRequestSearch;
 use Yii;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\Controller;
 
@@ -99,5 +102,34 @@ class ReportController extends Controller
         }
     }
 
+    public function actionCreateReportsAttended(){
+        $request = Yii::$app->request;
+        $model = new ReportForm();
+
+        if($request->isGet){
+            return [
+                'title'=> "Create new report",
+                'content'=>$this->renderAjax('createReportAttended', [
+                    'model' => $model,
+                ]),
+                'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                    Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+
+            ];
+        }else{
+
+        }
+        $searchModel = new UsersRequestSearch();
+        $query = UsersRequest::find()->joinWith('request')->where(['user_id' => $id])->andWhere(['>=', 'completion_date', $startDate])
+            ->andWhere(['<=', 'completion_date', $endDate])->groupBy('user_id');
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+
+
+    }
 
 }

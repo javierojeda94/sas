@@ -22,28 +22,28 @@ CrudAsset::register($this);
             'items' => [
                 [
                     'label'=>'<i class="glyphicon glyphicon-home"></i> My request',
-                    'content'=>$this->render('/tab-request/GridViewMyRequest', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]),
+                    'content'=>$this->render('GridViewMyRequest', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]),
                     'active'=>true,
-                    'linkOptions'=>['data-url'=>Url::to(['/tab-request/tab-my-request'])]
+                    'linkOptions'=>['data-url'=>Url::to(['/request/tab-my-request'])]
                 ],
                 [
                     'label'=>'<i class="glyphicon glyphicon-user"></i> Request Assigned',
-                    'linkOptions'=>['data-url'=>Url::to(['/tab-request/tab-request-assigned'])],
+                    'linkOptions'=>['data-url'=>Url::to(['/request/tab-request-assigned'])],
                     'visible' => Yii::$app->user->can('read_requests_created'),
                 ],
                 [
                     'label'=>'<i class="glyphicon glyphicon-user"></i> Request For My Area',
-                    'linkOptions'=>['data-url'=>Url::to(['/tab-request/tab-request-area'])],
+                    'linkOptions'=>['data-url'=>Url::to(['/request/tab-request-area'])],
                     'visible' => Yii::$app->user->can('read_requests_in_own_area'),
                 ],
                 [
                     'label'=>'<i class="glyphicon glyphicon-user"></i> All Request',
-                    'linkOptions'=>['data-url'=>Url::to(['/tab-request/tab-all-request'])],
+                    'linkOptions'=>['data-url'=>Url::to(['/request/tab-all-request'])],
                     'visible' => Yii::$app->user->can('read_requests'),
                 ],
                 [
                     'label'=>'<i class="glyphicon glyphicon-user"></i> Scheduled Request',
-                    'linkOptions'=>['data-url'=>Url::to(['/tab-request/tab-scheduled'])],
+                    'linkOptions'=>['data-url'=>Url::to(['/request/tab-scheduled'])],
                     'visible' => Yii::$app->user->can('read_scheduled_requests'),
                 ],
             ],

@@ -14,7 +14,7 @@ use Yii;
  * @property string $assignment_date
  *
  * @property Request $request
- * @property Areas $area
+ * @property Area $area
  */
 class AreasRequest extends \yii\db\ActiveRecord
 {
@@ -65,6 +65,6 @@ class AreasRequest extends \yii\db\ActiveRecord
      */
     public function getArea()
     {
-        return $this->hasOne(Areas::className(), ['id' => 'area_id']);
+        return $this->hasOne(Area::className(), ['id' => 'area_id']);
     }
 }
