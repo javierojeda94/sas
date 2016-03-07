@@ -505,6 +505,16 @@ class RequestController extends Controller
         $model->user_id = $request->post()['Request']['user_id'];
         $model->request_id = $request->post()['Request']['request_id'];
         $model->save();
+        $url = 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/view?id=' . $model->request_id;
+        $user = User::findOne($model->user_id);
+        Yii::$app->mailer->compose()
+            ->setFrom('sistemasolicitudesfmat@gmail.com')
+            ->setTo($user->email)
+            ->setSubject('Asignado!')
+            ->setHtmlBody("
+                        <p>Te han asignado a la siguiente solicitud para que atiendas:</p>
+                        <a href='$url'><strong>$url</strong></a>")
+            ->send();
         return $this->redirect('advanced?id='.$model->request_id);
     }
 
