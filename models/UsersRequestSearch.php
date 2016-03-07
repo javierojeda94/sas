@@ -38,14 +38,21 @@ class UsersRequestSearch extends UsersRequest
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $queryBuild)
     {
-        $query = UsersRequest::find();
+        if(isset($query)){
+            $query = $queryBuild;
+        }else{
+            $query = UsersRequest::find();
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
+
+        $query->joinWith('request');
+        $query->joinWith('users');
         $this->load($params);
 
         if (!$this->validate()) {

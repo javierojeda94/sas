@@ -149,4 +149,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return Yii::$app->getSecurity()->validatePassword($password,$this->hash_password);
     }
+
+    public function getRequestAttended($id, $startDate, $endDate){
+        UsersRequest::find()->joinWith('request')->where(['user_id' => $id])->andWhere(['>=', 'completion_date', $startDate])
+            ->andWhere(['<=', 'completion_date', $endDate])->groupBy('user_id');
+    }
 }
