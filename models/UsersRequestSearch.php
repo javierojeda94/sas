@@ -51,8 +51,9 @@ class UsersRequestSearch extends UsersRequest
         ]);
 
 
-        $query->joinWith('request');
-        $query->joinWith('users');
+        //$query->joinWith('request');
+        //$query->joinWith('users');
+        //$query->joinWith('areas');
         $this->load($params);
 
         if (!$this->validate()) {

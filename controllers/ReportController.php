@@ -18,6 +18,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\Controller;
+use yii\web\Response;
 
 class ReportController extends Controller
 {
@@ -46,10 +47,11 @@ class ReportController extends Controller
         return $this->render('index');
     }
 
-    public function actionExport(){
+    public function actionExport()
+    {
         $model = new ReportForm();
 
-        if($model->load(Yii::$app->request->post()) && $model) {
+        if ($model->load(Yii::$app->request->post()) && $model) {
             $init = $model->dateInit;
             $finish = $model->dateFinish;
 
@@ -96,40 +98,56 @@ class ReportController extends Controller
             }
 
             fclose($output);
-        }else {
+        } else {
             $html = $this->renderPartial('exportCSV', ['model' => $model]);
             return JSON::encode($html);
         }
     }
 
-    public function actionCreateReportsAttended(){
-        $request = Yii::$app->request;
+    public function actionAttended()
+    {
         $model = new ReportForm();
+        $request = Yii::$app->request;
+        $model->load($request->post());
 
         if($request->isGet){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
             return [
-                'title'=> "Create new report",
+                'title'=> "Create new request",
                 'content'=>$this->renderAjax('createReportAttended', [
                     'model' => $model,
                 ]),
                 'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                     Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
-
             ];
         }else{
 
+            $searchModel = new UsersRequestSearch();
+            $query = UsersRequest::find()->joinWith('request')->Where(['>=', 'completion_date', $model->startDate])
+                ->andWhere(['<=', 'completion_date', $model->endDate])->groupBy('user_id');
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
+
+            $html = $this->renderPartial('reportsAttended', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+            return JSON::encode($html);
         }
-        $searchModel = new UsersRequestSearch();
-        $query = UsersRequest::find()->joinWith('request')->where(['user_id' => $id])->andWhere(['>=', 'completion_date', $startDate])
-            ->andWhere(['<=', 'completion_date', $endDate])->groupBy('user_id');
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-
 
     }
 
+
+    public function actionCreate()
+    {
+        $model = new ReportForm();
+        return [
+            'title'=> "Create new Area",
+            'content'=>$this->renderAjax('create', [
+                'model' => $model,
+            ]),
+            'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+        ];
+    }
 }

@@ -26,7 +26,8 @@ CrudAsset::register($this);
                             [
                                 'label'=>'Reports attended by personal of an area',
                                 'encode'=>false,
-                                'content'=>"",
+                                'content'=>"Ningun reporte",
+                                'linkOptions'=>['data-url'=>Url::to(['/report/attended'])]
                             ],
                             [
                                 'label'=>'Reports by users',

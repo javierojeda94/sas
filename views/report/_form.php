@@ -32,9 +32,11 @@ use app\models\User;
         'dateFormat' => 'yyyy-MM-dd',
     ]) ?>
 
-    <p class="form-group">
-        <?= Html::submitButton('Export', ['class' => 'btn btn-success']) ?>
-    </p>
+    <?php if (!Yii::$app->request->isAjax){ ?>
+        <p class="form-group">
+            <?= Html::submitButton('Export', ['class' => 'btn btn-success']) ?>
+        </p>
+    <?php } ?>
 
     <?php ActiveForm::end(); ?>
 
