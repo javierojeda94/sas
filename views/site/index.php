@@ -30,19 +30,17 @@ echo Carousel::widget([
         <div class="steps row">
             <div class="col-lg-4">
 
-                <p><span class="home-icon glyphicon glyphicon-list-alt"
-                                                 aria-hidden="true"></span><span
-                        class="home-icon-small glyphicon glyphicon-pencil" aria-hidden="true"></span></p>
+                <p><img src="../images/icons/Compose.png"/></p>
                 <h3> Registra tu solicitud</h3>
             </div>
             <div class="col-lg-4">
-                <p><span class="home-icon glyphicon glyphicon-envelope" aria-hidden="true"></span></p>
+                <p><img src="../images/icons/Envelope.png"/></p>
                 <h3>Recibe un correo cuando vayas a ser atendido</h3>
 
             </div>
             <div class="col-lg-4">
 
-                <p><span class="home-icon glyphicon glyphicon-comment" aria-hidden="true"></span></p>
+                <p><img src="../images/icons/Communication.png"/></p>
                 <h3>Intercambia información sobre el avance de tu solicitud</h3>
 
             </div>
