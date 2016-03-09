@@ -86,7 +86,7 @@ $logo = "<img id='logo_nav' src='".Yii::$app->homeUrl."../images/UADY_w.png'/>";
 
 <footer class="footer">
     <div class="container">
-        <p><a href="http://www.matematicas.uady.mx/">Facultad de Matemáticas </a>&nbsp;  | &nbsp;<a href="/site/contact">Contactanos</a></p>
+        <p><a href="http://www.matematicas.uady.mx/">Facultad de Matemáticas </a>&nbsp;</p>
         <p class="pull-left">&copy; SAS <?= date('Y') ?></p>
 
     </div>
