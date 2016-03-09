@@ -1,4 +1,5 @@
 <?php
+use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
@@ -7,7 +8,6 @@ use johnitvn\ajaxcrud\CrudAsset;
 use johnitvn\ajaxcrud\BulkButtonWidget;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\UsersRequestSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Reports attended');
@@ -17,44 +17,45 @@ CrudAsset::register($this);
 
 ?>
 <div class="reports-attended-index">
-    <div id="ajaxCrudDatatable">
+    <div id="gridView">
         <?= GridView::widget([
-            'id' => 'crud-datatable',
+            'id'=>'crud-datatable',
             'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'pjax' => true,
-            'columns' =>[
+            'pjax'=>true,
+            'columns' => [
                 [
                     'class' => 'kartik\grid\SerialColumn',
                     'width' => '30px',
                 ],
                 [
-                    'class' => '\kartik\grid\DataColumn',
-                    'attribute' => 'responsable_name',
-                    'value' => 'user.first_name'
+
+                    'class'=>'\kartik\grid\DataColumn',
+                    'attribute'=>'User',
+                    'value'=>'user.first_name'
+                ],
+                [
+
+                    'class'=>'\kartik\grid\DataColumn',
+                    'attribute'=>'Area name',
+                    'value'=>'areaname'
+                ],
+                [
+
+                    'class'=>'\kartik\grid\DataColumn',
+                    'attribute'=>'Count',
+                    'value'=>'cnt'
                 ],
             ],
-            'toolbar' => [
-                ['content' =>
-                    Html::a('<i class="glyphicon glyphicon-plus"></i> Create', ['attended'],
-                        ['role' => 'modal-remote', 'title' => 'Create new report', 'class' => 'btn btn-success pull-right'])
+            'toolbar'=> [
 
-                ],
             ],
             'striped' => true,
             'condensed' => true,
             'responsive' => true,
             'panel' => [
                 'type' => 'default',
-                'heading' => '<h4><i class="glyphicon glyphicon-list"></i> Reports attended</h4>',
-
-
+                'heading' => '<h4><i class="glyphicon glyphicon-list"></i> Requests attended by personal of area</h4>',
             ]
         ]) ?>
     </div>
 </div>
-<?php Modal::begin([
-    "id" => "ajaxCrudModal",
-    "footer" => "",// always need it for jquery plugin
-]) ?>
-<?php Modal::end(); ?>

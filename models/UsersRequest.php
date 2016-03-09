@@ -15,6 +15,9 @@ use Yii;
  */
 class UsersRequest extends \yii\db\ActiveRecord
 {
+    public $cnt;
+    public $areaname;
+
     /**
      * @inheritdoc
      */
@@ -59,11 +62,5 @@ class UsersRequest extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
-
-    public function getRequestAttendCount($startDate,$endDate){
-        return $this->hasMany(Request::className(), ['id' => 'user_id'])->joinWith('request')
-            ->where(['>=', 'completion_date',$startDate])
-            ->andWhere(['<=', 'completion_date',$endDate])->count();
     }
 }

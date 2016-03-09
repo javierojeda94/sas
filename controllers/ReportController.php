@@ -14,6 +14,7 @@ use app\models\Request;
 use app\models\UsersRequest;
 use app\models\UsersRequestSearch;
 use Yii;
+use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -106,48 +107,35 @@ class ReportController extends Controller
 
     public function actionAttended()
     {
-        $model = new ReportForm();
-        $request = Yii::$app->request;
-        $model->load($request->post());
+        if(Yii::$app->request->isAjax){
+            $model = new ReportForm();
 
-        if($request->isGet){
-            Yii::$app->response->format = Response::FORMAT_JSON;
+            //$query = UsersRequest::find()->joinWith('request')->Where(['>=', 'completion_date', $model->startDate])
+            //    ->andWhere(['<=', 'completion_date', $model->endDate])->groupBy('user_id');
+            //$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
 
-            return [
-                'title'=> "Create new request",
-                'content'=>$this->renderAjax('createReportAttended', [
-                    'model' => $model,
-                ]),
-                'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                    Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
-            ];
+            $html = $this->renderAjax('reportsAttendedForm', [
+                'model' => $model,
+            ]);
+
+            return JSON::encode($html);
         }else{
+            $model = new ReportForm();
+            $request = Yii::$app->request;
+            $model->load($request->post());
 
-            $searchModel = new UsersRequestSearch();
-            $query = UsersRequest::find()->joinWith('request')->Where(['>=', 'completion_date', $model->startDate])
-                ->andWhere(['<=', 'completion_date', $model->endDate])->groupBy('user_id');
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
+            $dataProvider = new ArrayDataProvider([
+                'allModels' => UsersRequest::find()->select(['*','areas.name AS areaname', 'COUNT(*) AS cnt'])->join('JOIN','areas')
+                    ->join('JOIN','request')->Where(['between', 'request.completion_date', $model->startDate, $model->endDate])
+                    ->groupBy('users_request.user_id')->all(),
+                'pagination' => [
+                    'pageSize' => 20,
+                ],
+            ]);
 
-            $html = $this->renderPartial('reportsAttended', [
-                'searchModel' => $searchModel,
+            return $this->render('reportsAttendedGrid', [
                 'dataProvider' => $dataProvider,
             ]);
-            return JSON::encode($html);
         }
-
-    }
-
-
-    public function actionCreate()
-    {
-        $model = new ReportForm();
-        return [
-            'title'=> "Create new Area",
-            'content'=>$this->renderAjax('create', [
-                'model' => $model,
-            ]),
-            'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
-        ];
     }
 }
