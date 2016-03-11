@@ -11,8 +11,8 @@ use Yii;
  * @property integer $user_id
  * @property integer $permission
  *
- * @property Areas $area
- * @property Users $user
+ * @property Area $area
+ * @property User $user
  */
 class AreaPersonal extends \yii\db\ActiveRecord
 {

@@ -29,7 +29,10 @@ CrudAsset::register($this);
                 [
                     'label'=>'<i class="glyphicon glyphicon-user"></i> Request Assigned',
                     'linkOptions'=>['data-url'=>Url::to(['/request/tab-request-assigned'])],
-                    'visible' => Yii::$app->user->can('read_requests_created'),
+                    'visible' => Yii::$app->user->can('employeeArea')
+                        || Yii::$app->user->can('responsibleArea')
+                        || Yii::$app->user->can('executive')
+                        || Yii::$app->user->can('administrator'),
                 ],
                 [
                     'label'=>'<i class="glyphicon glyphicon-user"></i> Request For My Area',

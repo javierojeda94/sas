@@ -116,6 +116,10 @@ class Area extends \yii\db\ActiveRecord
             $auth = Yii::$app->authManager;
             $jefeArea = $auth->getRole('responsibleArea');
             $auth->revoke($jefeArea, $this->id_responsable);
+
+            foreach($this->areaPersonals as $personal){
+                $personal->delete();
+            }
             return true;
         }
         return false;
