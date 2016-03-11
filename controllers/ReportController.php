@@ -100,7 +100,7 @@ class ReportController extends Controller
 
             fclose($output);
         } else {
-            $html = $this->renderPartial('exportCSV', ['model' => $model]);
+            $html = $this->renderAjax('exportCSV', ['model' => $model]);
             return JSON::encode($html);
         }
     }

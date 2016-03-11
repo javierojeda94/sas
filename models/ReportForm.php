@@ -23,7 +23,7 @@ class ReportForm extends Model{
             // username and password are both required
             [['startDate', 'date', 'format' => 'yyyy-MM-dd'], 'required'],
             // rememberMe must be a boolean value
-            ['endDate', 'date', 'format' => 'yyyy-MM-dd'],
+            [['endDate', 'date', 'format' => 'yyyy-MM-dd'],'required'],
         ];
     }
 }

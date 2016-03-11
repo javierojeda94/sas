@@ -13,8 +13,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Reports');
 
 <?php $this->registerJs('
     $(\'#w0\').on(\'submit\', function(e) {
-        var dateInit = $(\'#reportform-dateinit\').val();
-        var dateFinish = $(\'#reportform-datefinish\').val();
+        var dateInit = $(\'#reportform-startdate\').val();
+        var dateFinish = $(\'#reportform-enddate\').val();
 
         if (!/Invalid|NaN/.test(new Date(dateInit))) {
             if(new Date(dateFinish) > new Date(dateInit)){
