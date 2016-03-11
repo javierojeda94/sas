@@ -93,6 +93,34 @@ class Area extends \yii\db\ActiveRecord
         return $this->hasMany(Area::className(), ['area_id' => 'id']);
     }
 
+    public function beforeSave($insert){
+        if(parent::beforeSave($insert)) {
+            $auth = Yii::$app->authManager;
+            $jefeArea = $auth->getRole('responsibleArea');
+            $roles = $auth->getRolesByUser($this->id_responsable);
+            $isResponsibleOfArea = false;
+            foreach($roles as $role){
+                if($role == $jefeArea){
+                    $isResponsibleOfArea = true;
+                }
+            }
+            if(!$isResponsibleOfArea){
+                $auth->assign($jefeArea, $this->id_responsable);
+                return true;
+            }
+        }
+        return false;
+    }
+    public function beforeDelete(){
+        if(parent::beforeDelete()) {
+            $auth = Yii::$app->authManager;
+            $jefeArea = $auth->getRole('responsibleArea');
+            $auth->revoke($jefeArea, $this->id_responsable);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

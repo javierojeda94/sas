@@ -9,7 +9,7 @@ use johnitvn\ajaxcrud\CrudAsset;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Requests');
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
@@ -40,8 +40,3 @@ CrudAsset::register($this);
         ])?>
     </div>
 </div>
-<?php Modal::begin([
-    "id"=>"ajaxCrudModal",
-    "footer"=>"",// always need it for jquery plugin
-])?>
-<?php Modal::end(); ?>

@@ -47,6 +47,36 @@ class AreaPersonal extends \yii\db\ActiveRecord
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            //Aqui se agregan los permisos al usuario
+            $auth = Yii::$app->authManager;
+            $employeeArea = $auth->getRole('employeeArea');
+            $roles = $auth->getRolesByUser($this->user_id);
+            $isEmployee = false;
+            foreach($roles as $role){
+                if($role == $employeeArea){
+                    $isEmployee = true;
+                }
+            }
+            if(!$isEmployee){
+                $auth->assign($employeeArea, $this->user_id);
+                return true;
+            }
+        }
+        return false;
+    }
+    public function beforeDelete(){
+        if(parent::beforeDelete()) {
+            $auth = Yii::$app->authManager;
+            $employee = $auth->getRole('employeeArea');
+            $auth->revoke($employee, $this->user_id);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
