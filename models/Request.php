@@ -22,6 +22,8 @@ use app\models\AttachedFiles;
  * @property string $scheduled_start_date
  * @property string $scheduled_end_date
  * @property string $token
+ * @property string $satisfaccion
+ * @property string $level
  *
  * @property AreasRequest[] $areasRequests
  * @property Area[] $areas
@@ -56,7 +58,7 @@ class Request extends \yii\db\ActiveRecord
     {
         return [
             [['area_id', 'name', 'email', 'subject', 'description'], 'required'],
-            [['area_id','category_id' ,'user_id'], 'integer'],
+            [['area_id','category_id' ,'user_id', 'level'], 'integer'],
             [['description'], 'string'],
             [['creation_date', 'completion_date', 'scheduled_start_date', 'scheduled_end_date'], 'safe'],
             [['name', 'email'], 'string', 'max' => 150],
@@ -65,6 +67,8 @@ class Request extends \yii\db\ActiveRecord
             [['status'], 'string', 'max' => 50],
             [['requestFiles'], 'file', 'skipOnEmpty' => true, 'extensions'=>'pdf,png,jpg,jpeg,bmp,doc,docx', 'maxFiles' => 10],
             [['fileNameAttached', 'status'], 'string', 'max' => 50],
+            [['satisfaccion'], 'string', 'max' => 50],
+
         ];
     }
 
@@ -210,5 +214,20 @@ class Request extends \yii\db\ActiveRecord
             $attachedFiles->url = $this->fileNameAttached;
             $attachedFiles->save();
         }
+    }
+
+    /**
+     * @return String
+     */
+    public function getStringOfCategories(){
+        $categoriesString  = null;
+        foreach($this->categories as $category){
+            if($categoriesString == null){
+                $categoriesString = $category->name;
+            }else{
+                $categoriesString .= ",".$category->name;
+            }
+        }
+        return $categoriesString;
     }
 }

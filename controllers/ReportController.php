@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 
+use app\models\importForm;
 use app\models\ReportForm;
 use app\models\Request;
 use app\models\UsersRequest;
@@ -19,7 +20,9 @@ use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use yii\web\UploadedFile;
 
 class ReportController extends Controller
 {
@@ -53,8 +56,8 @@ class ReportController extends Controller
         $model = new ReportForm();
 
         if ($model->load(Yii::$app->request->post()) && $model) {
-            $init = $model->dateInit;
-            $finish = $model->dateFinish;
+            $init = $model->startDate;
+            $finish = $model->endDate;
 
             header('Content-Type: text/csv; charset=utf-8');
             header('Content-Disposition: attachment; filename=data.csv');
@@ -100,8 +103,8 @@ class ReportController extends Controller
 
             fclose($output);
         } else {
-            $html = $this->renderAjax('exportCSV', ['model' => $model]);
-            return JSON::encode($html);
+            return $this->render('exportCSV', ['model' => $model]);
+            //return JSON::encode($html);
         }
     }
 
@@ -136,6 +139,103 @@ class ReportController extends Controller
             return $this->render('reportsAttendedGrid', [
                 'dataProvider' => $dataProvider,
             ]);
+        }
+    }
+
+    public function actionPolls()
+    {
+        if(Yii::$app->request->isAjax){
+            $model = new ReportForm();
+
+            $html = $this->renderAjax('reportsByPollForm', [
+                'model' => $model,
+            ]);
+
+            return JSON::encode($html);
+        }else{
+            $model = new ReportForm();
+            $request = Yii::$app->request;
+            $model->load($request->post());
+
+            $dataProvider = new ArrayDataProvider([
+                'allModels' => Request::find()->Where(['between', 'request.completion_date', $model->startDate, $model->endDate])->all(),
+                'pagination' => [
+                    'pageSize' => 20,
+                ],
+            ]);
+
+            return $this->render('reportsByPoll', [
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+    }
+
+    public function actionImport(){
+        if(Yii::$app->request->isGet){
+            $model = new importForm();
+
+            //$query = UsersRequest::find()->joinWith('request')->Where(['>=', 'completion_date', $model->startDate])
+            //    ->andWhere(['<=', 'completion_date', $model->endDate])->groupBy('user_id');
+            //$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
+
+            return $this->render('importForm', [
+                'model' => $model,
+            ]);
+        }else{
+            $model = new importForm();
+            //$model->load(Yii::$app->request->post());
+
+            $model->csv = UploadedFile::getInstance($model, 'csv');
+
+            if($model->upload()){
+                $i=0; $keys=array();$output=array();
+                $handle=fopen("uploads/".$model->csv, "r");
+                if ($handle){
+                    while(($line = fgetcsv($handle)) !== false) {
+                        $i++;
+                        if ($i==1) {
+                            $keys=$line;
+                        }
+                        elseif ($i>1){
+                            $attr=array();
+                            foreach($line as $k=>$v){
+                                $attr[$keys[$k]]=$v;
+                            }
+                            $output[]=$attr;
+                        }
+                    }
+                    fclose($handle);
+                }
+
+                $this->saveData($output);
+                return $this->render('index');
+            }
+        }
+    }
+
+
+    private function saveData($data){
+        foreach($data as $line){
+            $request = $this->findModel($line['id']);
+            $request->satisfaccion = $line['satisfaccion'];
+            $request->level = $line['level'];
+            $request->save();
+        }
+    }
+
+    /**
+     * Finds the Request model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $id
+     * @return Request the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Request::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 }
