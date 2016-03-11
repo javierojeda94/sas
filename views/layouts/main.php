@@ -43,26 +43,36 @@ $logo = "<img id='logo_nav' src='".Yii::$app->homeUrl."../images/UADY_w.png'/>";
 
 
             ['label' => 'Inicio', 'url' => Yii::$app->homeUrl],
-           Yii::$app->user->isGuest ?
+           Yii::$app->user->isGuest?
             [
                 'label' => Yii::t('app','Requests'),
                 'url' => ['/request/create']
-
             ]:
             [
                 'label' => Yii::t('app','Requests'),
-                'url' => ['/request']
+                'url' => ['/request'],
             ],
 
             [
                 'label' => Yii::t('app', 'Categories'),
                 'url' => ['/category'],
-                'visible' => !Yii::$app->user->isGuest
+                'visible' => Yii::$app->user->can('executive') || Yii::$app->user->can('administrator') ||
+                    Yii::$app->user->can('responsibleArea')
             ],
             [
                 'label' => Yii::t('app', 'Areas'),
                 'url' => ['/area'],
-                'visible' => !Yii::$app->user->isGuest
+                'visible' => Yii::$app->user->can('executive') || Yii::$app->user->can('administrator')
+            ],
+            [
+                'label' => Yii::t('app', 'Reports'),
+                'url' => ['/report'],
+                'visible' => Yii::$app->user->can('executive') || Yii::$app->user->can('administrator')
+            ],
+            [
+                'label' => Yii::t('app', 'Rbac'),
+                'url' => ['/rbac/assignment'],
+                'visible' => Yii::$app->user->can('executive') || Yii::$app->user->can('administrator')
             ],
             Yii::$app->user->isGuest ?
                 ['label' => Yii::t('app','Iniciar Sesión'), 'url' => ['/site/login']] :
