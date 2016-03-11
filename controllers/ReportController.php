@@ -243,6 +243,41 @@ class ReportController extends Controller
         }
     }
 
+    public function actionUser()
+    {
+
+        if(Yii::$app->request->isAjax){
+            $model = new ReportForm();
+
+            //$query = UsersRequest::find()->joinWith('request')->Where(['>=', 'completion_date', $model->startDate])
+            //    ->andWhere(['<=', 'completion_date', $model->endDate])->groupBy('user_id');
+            //$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
+
+            $html = $this->renderAjax('reportsUserForm', [
+                'model' => $model,
+            ]);
+
+            return JSON::encode($html);
+        }else{
+            $model = new ReportForm();
+            $request = Yii::$app->request;
+            $model->load($request->post());
+
+            $dataProvider = new ArrayDataProvider([
+                'allModels' => Request::find()->select(['*', 'COUNT(*) AS cnt'])
+                    ->Where(['between', 'creation_date', $model->startDate, $model->endDate])
+                    ->groupBy('name')->all(),
+                'pagination' => [
+                    'pageSize' => 20,
+                ],
+            ]);
+
+            return $this->render('reportsUserGrid', [
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+
+    }
     public function actionPolls()
     {
         if(Yii::$app->request->isAjax){
