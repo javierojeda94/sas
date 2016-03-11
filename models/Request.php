@@ -38,6 +38,7 @@ use app\models\AttachedFiles;
  */
 class Request extends \yii\db\ActiveRecord
 {
+    public $cnt;
     public $category_id;
     public $verifyCode;
     public $requestFiles;
