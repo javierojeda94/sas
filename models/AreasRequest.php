@@ -18,6 +18,9 @@ use Yii;
  */
 class AreasRequest extends \yii\db\ActiveRecord
 {
+
+    public $cnt;
+    public $areaname;
     /**
      * @inheritdoc
      */

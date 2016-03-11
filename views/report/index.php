@@ -30,14 +30,16 @@ CrudAsset::register($this);
                                 'linkOptions'=>['data-url'=>Url::to(['/report/attended'])]
                             ],
                             [
-                                'label'=>'Reports by users',
+                                'label'=>'Reports based on requests by area',
                                 'encode'=>false,
-                                'content'=> "",
+                                'content'=>"Ningun reporte",
+                                'linkOptions'=>['data-url'=>Url::to(['/report/areas'])]
                             ],
                             [
-                                'label' => 'Reports by area',
-                                'encode' => false,
-                                'content' => "",
+                                'label'=>'Reports based on requests by category',
+                                'encode'=>false,
+                                'content'=>"Ningun reporte",
+                                'linkOptions'=>['data-url'=>Url::to(['/report/categories'])]
                             ],
                             [
                                 'label' => 'Reports by area',
