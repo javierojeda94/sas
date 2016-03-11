@@ -307,7 +307,6 @@ class View extends \yii\base\View
                 $this->registerAssetBundle($dep, $pos);
             }
         }
-
         return $bundle;
     }
 

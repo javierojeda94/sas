@@ -13,6 +13,8 @@ use app\models\importForm;
 use app\models\ReportForm;
 use app\models\Request;
 use app\models\UsersRequest;
+use app\models\CategoryRequest;
+use app\models\AreasRequest;
 use app\models\UsersRequestSearch;
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -23,6 +25,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
+use DateTime;
 
 class ReportController extends Controller
 {
@@ -139,6 +142,104 @@ class ReportController extends Controller
             return $this->render('reportsAttendedGrid', [
                 'dataProvider' => $dataProvider,
             ]);
+        }
+    }
+
+    public function actionAreas()
+    {
+        if(Yii::$app->request->isAjax){
+            $model = new ReportForm();
+
+            $html = $this->renderAjax('reportsByAreaForm', [
+                'model' => $model,
+            ]);
+
+            return JSON::encode($html);
+        }else{
+            $model = new ReportForm();
+            $request = Yii::$app->request;
+            $model->load($request->post());
+            $start = new DateTime($model->startDate);
+            $end = new DateTime($model->endDate);
+            if($start <= $end){
+                $dataProvider = new ArrayDataProvider([
+                    'allModels' => AreasRequest::find()
+                        ->select(['areas.name AS areaname', 'COUNT(`areas_request`.`area_id`) AS cnt'])
+                        ->leftJoin('areas','areas_request.area_id = areas.id')
+                        ->leftJoin('request','areas_request.request_id = request.id')
+                        ->Where(['between', 'request.creation_date', $model->startDate, $model->endDate])
+                        ->groupBy('areas_request.area_id')
+                        ->all(),
+                    'pagination' => [
+                        'pageSize' => 20,
+                    ],
+                ]);
+                if($dataProvider->count == 0){
+                    return $this->render('reportsByAreaForm', [
+                        'model' => $model,
+                        'error' => 'No existen datos para generar el reporte'
+                    ]);
+                }
+                return $this->render('reportsByAreaGrid', [
+                    'dataProvider' => $dataProvider,
+                ]);
+            }
+            else{
+                return $this->render('reportsByAreaForm', [
+                    'model' => $model,
+                    'error' => 'Las fechas son incorrectas'
+                ]);
+            }
+
+        }
+    }
+
+    public function actionCategories()
+    {
+        if(Yii::$app->request->isAjax){
+            $model = new ReportForm();
+
+            $html = $this->renderAjax('reportsByCategoryForm', [
+                'model' => $model,
+            ]);
+
+            return JSON::encode($html);
+        }else{
+            $model = new ReportForm();
+            $request = Yii::$app->request;
+            $model->load($request->post());
+            $start = new DateTime($model->startDate);
+            $end = new DateTime($model->endDate);
+            if($start <= $end){
+                $dataProvider = new ArrayDataProvider([
+                    'allModels' => CategoryRequest::find()
+                        ->select(['categories.name AS categoryname', 'COUNT(`category_request`.`category_id`) AS cnt'])
+                        ->leftJoin('categories','category_request.category_id = categories.id')
+                        ->leftJoin('request','category_request.request_id = request.id')
+                        ->Where(['between', 'request.creation_date', $model->startDate, $model->endDate])
+                        ->groupBy('category_request.category_id')
+                        ->all(),
+                    'pagination' => [
+                        'pageSize' => 20,
+                    ],
+                ]);
+                if($dataProvider->count == 0){
+                    return $this->render('reportsByCategoryForm', [
+                        'model' => $model,
+                        'error' => 'No existen datos para generar el reporte'
+                    ]);
+                }
+                return $this->render('reportsByCategoryGrid', [
+                    'dataProvider' => $dataProvider,
+                ]);
+            }
+            else{
+                return $this->render('reportsByCategoryForm', [
+                    'model' => $model,
+                    'error' => 'Las fechas son incorrectas'
+                ]);
+            }
+
         }
     }
 
