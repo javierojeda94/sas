@@ -15,24 +15,50 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
 <div class="request-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <div class="row">
+        <div class="col-md-9">
+            <?= (Yii::$app->user->can('create_scheduled_requests') || Yii::$app->user->can('assign_request_to_personal_of_own_area') && $model->status != 'Finalizado') ?
+                Html::a(Yii::t('app', 'Advanced options'), ['advanced', 'id' => $model->id], ['class' => 'btn btn-primary']) : "" ?>
 
-    <p>
-        <?= (Yii::$app->user->can('create_scheduled_requests') || Yii::$app->user->can('assign_request_to_personal_of_own_area') && $model->status != 'Finalizado') ?
-            Html::a(Yii::t('app', 'Advanced options'), ['advanced', 'id' => $model->id], ['class' => 'btn btn-primary']) : "" ?>
+            <?php if ((Yii::$app->user->can('reject_requests_in_own_area') || Yii::$app->user->can('reject_requests_assigned_to_self', ['request' => $model])) &&
+                $model->status != 'Finalizado'
+            ) {
+                if ($model->status != 'Rechazado') { ?>
+                    <?= Html::a(Yii::t('app', 'Rechazar Solicitud'), ['reject', 'id' => $model->id],
+                        ['data-confirm' => 'Are you sure you want to reject this request?', 'class' => 'btn btn-primary']) ?>
+                <?php } else { ?>
+                    <?= Html::a(Yii::t('app', 'Autorizar Solicitud'), ['authorize', 'id' => $model->id],
+                        ['data-confirm' => 'Are you sure you want to authorize this request?', 'class' => 'btn btn-primary']) ?>
+                <?php }
+            } ?>
+        </div>
+        <div class="col-md-3">
+            <?php if ($model->status != 'Atendiendo' && $model->status != 'Finalizado' &&
+                Yii::$app->user->can('attend_requests_assigned_to_self', ['request' => $model])
+            ) { ?>
+                <p>
+                    <?= Html::a(Yii::t('app', 'Atender Solicitud'), ['attend', 'id' => $model->id],
+                        [
+                            'class' => 'btn btn-primary pull-right',
+                            'data-confirm' => 'Seguro que quieres atender esta solicitud?',
+                        ]) ?>
+                </p>
+            <?php } ?>
 
-        <?php if ((Yii::$app->user->can('reject_requests_in_own_area') || Yii::$app->user->can('reject_requests_assigned_to_self', ['request' => $model])) &&
-            $model->status != 'Finalizado'
-        ) {
-            if ($model->status != 'Rechazado') { ?>
-                <?= Html::a(Yii::t('app', 'Rechazar Solicitud'), ['reject', 'id' => $model->id],
-                    ['data-confirm' => 'Are you sure you want to reject this request?', 'class' => 'btn btn-primary']) ?>
-            <?php } else { ?>
-                <?= Html::a(Yii::t('app', 'Autorizar Solicitud'), ['authorize', 'id' => $model->id],
-                    ['data-confirm' => 'Are you sure you want to authorize this request?', 'class' => 'btn btn-primary']) ?>
-            <?php }
-        } ?>
-    </p>
-
+            <?php if ($model->status == 'Atendiendo' && $model->status != 'Finalizado') { ?>
+                <p>
+                    <?php if (Yii::$app->user->can('attend_requests_assigned_to_self', ['request' => $model])) { ?>
+                        <?= Html::a(Yii::t('app', '<i class="glyphicon glyphicon-ok"></i> Finalizar Solicitud'), ['complete', 'id' => $model->id],
+                            [
+                                'class' => 'btn btn-success pull-right',
+                                'data-confirm' => 'Seguro que quieres finalizar esta solicitud?',
+                            ]) ?>
+                    <?php } ?>
+                </p>
+            <?php } ?>
+        </div>
+    </div>
+    <br>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -79,39 +105,19 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
             ],
         ],
     ]) ?>
-    <?php if ($model->status != 'Atendiendo' && $model->status != 'Finalizado' &&
-            Yii::$app->user->can('attend_requests_assigned_to_self', ['request' => $model])) { ?>
-        <p>
-            <?= Html::a(Yii::t('app', 'Atender Solicitud'), ['attend', 'id' => $model->id],
-                [
-                    'class' => 'btn btn-info',
-                    'data-confirm' => 'Seguro que quieres atender esta solicitud?',
-                ]) ?>
-        </p>
-    <?php } ?>
-
     <?php if ($model->status == 'Atendiendo' && $model->status != 'Finalizado') { ?>
-        <p>
-            <?php if(Yii::$app->user->can('attend_requests_assigned_to_self', ['request' => $model])){ ?>
-            <?= Html::a(Yii::t('app', 'Finalizar Solicitud'), ['complete', 'id' => $model->id],
-                [
-                    'class' => 'btn btn-success',
-                    'data-confirm' => 'Seguro que quieres finalizar esta solicitud?',
-                ]) ?>
-            <?php } ?>
-        </p>
-        <div>
-            <?= ChatRoom::widget([
-                    'url' => \yii\helpers\Url::toRoute(['/request/chat']),
-                    //'requestModel'=> \app\models\Request::className(),
-                    'userModel' => \app\models\User::className(),
-                    'userField' => 'avatarImage',
-                    'idRequest' => $model->id,
-                    'userName' => $model->name
-                ]
-            );
-            ?>
-        </div>
-    <?php } ?>
+    <div>
+        <?= ChatRoom::widget([
+                'url' => \yii\helpers\Url::toRoute(['/request/chat']),
+                //'requestModel'=> \app\models\Request::className(),
+                'userModel' => \app\models\User::className(),
+                'userField' => 'avatarImage',
+                'idRequest' => $model->id,
+                'userName' => $model->name
+            ]
+        );
+        ?>
+    </div>
+    <?php }?>
 
 </div>

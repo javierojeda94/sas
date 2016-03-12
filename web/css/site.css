@@ -178,6 +178,9 @@
     }
 
     /*CRUD panel */
+    a{
+        color:#2d2558;
+    }
     .panel-default > .panel-heading {
         color: rgb(243, 255, 246);
         background-color: #2d2558;
@@ -203,7 +206,11 @@
     .btn-primary {
         background-color: #322961;
         border-color: #322961;
-        padding: .5em 3em;
+        padding: .5em 2em;
+    }
+
+    .btn-danger{
+        padding: .5em 1.5em;
     }
 
     .btn-primary:hover, .btn-primary:active:focus, .btn-primary:active, .btn-primary:focus {
@@ -214,6 +221,17 @@
 
     a i.glyphicon {
         padding-right: .2em;
+    }
+
+    .input_form input{
+        border-radius: 5px;
+        border: 1px solid silver;
+        height: 2.5em;
+        width: 14.5em;
+    }
+    .btn-small{
+        padding: .5em;
+        border-radius: 5px;
     }
 }
 
