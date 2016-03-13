@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
 
     <div>
         <?=
-        Html::a(Yii::t('app', '<i class="glyphicon glyphicon-remove"></i>Unassing All '),
+        Html::a(Yii::t('app', 'Unassing All'),
             ['unasign', 'r_id' => $request->id],
             [
                 'id' => 'unasign_several',
@@ -120,7 +120,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                         Html::a(Yii::t('app', '<i class="glyphicon glyphicon-remove"></i>'),
                             ['unasign', 'u_id' => $user->id, 'r_id' => $request->id],
                             [
-                                'class' => 'btn-danger btn-small',
+                                'class' => 'btn btn-small',
                                 'data-confirm' => Yii::t('app','¿Are you sure you want to unasign this user?'),
                             ])
                         ?>
@@ -187,7 +187,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                         Html::a(Yii::t('app', '<i class="glyphicon glyphicon-remove"></i>'),
                             ['unasign-area', 'r_id' => $request->id, 'a_id' => $areaRequest['area_id']],
                             [
-                                'class' => 'btn-danger btn-small',
+                                'class' => 'btn btn-small',
                                 'data-confirm' => Yii::t('app', '¿Are you sure you want to unassign this area?'),
                             ])
                         ?>
@@ -254,7 +254,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                         Html::a(Yii::t('app', '<i class="glyphicon glyphicon-remove"></i>'),
                             ['unasign-category', 'r_id' => $request->id, 'c_id' => $categoryRequest['category_id']],
                             [
-                                'class' => 'btn-danger btn-small',
+                                'class' => 'btn btn-small',
                                 'data-confirm' =>Yii::t('app', '¿Are you sure you want to unassign this category?'),
                             ])
                         ?>

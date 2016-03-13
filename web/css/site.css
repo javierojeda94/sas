@@ -230,8 +230,9 @@
         width: 14.5em;
     }
     .btn-small{
-        padding: .5em;
+        padding: .3em;
         border-radius: 5px;
+        padding-right: .2em;
     }
 }
 
