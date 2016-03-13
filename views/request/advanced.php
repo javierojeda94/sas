@@ -121,6 +121,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                             ['unasign', 'u_id' => $user->id, 'r_id' => $request->id],
                             [
                                 'class' => 'btn btn-small',
+                                'data-toggle'=> 'tooltip',
+                                'title'=>Yii::t('app', 'Remove personal'),
                                 'data-confirm' => Yii::t('app','¿Are you sure you want to unasign this user?'),
                             ])
                         ?>
@@ -188,6 +190,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                             ['unasign-area', 'r_id' => $request->id, 'a_id' => $areaRequest['area_id']],
                             [
                                 'class' => 'btn btn-small',
+                                'data-toggle'=> 'tooltip',
+                                'title'=>Yii::t('app', 'Remove area'),
                                 'data-confirm' => Yii::t('app', '¿Are you sure you want to unassign this area?'),
                             ])
                         ?>
@@ -255,6 +259,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                             ['unasign-category', 'r_id' => $request->id, 'c_id' => $categoryRequest['category_id']],
                             [
                                 'class' => 'btn btn-small',
+                                'data-toggle'=> 'tooltip',
+                                'title'=>Yii::t('app', 'Remove category'),
                                 'data-confirm' =>Yii::t('app', '¿Are you sure you want to unassign this category?'),
                             ])
                         ?>
