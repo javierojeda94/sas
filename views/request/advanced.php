@@ -4,7 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\User;
 use yii\jui\DatePicker;
-
+use app\models\Area;
+use app\models\Category;
 /* @var $this yii\web\View */
 /* @var $request app\models\request */
 
@@ -121,6 +122,140 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                             [
                                 'class' => 'btn-danger btn-small',
                                 'data-confirm' => '¿Está seguro que desea desasignar este usuario?',
+                            ])
+                        ?>
+                    </td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="users-request-input request-form row">
+        <div class="page-header">
+            <h2><small>Áreas asignadas</small></h2>
+        </div>
+        <?php $form = ActiveForm::begin(['action' => "asign-area"]); ?>
+
+        <?= $form->field($request, 'request_id')->hiddenInput(['value' => $request->id])->label(false) ?>
+
+        <div class="col-md-4">
+            <?= $form->field($request, 'area_id')->dropDownList($areas, ['class' => 'form-control']) ?>
+        </div>
+
+        <?php if (!Yii::$app->request->isAjax) { ?>
+            <div class="form-group">
+                <br>
+                <?= Html::submitButton('Agregar', ['class' => 'btn btn-success']) ?>
+            </div>
+        <?php } ?>
+
+        <?php ActiveForm::end(); ?>
+    </div>
+
+    <div>
+        <br>
+        <br>
+        <table width="100%" border="1px solid grey"
+               class="kv-grid-table table table-bordered table-striped table-condensed kv-table-wrap">
+            <thead>
+            <th class="kv-align-center kv-align-middle kv-merged-header"></th>
+            <th class="kv-align-center kv-align-middle kv-merged-header">Id de Área</th>
+            <th class="kv-align-center kv-align-middle kv-merged-header">Nombre de Área</th>
+            <th class="kv-align-center kv-align-middle kv-merged-header text-center">Actions</th>
+            </thead>
+            <tbody>
+            <?php
+                    foreach ($areasRequest as $areaRequest) {
+                ?>
+                <tr>
+                    <td>
+                        <input class="checkbox" type="checkbox" value="<?= $areaRequest['area_id'] ?>">
+                    </td>
+                    <td class="skip-export kv-align-center kv-align-middle">
+                        <?= $areaRequest['area_id'] ?>
+
+                    </td>
+                    <td class="skip-export kv-align-center kv-align-middle">
+                        <?php
+                        $area = Area::findOne($areaRequest["area_id"]);
+                        echo $area->name;
+                        ?>
+                    </td>
+                    <td class="skip-export kv-align-center kv-align-middle text-center" style="width: 10%;">
+                        <?=
+                        Html::a(Yii::t('app', '<i class="glyphicon glyphicon-remove"></i>'),
+                            ['unasign-area', 'r_id' => $request->id, 'a_id' => $areaRequest['area_id']],
+                            [
+                                'class' => 'btn-danger btn-small',
+                                'data-confirm' => '¿Está seguro que desea desasignar esta área?',
+                            ])
+                        ?>
+                    </td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="users-request-input request-form row">
+        <div class="page-header">
+            <h2><small>Categorías asignadas</small></h2>
+        </div>
+        <?php $form = ActiveForm::begin(['action' => "asign-category"]); ?>
+
+        <?= $form->field($request, 'request_id')->hiddenInput(['value' => $request->id])->label(false) ?>
+
+        <div class="col-md-4">
+            <?= $form->field($request, 'category_id')->dropDownList($categories, ['class' => 'form-control']) ?>
+        </div>
+
+        <?php if (!Yii::$app->request->isAjax) { ?>
+            <div class="form-group">
+                <br>
+                <?= Html::submitButton('Agregar', ['class' => 'btn btn-success']) ?>
+            </div>
+        <?php } ?>
+
+        <?php ActiveForm::end(); ?>
+    </div>
+
+    <div>
+        <br>
+        <br>
+        <table width="100%" border="1px solid grey"
+               class="kv-grid-table table table-bordered table-striped table-condensed kv-table-wrap">
+            <thead>
+            <th class="kv-align-center kv-align-middle kv-merged-header"></th>
+            <th class="kv-align-center kv-align-middle kv-merged-header">Id de Categoría</th>
+            <th class="kv-align-center kv-align-middle kv-merged-header">Nombre de Categoría</th>
+            <th class="kv-align-center kv-align-middle kv-merged-header text-center">Actions</th>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($categoriesRequest as $categoryRequest) {
+                ?>
+                <tr>
+                    <td>
+                        <input class="checkbox" type="checkbox" value="<?= $categoryRequest['category_id'] ?>">
+                    </td>
+                    <td class="skip-export kv-align-center kv-align-middle">
+                        <?= $categoryRequest['category_id'] ?>
+
+                    </td>
+                    <td class="skip-export kv-align-center kv-align-middle">
+                        <?php
+                        $category =Category::findOne($categoryRequest['category_id']);
+                        echo $category->name;
+                        ?>
+                    </td>
+                    <td class="skip-export kv-align-center kv-align-middle text-center" style="width: 10%;">
+                        <?=
+                        Html::a(Yii::t('app', '<i class="glyphicon glyphicon-remove"></i>'),
+                            ['unasign-category', 'r_id' => $request->id, 'c_id' => $categoryRequest['category_id']],
+                            [
+                                'class' => 'btn-danger btn-small',
+                                'data-confirm' => '¿Está seguro que desea desasignar esta categoría?',
                             ])
                         ?>
                     </td>

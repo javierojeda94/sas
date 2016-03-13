@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Area;
 use app\models\AreasRequest;
+use app\models\Category;
 use app\models\CategoryRequest;
 use sintret\chat\ChatRoom;
 use Yii;
@@ -40,7 +41,8 @@ class RequestController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['advanced','reject', 'authorize','asign', 'unasign', 'complete', 'attend'],
+                        'actions' => ['advanced','reject', 'authorize','asign','asign-area','asign-category','unasign',
+                            'unasign-area','unasign-category', 'complete', 'attend'],
                         'roles' => ['administrator', 'responsibleArea','executive','employeeArea'],
                     ],
                     [
@@ -500,10 +502,30 @@ class RequestController extends Controller
                     'params' => [':id' => $id]
                 ]);
                 $models = $dataProvider->getModels();
+
+                $areasRequest=AreasRequest::findAll($specificRequest->id);
+                $areasAvailable=Area::find()->leftJoin('areas_request',
+                    'areas.id = areas_request.area_id and areas_request.request_id ='.$id)
+                    ->where(['areas_request.request_id' => null])
+                    ->indexBy('area_id')->all();
+                $areas=ArrayHelper::map($areasAvailable,'id','name');
+
+                $categoriesRequest=CategoryRequest::findAll($specificRequest->id);
+                $categoriesAvailable=Category::find()->leftJoin('category_request','`categories`.`id` = `category_request`.`category_id`
+                    and `category_request`.`request_id` = '.$id)->
+                where(['category_request.request_id' => null])->indexBy('id')->all();
+                $categories=ArrayHelper::map($categoriesAvailable,'id','name');
+
+
+
                 return $this->render('advanced', [
                     'request' => $specificRequest,
                     'users' => $users,
+                    'areas'=> $areas,
+                    'categories' => $categories,
                     'responsible' => $models,
+                    'areasRequest' => $areasRequest,
+                    'categoriesRequest' => $categoriesRequest,
                 ]);
             }
         }else{
@@ -538,6 +560,25 @@ class RequestController extends Controller
         return $this->redirect('advanced?id='.$model->request_id);
     }
 
+    public function actionAsignArea()
+    {
+        $request = Yii::$app->request;
+        $model = new AreasRequest();
+        $model->area_id = $request->post()['Request']['area_id'];
+        $model->request_id = $request->post()['Request']['request_id'];
+        $model->save();
+        return $this->redirect('advanced?id='.$model->request_id);
+    }
+
+    public function actionAsignCategory()
+    {
+        $request = Yii::$app->request;
+        $model = new CategoryRequest();
+        $model->category_id= $request->post()['Request']['category_id'];
+        $model->request_id = $request->post()['Request']['request_id'];
+        $model->save();
+        return $this->redirect('advanced?id='.$model->request_id);
+    }
     /**
      * Unassign a responsible for the request.
      * For ajax request will return json object
@@ -551,6 +592,19 @@ class RequestController extends Controller
         $model->delete();
         return $this->redirect('advanced?id='.$r_id);
     }
+
+    public function actionUnasignArea($r_id,$a_id)
+    {
+        $model = AreasRequest::find()->where(['area_id'=>$a_id,'request_id'=>$r_id])->one();
+        $model->delete();
+        return $this->redirect('advanced?id='.$r_id);
+    }
+
+    public function actionUnasignCategory($r_id,$c_id)
+    {
+        $model = CategoryRequest::find()->where(['category_id'=>$c_id,'request_id'=>$r_id])->one();
+        $model->delete();
+        return $this->redirect('advanced?id='.$r_id);    }
 
     public function actionAttend($id)
     {

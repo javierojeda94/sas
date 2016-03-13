@@ -16,7 +16,7 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Reports by User');
+$this->title = Yii::t('app', 'Reports based on Request by User');
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);

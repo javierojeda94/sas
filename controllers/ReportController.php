@@ -248,11 +248,6 @@ class ReportController extends Controller
 
         if(Yii::$app->request->isAjax){
             $model = new ReportForm();
-
-            //$query = UsersRequest::find()->joinWith('request')->Where(['>=', 'completion_date', $model->startDate])
-            //    ->andWhere(['<=', 'completion_date', $model->endDate])->groupBy('user_id');
-            //$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
-
             $html = $this->renderAjax('reportsUserForm', [
                 'model' => $model,
             ]);
