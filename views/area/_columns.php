@@ -22,7 +22,8 @@ return [
 
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'father_area',
-        'value'=>'area.name'
+        'value'=>'area.name',
+        'label'=> Yii::t('app', 'Father area')
         /*
         'value' => function($model){
             $area = Area::findOne($model->area_id);
@@ -34,7 +35,8 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'responsable_name',
-        'value'=>'idResponsable.first_name'
+        'value'=>'idResponsable.first_name',
+        'label'=> Yii::t('app', 'Responsable Name')
 
         /*
         'value'=>function($model){
@@ -49,10 +51,12 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'name',
+        'label'=> Yii::t('app', 'Name')
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'description',
+        'label'=> Yii::t('app', 'Description')
     ],
     [
         'class' => 'kartik\grid\ActionColumn',
@@ -62,14 +66,14 @@ return [
                 return Url::to([$action,'id'=>$key]);
         },
         'template' => '{view}{update}{delete}{addPersonalOption}',
-        'viewOptions'=>['role'=>'modal-remote','title'=>'View','data-toggle'=>'tooltip'],
-        'updateOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
-        'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete',
+        'viewOptions'=>['role'=>'modal-remote','title'=>Yii::t('app', 'View'),'data-toggle'=>'tooltip'],
+        'updateOptions'=>['role'=>'modal-remote','title'=>Yii::t('app', 'Update'), 'data-toggle'=>'tooltip'],
+        'deleteOptions'=>['role'=>'modal-remote','title'=>Yii::t('app', 'Delete'),
                           'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
                           'data-request-method'=>'post',
                           'data-toggle'=>'tooltip',
-                          'data-confirm-title'=>'Are you sure?',
-                          'data-confirm-message'=>'Are you sure want to delete this item'],
+                          'data-confirm-title'=>Yii::t('app', 'Are you sure?'),
+                          'data-confirm-message'=>Yii::t('app', 'Are you sure you want to delete this item?')],
         'buttons' => [
             'addPersonalOption'=>function($url, $model){
                 $options = ['data-toggle'=>'tooltip'];

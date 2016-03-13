@@ -17,7 +17,7 @@ use yii\jui\DatePicker;
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="permissionsModalLabel">asdasdasdasd</h4>
+                <h4 class="modal-title" id="permissionsModalLabel"><?php echo Yii::t('app', 'Permissions')?></h4>
             </div>
             <?php $form = ActiveForm::begin(['action' => "addpermission"]); ?>
             <div class="modal-body">
@@ -27,7 +27,7 @@ use yii\jui\DatePicker;
                 <input type="hidden" id="areapersonal-area_id" name="AreaPersonal[area_id]">
                 <label for="areapersonal-permission">Permission</label>
                 <select required id="areapersonal-permission" class="form-control" name="AreaPersonal[permission]">
-                    <option value="0" selected disabled>Selecction</option>
+                    <option value="0" selected disabled><?php echo Yii::t('app', 'Selection')?></option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -37,7 +37,7 @@ use yii\jui\DatePicker;
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
             </div>
             <?php ActiveForm::end(); ?>
         </div>
