@@ -41,35 +41,28 @@ return [
                 return Url::to([$action,'id'=>$key]);
         },
         'template' => '{view}{rejectOption}',
-        'viewOptions'=>['role'=>'page','title'=>'View','data-toggle'=>'tooltip'],
-        'updateOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
-        'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete',
-                          'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                          'data-request-method'=>'post',
-                          'data-toggle'=>'tooltip',
-                          'data-confirm-title'=>'Are you sure?',
-                          'data-confirm-message'=>'Are you sure want to delete this item'],
+        'viewOptions'=>['role'=>'page','title'=>Yii::t('app', 'View'),'data-toggle'=>'tooltip'],
         'buttons' => [
         'rejectOption' => function ($url, $model) {
             if($model->status === 'Rechazado'){
-                $options = ['role'=>'modal-remote','title'=>'Authorize',
+                $options = ['role'=>'modal-remote','title'=>Yii::t('app', 'Authorize'),
                 'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
                 'data-request-method'=>'post',
                 'data-toggle'=>'tooltip',
-                'data-confirm-title'=>'Are you sure?',
-                'data-confirm-message'=>'Are you sure want to authorize this item'];
+                'data-confirm-title'=>Yii::t('app', 'Are you sure?'),
+                'data-confirm-message'=>Yii::t('app', 'Are you sure want to authorize this item')];
                 $title = Yii::t('app', 'Authorize Request');
                 $icon = '<span class="glyphicon glyphicon-open"></span>';
                 $label = ArrayHelper::remove($options, 'label', $icon);
                 $options = ArrayHelper::merge(['title' => $title, 'data-pjax' => '0'], $options);
                 $url = Url::toRoute(['authorize','id'=>$model->id]);
             }else {
-                $options = ['role'=>'modal-remote','title'=>'Reject',
+                $options = ['role'=>'modal-remote','title'=>Yii::t('app', 'Reject'),
                 'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
                 'data-request-method'=>'post',
                 'data-toggle'=>'tooltip',
-                'data-confirm-title'=>'Are you sure?',
-                'data-confirm-message'=>'Are you sure want to reject this item'];
+                'data-confirm-title'=>Yii::t('app', 'Are you sure?'),
+                'data-confirm-message'=>Yii::t('app', 'Are you sure want to reject this item')];
                 $title = Yii::t('app', 'Reject Request');
                 $icon = '<span class="glyphicon glyphicon-remove"></span>';
                 $label = ArrayHelper::remove($options, 'label', $icon);

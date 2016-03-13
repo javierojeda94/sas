@@ -20,12 +20,12 @@ if(Yii::$app->user->isGuest) {
 
     <?php if (Yii::$app->session->hasFlash('requestFormSubmitted')): ?>
         <div class="alert alert-success">
-            <p>Su solicitud fue registrada. <br>Utilice la siguiente url para darle seguimiento a su solicitud:
+            <p><?= Yii::t('app','Your request was created.')?> <br><?= Yii::t('app','Use the next url for see you request')?>
                 <a href="<?= 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/follow?token=' . $model->token ?>">
                     <?= 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/follow?token=' . $model->token ?>
                 </a>
             </p>
-            <small>De igual manera, le hemos enviado esa url a su correo.</small>
+            <small><?= Yii::t('app','We send the url to your email') ?></small>
         </div>
     <?php endif; ?>
 

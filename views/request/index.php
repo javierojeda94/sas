@@ -21,13 +21,13 @@ CrudAsset::register($this);
         <?= TabsX::widget([
             'items' => [
                 [
-                    'label'=>'<i class="glyphicon glyphicon-home"></i> My request',
+                    'label'=>'<i class="glyphicon glyphicon-home"></i> '.Yii::t('app','My request'),
                     'content'=>$this->render('GridViewMyRequest', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider,]),
                     'active'=>true,
                     'linkOptions'=>['data-url'=>Url::to(['/request/tab-my-request'])]
                 ],
                 [
-                    'label'=>'<i class="glyphicon glyphicon-user"></i> Request Assigned',
+                    'label'=>'<i class="glyphicon glyphicon-user"></i> '.Yii::t('app','Request Assigned'),
                     'linkOptions'=>['data-url'=>Url::to(['/request/tab-request-assigned'])],
                     'visible' => Yii::$app->user->can('employeeArea')
                         || Yii::$app->user->can('responsibleArea')
@@ -35,17 +35,17 @@ CrudAsset::register($this);
                         || Yii::$app->user->can('administrator'),
                 ],
                 [
-                    'label'=>'<i class="glyphicon glyphicon-user"></i> Request For My Area',
+                    'label'=>'<i class="glyphicon glyphicon-user"></i> '.Yii::t('app','Request For My Area'),
                     'linkOptions'=>['data-url'=>Url::to(['/request/tab-request-area'])],
                     'visible' => Yii::$app->user->can('read_requests_in_own_area'),
                 ],
                 [
-                    'label'=>'<i class="glyphicon glyphicon-user"></i> All Request',
+                    'label'=>'<i class="glyphicon glyphicon-user"></i> '.Yii::t('app','All Request'),
                     'linkOptions'=>['data-url'=>Url::to(['/request/tab-all-request'])],
                     'visible' => Yii::$app->user->can('read_requests'),
                 ],
                 [
-                    'label'=>'<i class="glyphicon glyphicon-user"></i> Scheduled Request',
+                    'label'=>'<i class="glyphicon glyphicon-user"></i> '.Yii::t('app','Scheduled Request'),
                     'linkOptions'=>['data-url'=>Url::to(['/request/tab-scheduled'])],
                     'visible' => Yii::$app->user->can('read_scheduled_requests'),
                 ],

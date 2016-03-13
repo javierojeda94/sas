@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
 ?>
 <div class="request-advanced container">
 
-    <h1><i class="glyphicon glyphicon-cog"></i> Opciones avanzadas de solicitud: <?= $request->id ?></h1>
+    <h1><i class="glyphicon glyphicon-cog"></i> <?= Yii::t('app', 'Advanced options for request:'), $request->id ?></h1>
 
     <div class="users-request-input request-form row">
         <div class="page-header">
-            <h2><small>Calendarización de solicitud</small></h2>
+            <h2><small><?= Yii::t('app', 'Schedule Request')?></small></h2>
         </div>
         <?php if (Yii::$app->user->can('create_scheduled_requests')) {
 
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                 'clientOptions' => [
                     'minDate' => '0',
                 ],
-            ]) ?>
+            ])->label(Yii::t('app', 'Scheduled start date')) ?>
         </div>
         <div class="col-md-5 input_form">
             <?= $form->field($request, 'scheduled_end_date')->widget(DatePicker::classname(), [
@@ -39,15 +39,15 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                 'clientOptions' => [
                     'minDate' => '0',
                 ],
-            ]) ?>
+            ])->label(Yii::t('app','Scheduled end date')) ?>
         </div>
         <div class="col-md-2">
             <?php if (!Yii::$app->request->isAjax) { ?>
                 <div class="form-group">
-                    <?= Html::submitButton('Calendarizar',
+                    <?= Html::submitButton(Yii::t('app','Schedule'),
                         [
                             'class' => 'btn btn-success',
-                            'data-confirm' => '¿Está seguro que quiere calendarizar la solicitud?',
+                            'data-confirm' => Yii::t('app','¿Are you sure you want to schedule this request?'),
                         ]) ?>
                 </div>
             <?php } ?>
@@ -59,20 +59,20 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
 
     <div class="users-request-input request-form row">
         <div class="page-header">
-            <h2><small>Personal asignado</small></h2>
+            <h2><small><?= Yii::t('app', 'Assigned Personal')?> </small></h2>
         </div>
         <?php $form = ActiveForm::begin(['action' => "asign"]); ?>
 
         <?= $form->field($request, 'request_id')->hiddenInput(['value' => $request->id])->label(false) ?>
 
         <div class="col-md-4">
-            <?= $form->field($request, 'user_id')->dropDownList($users, ['class' => 'form-control']) ?>
+            <?= $form->field($request, 'user_id')->dropDownList($users, ['class' => 'form-control'])->label('Personal') ?>
         </div>
 
         <?php if (!Yii::$app->request->isAjax) { ?>
             <div class="form-group">
                 <br>
-                <?= Html::submitButton('Agregar', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton(Yii::t('app','Add'), ['class' => 'btn btn-success']) ?>
             </div>
         <?php } ?>
 
@@ -94,10 +94,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
         <table width="100%" border="1px solid grey"
                class="kv-grid-table table table-bordered table-striped table-condensed kv-table-wrap">
             <thead>
-            <th class="kv-align-center kv-align-middle kv-merged-header"></th>
-            <th class="kv-align-center kv-align-middle kv-merged-header">Id</th>
-            <th class="kv-align-center kv-align-middle kv-merged-header">Nombre</th>
-            <th class="kv-align-center kv-align-middle kv-merged-header text-center">Actions</th>
+            <th class="kv-merged-header"></th>
+            <th class="kv-merged-header"><?=Yii::t('app', 'Id')?></th>
+            <th class="kv-merged-header"><?=Yii::t('app', 'Name')?></th>
+            <th class="kv-merged-header text-center"><?= Yii::t('app', 'Actions')?></th>
             </thead>
             <tbody>
             <?php foreach ($responsible as $resp) {
@@ -106,22 +106,22 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                     <td>
                         <input class="checkbox" type="checkbox" value="<?= $resp['user_id'] ?>">
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle">
+                    <td>
                         <?= $resp['user_id'] ?>
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle">
+                    <td>
                         <?php
                         $user = User::findOne($resp["user_id"]);
                         echo $user->first_name . ' ' . $user->lastname;
                         ?>
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle text-center" style="width: 10%;">
+                    <td class="text-center" style="width: 10%;">
                         <?=
                         Html::a(Yii::t('app', '<i class="glyphicon glyphicon-remove"></i>'),
                             ['unasign', 'u_id' => $user->id, 'r_id' => $request->id],
                             [
                                 'class' => 'btn-danger btn-small',
-                                'data-confirm' => '¿Está seguro que desea desasignar este usuario?',
+                                'data-confirm' => Yii::t('app','¿Are you sure you want to unasign this user?'),
                             ])
                         ?>
                     </td>
@@ -133,20 +133,20 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
 
     <div class="users-request-input request-form row">
         <div class="page-header">
-            <h2><small>Áreas asignadas</small></h2>
+            <h2><small><?= Yii::t('app','Assigned Areas') ?></small></h2>
         </div>
         <?php $form = ActiveForm::begin(['action' => "asign-area"]); ?>
 
         <?= $form->field($request, 'request_id')->hiddenInput(['value' => $request->id])->label(false) ?>
 
         <div class="col-md-4">
-            <?= $form->field($request, 'area_id')->dropDownList($areas, ['class' => 'form-control']) ?>
+            <?= $form->field($request, 'area_id')->dropDownList($areas, ['class' => 'form-control']) ->label(Yii::t('app','Area'))?>
         </div>
 
         <?php if (!Yii::$app->request->isAjax) { ?>
             <div class="form-group">
                 <br>
-                <?= Html::submitButton('Agregar', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton(Yii::t('app','Add'), ['class' => 'btn btn-success']) ?>
             </div>
         <?php } ?>
 
@@ -159,10 +159,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
         <table width="100%" border="1px solid grey"
                class="kv-grid-table table table-bordered table-striped table-condensed kv-table-wrap">
             <thead>
-            <th class="kv-align-center kv-align-middle kv-merged-header"></th>
-            <th class="kv-align-center kv-align-middle kv-merged-header">Id de Área</th>
-            <th class="kv-align-center kv-align-middle kv-merged-header">Nombre de Área</th>
-            <th class="kv-align-center kv-align-middle kv-merged-header text-center">Actions</th>
+            <th class="kv-merged-header"></th>
+            <th class="kv-merged-header"><?= Yii::t('app','Id') ?></th>
+            <th class="kv-merged-header"><?= Yii::t('app','Area name') ?></th>
+            <th class="kv-merged-header text-center"><?= Yii::t('app','Actions') ?></th>
             </thead>
             <tbody>
             <?php
@@ -172,23 +172,23 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                     <td>
                         <input class="checkbox" type="checkbox" value="<?= $areaRequest['area_id'] ?>">
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle">
+                    <td>
                         <?= $areaRequest['area_id'] ?>
 
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle">
+                    <td>
                         <?php
                         $area = Area::findOne($areaRequest["area_id"]);
                         echo $area->name;
                         ?>
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle text-center" style="width: 10%;">
+                    <td class="text-center" style="width: 10%;">
                         <?=
                         Html::a(Yii::t('app', '<i class="glyphicon glyphicon-remove"></i>'),
                             ['unasign-area', 'r_id' => $request->id, 'a_id' => $areaRequest['area_id']],
                             [
                                 'class' => 'btn-danger btn-small',
-                                'data-confirm' => '¿Está seguro que desea desasignar esta área?',
+                                'data-confirm' => Yii::t('app', '¿Are you sure you want to unassign this area?'),
                             ])
                         ?>
                     </td>
@@ -200,20 +200,20 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
 
     <div class="users-request-input request-form row">
         <div class="page-header">
-            <h2><small>Categorías asignadas</small></h2>
+            <h2><small><?= Yii::t('app','Assigned categories') ?></small></h2>
         </div>
         <?php $form = ActiveForm::begin(['action' => "asign-category"]); ?>
 
         <?= $form->field($request, 'request_id')->hiddenInput(['value' => $request->id])->label(false) ?>
 
         <div class="col-md-4">
-            <?= $form->field($request, 'category_id')->dropDownList($categories, ['class' => 'form-control']) ?>
+            <?= $form->field($request, 'category_id')->dropDownList($categories, ['class' => 'form-control'])->label(Yii::t('app','Category')) ?>
         </div>
 
         <?php if (!Yii::$app->request->isAjax) { ?>
             <div class="form-group">
                 <br>
-                <?= Html::submitButton('Agregar', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton(Yii::t('app','Add'), ['class' => 'btn btn-success']) ?>
             </div>
         <?php } ?>
 
@@ -226,10 +226,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
         <table width="100%" border="1px solid grey"
                class="kv-grid-table table table-bordered table-striped table-condensed kv-table-wrap">
             <thead>
-            <th class="kv-align-center kv-align-middle kv-merged-header"></th>
-            <th class="kv-align-center kv-align-middle kv-merged-header">Id de Categoría</th>
-            <th class="kv-align-center kv-align-middle kv-merged-header">Nombre de Categoría</th>
-            <th class="kv-align-center kv-align-middle kv-merged-header text-center">Actions</th>
+            <th class="kv-merged-header"></th>
+            <th class="kv-merged-header"><?= Yii::t('app','Id') ?></th>
+            <th class="kv-merged-header"><?= Yii::t('app','Category name') ?></th>
+            <th class="kv-merged-header text-center"><?= Yii::t('app','Actions') ?></th>
             </thead>
             <tbody>
             <?php
@@ -239,23 +239,23 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                     <td>
                         <input class="checkbox" type="checkbox" value="<?= $categoryRequest['category_id'] ?>">
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle">
+                    <td>
                         <?= $categoryRequest['category_id'] ?>
 
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle">
+                    <td>
                         <?php
                         $category =Category::findOne($categoryRequest['category_id']);
                         echo $category->name;
                         ?>
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle text-center" style="width: 10%;">
+                    <td class="text-center" style="width: 10%;">
                         <?=
                         Html::a(Yii::t('app', '<i class="glyphicon glyphicon-remove"></i>'),
                             ['unasign-category', 'r_id' => $request->id, 'c_id' => $categoryRequest['category_id']],
                             [
                                 'class' => 'btn-danger btn-small',
-                                'data-confirm' => '¿Está seguro que desea desasignar esta categoría?',
+                                'data-confirm' =>Yii::t('app', '¿Are you sure you want to unassign this category?'),
                             ])
                         ?>
                     </td>

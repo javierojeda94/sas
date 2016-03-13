@@ -24,11 +24,11 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                 $model->status != 'Finalizado'
             ) {
                 if ($model->status != 'Rechazado') { ?>
-                    <?= Html::a(Yii::t('app', 'Rechazar Solicitud'), ['reject', 'id' => $model->id],
-                        ['data-confirm' => 'Are you sure you want to reject this request?', 'class' => 'btn btn-primary']) ?>
+                    <?= Html::a(Yii::t('app', 'Reject Request'), ['reject', 'id' => $model->id],
+                        ['data-confirm' => Yii::t('app','Are you sure you want to reject this request?'), 'class' => 'btn btn-primary']) ?>
                 <?php } else { ?>
-                    <?= Html::a(Yii::t('app', 'Autorizar Solicitud'), ['authorize', 'id' => $model->id],
-                        ['data-confirm' => 'Are you sure you want to authorize this request?', 'class' => 'btn btn-primary']) ?>
+                    <?= Html::a(Yii::t('app', 'authorize request'), ['authorize', 'id' => $model->id],
+                        ['data-confirm' => Yii::t('app','Are you sure you want to authorize this request?'), 'class' => 'btn btn-primary']) ?>
                 <?php }
             } ?>
         </div>
@@ -37,10 +37,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                 Yii::$app->user->can('attend_requests_assigned_to_self', ['request' => $model])
             ) { ?>
                 <p>
-                    <?= Html::a(Yii::t('app', 'Atender Solicitud'), ['attend', 'id' => $model->id],
+                    <?= Html::a(Yii::t('app', 'Attend request'), ['attend', 'id' => $model->id],
                         [
                             'class' => 'btn btn-primary pull-right',
-                            'data-confirm' => 'Seguro que quieres atender esta solicitud?',
+                            'data-confirm' => Yii::t('app','Are you sure you want to attend this request?'),
                         ]) ?>
                 </p>
             <?php } ?>
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                         <?= Html::a(Yii::t('app', '<i class="glyphicon glyphicon-ok"></i> Finalizar Solicitud'), ['complete', 'id' => $model->id],
                             [
                                 'class' => 'btn btn-success pull-right',
-                                'data-confirm' => 'Seguro que quieres finalizar esta solicitud?',
+                                'data-confirm' => Yii::t('app','Are you sure you want to end this request?'),
                             ]) ?>
                     <?php } ?>
                 </p>
@@ -64,43 +64,43 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
         'attributes' => [
             'id',
             [
-                'label' => 'Area',
+                'label' => Yii::t('app','Area'),
                 'value' => isset($model->area) ? $model->area->name : "",
             ],
             [
-                'label' => 'Name',
+                'label' => Yii::t('app','Name'),
                 'value' => $model->name,
             ],
             [
-                'label' => 'Email',
+                'label' => Yii::t('app','Email'),
                 'value' => $model->email,
             ],
             [
-                'label' => 'Responsible',
-                'value' => strlen($responsible) > 0 ? $responsible : 'Sin asignar',
+                'label' => Yii::t('app','Responsable'),
+                'value' => strlen($responsible) > 0 ? $responsible : Yii::t('app','Not assigned'),
             ],
             [
-                'label' => 'Subject',
+                'label' => Yii::t('app','Subject'),
                 'value' => $model->subject,
             ],
             [
-                'label' => 'Description',
+                'label' => Yii::t('app','Description'),
                 'value' => $model->description,
             ],
             [
-                'label' => 'Creation Date',
+                'label' => Yii::t('app','Creation Date'),
                 'value' => $model->creation_date,
             ],
             [
-                'label' => 'Status',
+                'label' => Yii::t('app','Status'),
                 'value' => $model->status,
             ],
             [
-                'label' => 'Start Date',
+                'label' => Yii::t('app','Start Date'),
                 'value' => $model->scheduled_start_date,
             ],
             [
-                'label' => 'End Date',
+                'label' => Yii::t('app','End Date'),
                 'value' => $model->scheduled_end_date,
             ],
         ],

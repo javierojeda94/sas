@@ -12,34 +12,36 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'id',
-    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'name',
+        'label' => Yii::t('app', 'Name')
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'email',
+        'label' => Yii::t('app', 'Email')
     ],
     [
         'class' => 'kartik\grid\DataColumn',
         'attribute' => 'area_name',
         'value' => 'area.name',
+        'label' => Yii::t('app', 'Area')
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'subject',
+        'label' => Yii::t('app', 'Subject')
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'description',
+        'label' => Yii::t('app', 'Description')
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'status',
+        'label' => Yii::t('app', 'Status')
     ],
     [
         'class' => 'kartik\grid\ActionColumn',
@@ -48,15 +50,8 @@ return [
         'urlCreator' => function($action, $model, $key, $index) {
                 return Url::to([$action,'id'=>$key]);
         },
-        'template' => '{view} {update}',
-        'viewOptions'=>['role'=>'page','title'=>'View','data-toggle'=>'tooltip'],
-        'updateOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
-        'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete',
-                          'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                          'data-request-method'=>'post',
-                          'data-toggle'=>'tooltip',
-                          'data-confirm-title'=>'Are you sure?',
-                          'data-confirm-message'=>'Are you sure want to delete this item'],
+        'template' => '{view}',
+        'viewOptions'=>['role'=>'page','title'=> Yii::t('app', 'View'),'data-toggle'=>'tooltip'],
     ],
 
 ];

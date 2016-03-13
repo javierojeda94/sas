@@ -17,9 +17,9 @@ use app\models\User;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true])->label(Yii::t('app', 'Name')) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true])->label(Yii::t('app','Email')) ?>
 
     <?= $form->field($model, 'area_id')->dropDownList( ArrayHelper::map(
         Area::find()->all(),
@@ -29,7 +29,7 @@ use app\models\User;
             .done(function( data ) {
 					$( "#'.Html::getInputId($model, 'category_id').'" ).html( data );
 				}
-            );'])
+            );'])->label(Yii::t('app', 'Area'))
     ?>
 
     <?= $form->field($model, 'category_id')->dropDownList(
@@ -37,13 +37,13 @@ use app\models\User;
             Category::find()->all(),
             'id',
             'name'
-        ), array('prompt'=> "")) ?>
+        ), array('prompt'=> ""))->label(Yii::t('app','Category')) ?>
 
-    <?= $form->field($model, 'subject')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'subject')->textInput(['maxlength' => true])->label(Yii::t('app','Subject')) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'description')->textarea(['rows' => 6])->label(Yii::t('app','Description')) ?>
 
-    <?= $form->field($model, 'requestFiles[]')->fileInput(['multiple' => true]) ?>
+    <?= $form->field($model, 'requestFiles[]')->fileInput(['multiple' => true])->label(Yii::t('app','Request files')) ?>
 
 
     <?php if(Yii::$app->user->isGuest) {
@@ -52,7 +52,7 @@ use app\models\User;
     <?= $form->field($model, 'verifyCode')->widget(
         Captcha::className(), [
         'template' => '<div class="row"><div class="col-lg-1.5">{image}</div><div class="col-lg-2">{input}</div></div>',
-    ]) ?>
+    ])->label(Yii::t('app','Captcha')) ?>
 
     <?php } ?>
 

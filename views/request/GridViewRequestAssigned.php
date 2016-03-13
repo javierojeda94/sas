@@ -24,8 +24,8 @@ CrudAsset::register($this);
             'columns' => require(__DIR__ . '/_columnsRequestAssigned.php'),
             'toolbar'=> [
                 ['content'=>
-                    Html::a('<i class="glyphicon glyphicon-plus"></i> Create', ['create'],
-                        ['role'=>'modal-remote','title'=> 'Create new Requests','class'=>'btn btn-success pull-right'])
+                    Html::a('<i class="glyphicon glyphicon-plus"></i> '.Yii::t('app','Create'), ['create'],
+                        ['role'=>'modal-remote','title'=> Yii::t('app','Create new Requests'),'class'=>'btn btn-success pull-right'])
 
                 ],
             ],
@@ -34,7 +34,7 @@ CrudAsset::register($this);
             'responsive' => true,
             'panel' => [
                 'type' => 'default',
-                'heading' => '<h4><i class="glyphicon glyphicon-list"></i> Requests</h4>',
+                'heading' => '<h4><i class="glyphicon glyphicon-list"></i>'.Yii::t('app', 'Requests').'</h4>',
 
             ]
         ])?>
