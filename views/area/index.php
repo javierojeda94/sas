@@ -26,7 +26,7 @@ CrudAsset::register($this);
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
                 ['content'=>
-                    Html::a('<i class="glyphicon glyphicon-plus"></i> Create', ['create'],
+                    Html::a('<i class="glyphicon glyphicon-plus"></i> '. Yii::t("app", "Create"), ['create'],
                     ['role'=>'modal-remote','title'=> 'Create new Areas','class'=>'btn btn-success pull-right'])
 
                 ],
@@ -36,7 +36,7 @@ CrudAsset::register($this);
             'responsive' => true,          
             'panel' => [
                 'type' => 'default',
-                'heading' => '<h4><i class="glyphicon glyphicon-list"></i> Areas</h4>',
+                'heading' => '<h4><i class="glyphicon glyphicon-list"></i> '. Yii::t("app", "Areas").'</h4>',
 
 
             ]

@@ -17,9 +17,9 @@ $this->title = Yii::t('app', 'Advanced Options');
 $this->params['breadcrumbs'][] = ['label' => 'Areas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
 ?>
-<div class="request-advanced">
+<div class="request-advanced container">
 
-    <h1>Area's personal: <?= $area->id ?></h1>
+    <h1><i class="glyphicon glyphicon-cog"></i> <?=Yii::t('app', 'Area\'s personal:'.$area->id)?></h1>
 
     <div class="users-request-input request-form row">
 
@@ -28,18 +28,19 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
         <?= $form->field($area, 'area_id')->hiddenInput(['value'=> $area->id])->label(false) ?>
 
         <div class="col-md-4">
-            <?= $form->field($area, 'id_responsable')->dropDownList($available_users,['class' => 'form-control']) ?>
+            <?= $form->field($area, 'id_responsable')->dropDownList(
+                $available_users,['class' => 'form-control'])->label(Yii::t('app','Area\'s personal')) ?>
         </div>
 
         <?php if (empty($available_users)){ ?>
             <div class="form-group">
                 <br>
-                <?= Html::button('Add', ['class' => 'btn btn-success disabled']) ?>
+                <?= Html::button(Yii::t('app', 'Add'), ['class' => 'btn btn-success disabled']) ?>
             </div>
         <?php }else{ ?>
             <div class="form-group">
                 <br>
-                <?= Html::submitButton('Add', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton(Yii::t('app', 'Add'), ['class' => 'btn btn-success']) ?>
             </div>
         <?php } ?>
 
@@ -47,59 +48,70 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
     </div>
 
     <div>
-
+        <?php
+        if(!empty($personal)){
+            echo Html::a(Yii::t('app', 'Unassign All'),
+                ['remove', 'r_id' => $area->id],
+                ['id' => 'unasign_several-from-area',
+                    'data-request' => $area->id,
+                    'class' => 'btn btn-danger pull-right',]
+            );
+        }
+        ?>
+        <br>
+        <br>
         <div class="input-group">
-            <span class="input-group-addon">Filtro</span>
-            <input id="filter" type="text" class="form-control" placeholder="Busca a un usuario...">
+            <span class="input-group-addon"><?php echo Yii::t('app', 'Filter')?></span>
+            <input id="filter" type="text" class="form-control" placeholder="<?php echo Yii::t('app', 'Search an user...')?>">
         </div>
 
         <table width="100%" border="1px solid grey" class="kv-grid-table table table-bordered table-striped table-condensed kv-table-wrap">
             <thead>
-                <th class="kv-align-center kv-align-middle kv-merged-header"></th>
-                <th class="kv-align-center kv-align-middle kv-merged-header">Id</th>
-                <th class="kv-align-center kv-align-middle kv-merged-header">Nombre</th>
-                <th class="kv-align-center kv-align-middle kv-merged-header">Apellido</th>
-                <th class="kv-align-center kv-align-middle kv-merged-header">Permisos</th>
-                <th class="kv-align-center kv-align-middle kv-merged-header">Actions</th>
+                <th></th>
+                <th class="text-center"><?php echo Yii::t('app', 'ID')?></th>
+                <th class="text-center"><?php echo Yii::t('app', 'Name')?></th>
+                <th class="text-center"><?php echo Yii::t('app', 'Last name')?></th>
+                <th class="text-center"><?php echo Yii::t('app', 'Permissions')?></th>
+                <th class="text-center"><?php echo Yii::t('app', 'Actions')?></th>
             </thead>
             <tbody class="searchable">
                 <?php foreach($personal as $pers){
 
                      ?>
                 <tr>
-                    <td>
+                    <td class="text-center">
                         <input class="checkbox" type="checkbox" value="<?= $pers['user_id'] ?>">
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle">
+                    <td class="text-center">
                         <?= $pers['user_id'] ?>
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle">
+                    <td class="text-center">
                         <?php
                         $user = User::findOne($pers["user_id"]);
                         echo $user->first_name;
                         ?>
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle">
+                    <td class="text-center">
                         <?php
                         echo $user->lastname;
                         ?>
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle">
+                    <td class="text-center">
                         <?php
                         $relationship = AreaPersonal::find()->where(['user_id'=>$pers['user_id'],
                             'area_id'=>$area->id])->one();
                         echo $relationship->permission;
                         ?>
                     </td>
-                    <td class="skip-export kv-align-center kv-align-middle">
+                    <td class="text-center">
                         <a data-toggle="modal" data-target="#permissionsModal"
                            data-user-id="<?= $user->id ?>" data-area-id="<?= $area->id ?>">
-                            <span data-toggle="tooltip" title="Modify permission"
+                            <span data-toggle="tooltip" title="<?php echo Yii::t('app', 'Modify permission')?>"
                                   class="glyphicon glyphicon-pencil"></span>
                         </a>
                         <a href="remove?u_id=<?=$user->id?>&a_id=<?=$area->id?>"
-                           data-toggle="tooltip" title="Remove user"
-                           data-confirm="Seguro que quieres remover este usuario?">
+                           data-toggle="tooltip" title="<?php echo Yii::t('app', 'Remove user')?>"
+                           data-confirm="<?php echo Yii::t('app', 'Are you sure you want to remove this user?')?>">
                            <span class="glyphicon glyphicon-remove"></span>
                         </a>
                     </td>
@@ -107,16 +119,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
                 <?php } ?>
             </tbody>
         </table>
-        <?php
-        if(!empty($personal)){
-            echo Html::a(Yii::t('app', 'Unasign '),
-                ['remove', 'r_id' => $area->id],
-                ['id' => 'unasign_several-from-area',
-                'data-request' => $area->id,
-                'class' => 'btn btn-info',]
-            );
-        }
-        ?>
     </div>
 
 </div>

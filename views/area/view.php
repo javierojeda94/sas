@@ -16,11 +16,11 @@ use yii\widgets\DetailView;
                 'value' => isset($model->area) ? $model->area->name : "" ,
             ],
             [
-                'label' => 'Responsable',
+                'label' => Yii::t("app", "Responsable"),
                 'value' => $model->idResponsable->first_name . " ". $model->idResponsable->lastname ,
             ],
-            'name',
-            'description',
+            Yii::t("app", "name"),
+            Yii::t("app", "description"),
         ],
     ]) ?>
 
