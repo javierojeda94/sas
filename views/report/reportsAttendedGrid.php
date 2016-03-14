@@ -1,4 +1,5 @@
 <?php
+use app\models\AreaPersonal;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use yii\helpers\Html;
@@ -31,13 +32,19 @@ CrudAsset::register($this);
 
                     'class'=>'\kartik\grid\DataColumn',
                     'attribute'=>'User',
-                    'value'=>'user.first_name'
+                    //'value'=>'user.first_name'
+                    'value' => function($model){
+                        return $model->user->first_name;
+                    }
                 ],
                 [
 
                     'class'=>'\kartik\grid\DataColumn',
                     'attribute'=>'Area name',
-                    'value'=>'areaname'
+                    //'value'=>'areaname'
+                    'value' => function($model){
+                        return $model->request->area->name;
+                    }
                 ],
                 [
 
