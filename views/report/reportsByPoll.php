@@ -25,19 +25,19 @@ CrudAsset::register($this);
                 [
 
                     'class'=>'\kartik\grid\DataColumn',
-                    'attribute'=>'Request',
+                    'attribute'=>Yii::t('app','Request'),
                     'value'=>'subject'
                 ],
                 [
 
                     'class'=>'\kartik\grid\DataColumn',
-                    'attribute'=>'Satisfaccion',
+                    'attribute'=>Yii::t('app','Satisfaccion'),
                     'value'=>'satisfaccion'
                 ],
                 [
 
                     'class'=>'\kartik\grid\DataColumn',
-                    'attribute'=>'Level',
+                    'attribute'=>Yii::t('app','Level'),
                     'value'=>'level'
                 ],
             ],
@@ -49,7 +49,8 @@ CrudAsset::register($this);
             'responsive' => true,
             'panel' => [
                 'type' => 'default',
-                'heading' => '<h4><i class="glyphicon glyphicon-list"></i> Reports by polls</h4>',
+                'heading' => '<h4><i class="glyphicon glyphicon-list"></i> ' .
+                    Yii::t('app','Reports by polls'). '</h4>',
             ]
         ]) ?>
     </div>

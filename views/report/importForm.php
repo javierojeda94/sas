@@ -24,10 +24,10 @@ CrudAsset::register($this);
             'options' => ['enctype' => 'multipart/form-data']
         ]) ?>
 
-        <?= $form->field($model, 'csv')->fileInput() ?>
+        <?= $form->field($model, 'csv')->fileInput()->label(Yii::t('app','CSV')) ?>
 
         <div>
-            <?= Html::submitButton('Import', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton(Yii::t('app','Import'), ['class' => 'btn btn-primary']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

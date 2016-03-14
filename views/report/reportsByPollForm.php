@@ -27,7 +27,7 @@ CrudAsset::register($this);
                 return false;
             }
         }else{
-            alert(\'Date not valid\');
+            alert(\'La fecha no es válida\');
             return false;
         }
     });
@@ -48,14 +48,14 @@ CrudAsset::register($this);
 
         <?= $form->field($model, 'startDate')->widget(DatePicker::classname(), [
             'dateFormat' => 'yyyy-MM-dd',
-        ]) ?>
+        ])->label(Yii::t('app','Start Date')) ?>
 
         <?= $form->field($model, 'endDate')->widget(DatePicker::classname(), [
             'dateFormat' => 'yyyy-MM-dd',
-        ]) ?>
+        ])->label(Yii::t('app','End Date')) ?>
 
         <div">
-            <?= Html::submitButton('Generate report', ['class' => 'btn btn-primary btn-margin']) ?>
+            <?= Html::submitButton(Yii::t('app','Generate report'), ['class' => 'btn btn-primary btn-margin']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
