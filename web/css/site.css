@@ -223,16 +223,25 @@
         padding-right: .2em;
     }
 
-    .input_form input{
+    .input_form input,
+    .reports-attended-form input[type=text],
+    .reports-by-area-index input[type=text],
+    .reports-by-category-index input[type=text],
+    .reports-by-requestuser-index input[type=text],
+    .reports-attended-form input[type=text]{
         border-radius: 5px;
         border: 1px solid silver;
         height: 2.5em;
         width: 14.5em;
+        outline: none;
     }
     .btn-small{
         padding: .3em;
         border-radius: 5px;
         padding-right: .2em;
+    }
+    .btn-margin{
+        margin-left: 7em;
     }
 }
 

@@ -33,7 +33,9 @@ CrudAsset::register($this);
     });
 '); ?>
 
-<div class="reports-attended-form">
+<div class="reports-attended-form container">
+    <h2 class="page-header"><small><?php echo Yii::t('app','Based on polls')?></small></h2>
+
     <div id="form-Attend">
         <?php $form = ActiveForm::begin([
             'id' => 'login-form',
@@ -52,9 +54,9 @@ CrudAsset::register($this);
             'dateFormat' => 'yyyy-MM-dd',
         ]) ?>
 
-        <p class="form-group">
-            <?= Html::submitButton('Make report', ['class' => 'btn btn-success']) ?>
-        </p>
+        <div">
+            <?= Html::submitButton('Generate report', ['class' => 'btn btn-primary btn-margin']) ?>
+        </div>
 
         <?php ActiveForm::end(); ?>
     </div>
