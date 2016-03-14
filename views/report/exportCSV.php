@@ -7,8 +7,8 @@ use yii\helpers\Html;
 /* @var $model app\models\ReportForm */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->title = Yii::t('app', 'Reports');
-$this->params['breadcrumbs'][] = Yii::t('app', 'Reports');
+$this->title = Yii::t('app', 'Export CSV');
+$this->params['breadcrumbs'][] =$this->title;
 ?>
 
 <?php $this->registerJs('
@@ -32,8 +32,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Reports');
 
 <h1><?= Html::encode($this->title) ?></h1>
 
-<div class="reports-form">
-    <h4>Export CSV</h4>
+<div class="reports-export-form container">
+    <h2 class="page-header"><small><i class="glyphicon glyphicon-open"></i> <?php echo Yii::t('app','Export CSV')?></small></h2>
+    <p><?php echo Yii::t('app','Select the start and end dates of the reports your want export to CSV')?></p>
+    <br>
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
@@ -52,9 +54,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Reports');
         'dateFormat' => 'yyyy-MM-dd',
     ]) ?>
 
-    <p class="form-group">
-        <?= Html::submitButton('Export', ['class' => 'btn btn-success']) ?>
-    </p>
+    <div>
+        <?= Html::submitButton('Export', ['class' => 'btn btn-primary btn-margin']) ?>
+    </div>
 
     <?php ActiveForm::end(); ?>
 

@@ -54,7 +54,7 @@ CrudAsset::register($this);
                         'linkOptions'=>['data-url'=>Url::to(['/report/request-report'])]
                     ],
                     [
-                        'label'=>'<i class="glyphicon glyphicon-list"></i> Reporst based on polls',
+                        'label'=>'<i class="glyphicon glyphicon-list"></i> Reports based on polls',
                         'linkOptions'=>['data-url'=>Url::to(['/report/polls'])]
                         //'visible' => Yii::$app->user->can('read_requests_created'),
                     ],
@@ -64,12 +64,12 @@ CrudAsset::register($this);
                             [
                                 'label'=>'Export CSV',
                                 'encode'=>false,
-                                'content'=> Html::a('Export', ['export'], ['class'=>'btn btn-success pull-left']),
+                                'content'=> Html::a('Export', ['export'], ['class'=>'btn btn-primary pull-left']),
                             ],
                             [
                                 'label'=>'Import CSV',
                                 'encode'=>false,
-                                'content'=> Html::a('Import', ['import'], ['class'=>'btn btn-success pull-left']),
+                                'content'=> Html::a('Import', ['import'], ['class'=>'btn btn-primary pull-left']),
                             ],
                         ],
                         'content'=>"Seleccione una opcion",

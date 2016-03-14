@@ -228,7 +228,8 @@
     .reports-by-area-index input[type=text],
     .reports-by-category-index input[type=text],
     .reports-by-requestuser-index input[type=text],
-    .reports-attended-form input[type=text]{
+    .reports-attended-form input[type=text],
+    .reports-export-form input[type=text]{
         border-radius: 5px;
         border: 1px solid silver;
         height: 2.5em;

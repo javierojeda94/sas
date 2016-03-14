@@ -14,7 +14,11 @@ CrudAsset::register($this);
 
 ?>
 
-<div class="reports-attended-form">
+<div class="reports-import-form container">
+    <h2 class="page-header"><small><i class="glyphicon glyphicon-save"></i> <?php echo Yii::t('app','Import CSV')?></small></h2>
+    <p><?php echo Yii::t('app','Select any CSV file that you wish to import to the system')?></p>
+    <br>
+    <br>
     <div id="form-import">
         <?php $form = ActiveForm::begin([
             'options' => ['enctype' => 'multipart/form-data']
@@ -22,9 +26,9 @@ CrudAsset::register($this);
 
         <?= $form->field($model, 'csv')->fileInput() ?>
 
-        <p class="form-group">
-            <?= Html::submitButton('Import', ['class' => 'btn btn-success']) ?>
-        </p>
+        <div>
+            <?= Html::submitButton('Import', ['class' => 'btn btn-primary']) ?>
+        </div>
 
         <?php ActiveForm::end(); ?>
     </div>
