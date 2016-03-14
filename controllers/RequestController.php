@@ -495,11 +495,16 @@ class RequestController extends Controller
                 *   Process for non-ajax request
                 */
                 $availableUsersQuery = new Query;
-                $availableUsersQuery->select('*')->from('users')->
+                $availableUsersQuery->select('`id`,`first_name`,`lastname`')->from('`users`')->
+                    innerJoin('`auth_assignment`','`users`.`id` = `auth_assignment`.`user_id`')->
                     leftJoin('users_request','`users`.`id` = `users_request`.`user_id`
                     and `users_request`.`request_id` = '.$id)->
-                    where(['users_request.user_id' => null]);
+                    where(['users_request.user_id' => null])->
+                    groupBy('`users`.`id`');
                 $command = $availableUsersQuery->createCommand();
+                // esta consulta todavía devuelve personal que no pertenece al área de la solicitud
+                // esta línea que sigue, la puse para depurar el sql
+                //exit($command->getSql());
                 $availableUsers = $command->queryAll();
                 $users = ArrayHelper::map($availableUsers,'id', 'first_name');
                 $dataProvider = new SqlDataProvider([
