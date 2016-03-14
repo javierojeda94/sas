@@ -35,6 +35,17 @@ class ReportController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','export', 'attended','areas','categories','user','polls',
+                            'import'],
+                        'roles' => ['administrator', 'responsibleArea','executive'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -131,8 +142,9 @@ class ReportController extends Controller
             $model->load($request->post());
 
             $dataProvider = new ArrayDataProvider([
-                'allModels' => UsersRequest::find()->select(['*','areas.name AS areaname', 'COUNT(*) AS cnt'])->join('JOIN','areas')
-                    ->leftJoin('request','request.id = users_request.request_id')->Where(['between', 'request.completion_date', $model->startDate, $model->endDate])
+                'allModels' => UsersRequest::find()->select(['users_request.request_id', 'users_request.user_id', 'COUNT(*) AS cnt'])
+                    ->Join('JOIN','request')
+                    ->Where(['between', 'request.completion_date', $model->startDate, $model->endDate])
                     ->groupBy('users_request.user_id')->all(),
                 'pagination' => [
                     'pageSize' => 20,

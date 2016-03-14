@@ -82,7 +82,7 @@ class AreaPersonal extends \yii\db\ActiveRecord
      */
     public function getArea()
     {
-        return $this->hasOne(Areas::className(), ['id' => 'area_id']);
+        return $this->hasOne(Area::className(), ['id' => 'area_id']);
     }
 
     /**
@@ -90,6 +90,6 @@ class AreaPersonal extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

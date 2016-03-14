@@ -16,7 +16,6 @@ use Yii;
 class UsersRequest extends \yii\db\ActiveRecord
 {
     public $cnt;
-    public $areaname;
 
     /**
      * @inheritdoc
