@@ -353,6 +353,7 @@ class ReportController extends Controller
                 $this->saveData($output);
                 return $this->render('index');
             }
+            return $this->render('index');
         }
     }
 

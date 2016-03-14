@@ -13,6 +13,26 @@ $this->title = Yii::t('app', 'Advanced Options');
 $this->params['breadcrumbs'][] = ['label' => 'Requests', 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
 ?>
+
+<?php $this->registerJs('
+    $(\'#w0\').on(\'submit\', function(e) {
+        var dateInit = $(\'#request-scheduled_start_date\').val();
+        var dateFinish = $(\'#request-scheduled_end_date\').val();
+
+        if (!/Invalid|NaN/.test(new Date(dateInit))) {
+            if(new Date(dateFinish) > new Date(dateInit)){
+                return true;
+            }else{
+                alert("Porfavor ingrese bien la fecha");
+                return false;
+            }
+        }else{
+            alert(\'Date not valid\');
+            return false;
+        }
+    });
+'); ?>
+
 <div class="request-advanced container">
 
     <h1><i class="glyphicon glyphicon-cog"></i> <?= Yii::t('app', 'Advanced options for request:'), $request->id ?></h1>

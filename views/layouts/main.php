@@ -79,7 +79,7 @@ $logo = "<img id='logo_nav' src='".Yii::$app->homeUrl."../images/UADY_w.png'/>";
                 [
                     'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
                     'url' => ['/site/logout'],
-                    'linkOptions' => ['data-method' => 'post']
+                    'linkOptions' => ['data-method' => 'post','data-confirm' => Yii::t('app','¿Are you sure you want to logout?')]
                 ],
         ],
     ]);
