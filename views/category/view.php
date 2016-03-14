@@ -14,17 +14,17 @@ use app\models\Category;
         'attributes' => [
             'id',
             [
-                'label' => 'Father Category',
+                'label' => Yii::t('app', 'Father Category'),
                 'value' => isset($model->category) ? $model->category->name : "",
             ],
             [
-                'label' => 'Area',
+                'label' => Yii::t('app', 'Area'),
                 'value' => $model->idArea->name,
             ],
-            'name',
-            'description',
-            'service_level_agreement_asignment',
-            'service_level_agreement_completion',
+            Yii::t("app", "name"),
+            Yii::t("app", "description"),
+            Yii::t("app", "service_level_agreement_asignment"),
+            Yii::t("app", "service_level_agreement_completion"),
         ],
     ]) ?>
 
