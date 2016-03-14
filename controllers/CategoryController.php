@@ -89,16 +89,16 @@ class CategoryController extends Controller
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Category #".$id,
+                    'title'=> Yii::t('app',"Category #").$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
                     'footer'=> 
-                        Html::button('Close', [
+                        Html::button(Yii::t('app','Close'), [
                             'class'=>'btn btn-default pull-left', 
                             'data-dismiss'=>"modal"
                         ]).
-                        Html::a('Edit', ['update','id'=>$id],  [
+                        Html::a(Yii::t('app','Edit'), ['update','id'=>$id],  [
                             'class'=>'btn btn-primary',
                             'role'=>'modal-remote'
                         ])
@@ -128,16 +128,16 @@ class CategoryController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if ($request->isGet) {
                 return [
-                    'title'=> "Create new Category",
+                    'title'=> Yii::t('app',"Create new Category"),
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
                     'footer'=> 
-                        Html::button('Close', [
+                        Html::button(Yii::t('app','Close'), [
                             'class'=>'btn btn-default pull-left',
                             'data-dismiss'=>"modal"
                         ]).
-                        Html::button('Save', [
+                        Html::button(Yii::t('app','Save'), [
                             'class'=>'btn btn-primary',
                             'type'=>"submit"
                         ])
@@ -147,14 +147,14 @@ class CategoryController extends Controller
                        && $model->save())    {
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new Category",
+                    'title'=> Yii::t('app',"Create new Category"),
                     'content'=>'<span class="text-success">Create Category success</span>',
                     'footer'=> 
-                        Html::button('Close', [
+                        Html::button(Yii::t('app','Close'), [
                             'class'=>'btn btn-default pull-left',
                             'data-dismiss'=>"modal"
                         ]).
-                        Html::a('Create More', ['create'], [
+                        Html::a(Yii::t('app','Create More'), ['create'], [
                             'class'=>'btn btn-primary',
                             'role'=>'modal-remote'
                         ])
@@ -162,16 +162,16 @@ class CategoryController extends Controller
                 ];         
             }   else   {           
                 return [
-                    'title'=> "Create new Category",
+                    'title'=> Yii::t('app',"Create new Category"),
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
                     'footer'=> 
-                        Html::button('Close', [
+                        Html::button(Yii::t('app','Close'), [
                             'class'=>'btn btn-default pull-left',
                             'data-dismiss'=>"modal"
                         ]).
-                        Html::button('Save', [
+                        Html::button(Yii::t('app','Save'), [
                             'class'=>'btn btn-primary',
                             'type'=>"submit"
                         ])
@@ -213,16 +213,16 @@ class CategoryController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if  ($request->isGet)  {
                 return [
-                    'title'=> "Update Category #".$id,
+                    'title'=> Yii::t('app',"Update Category #").$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> 
-                        Html::button('Close', [
+                        Html::button(Yii::t('app','Close'), [
                             'class'=>'btn btn-default pull-left',
                             'data-dismiss'=>"modal"
                         ]).
-                        Html::button('Save', [
+                        Html::button(Yii::t('app','Save'), [
                             'class'=>'btn btn-primary',
                             'type'=>"submit"
                         ])
@@ -231,32 +231,32 @@ class CategoryController extends Controller
                        && $model->save())  {
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Category #".$id,
+                    'title'=> Yii::t('app',"Category #").$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
                     'footer'=> 
-                        Html::button('Close', [
+                        Html::button(Yii::t('app','Close'), [
                             'class'=>'btn btn-default pull-left',
                             'data-dismiss'=>"modal"
                         ]).
-                        Html::a('Edit', ['update','id'=>$id], [
+                        Html::a(Yii::t('app','Edit'), ['update','id'=>$id], [
                             'class'=>'btn btn-primary',
                             'role'=>'modal-remote'
                         ])
                 ];    
             }  else  {
                  return [
-                    'title'=> "Update Category #".$id,
+                    'title'=> Yii::t('app',"Update Category #").$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> 
-                        Html::button('Close', [
+                        Html::button(Yii::t('app','Close'), [
                             'class'=>'btn btn-default pull-left',
                             'data-dismiss'=>"modal"
                         ]).
-                        Html::button('Save', [
+                        Html::button(Yii::t('app','Save'), [
                             'class'=>'btn btn-primary',
                             'type'=>"submit"
                         ])

@@ -8,6 +8,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language'=>'es',
     'components' => [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
