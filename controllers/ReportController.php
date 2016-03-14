@@ -132,7 +132,7 @@ class ReportController extends Controller
 
             $dataProvider = new ArrayDataProvider([
                 'allModels' => UsersRequest::find()->select(['*','areas.name AS areaname', 'COUNT(*) AS cnt'])->join('JOIN','areas')
-                    ->join('JOIN','request')->Where(['between', 'request.completion_date', $model->startDate, $model->endDate])
+                    ->leftJoin('request','request.id = users_request.request_id')->Where(['between', 'request.completion_date', $model->startDate, $model->endDate])
                     ->groupBy('users_request.user_id')->all(),
                 'pagination' => [
                     'pageSize' => 20,
