@@ -40,7 +40,7 @@ class Area extends \yii\db\ActiveRecord
     {
         return [
             [['area_id', 'id_responsable'], 'integer'],
-            [['name'], 'required'],
+            [['name','id_responsable','description'], 'required'],
             [['name'], 'string', 'max' => 100],
             [['description'], 'string', 'max' => 150],
             [['id_responsable'], 'unique']

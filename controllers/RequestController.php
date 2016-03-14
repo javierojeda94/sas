@@ -8,6 +8,7 @@ use app\models\Category;
 use app\models\CategoryRequest;
 use sintret\chat\ChatRoom;
 use Yii;
+use yii\base\ErrorException;
 use yii\data\ActiveDataProvider;
 use yii\data\SqlDataProvider;
 use app\models\Request;
@@ -133,7 +134,11 @@ class RequestController extends Controller
 
     public function actionFollow($token){
         $request = Request::find()->where(['token' => $token])->one();
-        $responsibleArray = UsersRequest::find()->where(['request_id' => $request->id])->all();
+        try{
+            $responsibleArray = UsersRequest::find()->where(['request_id' => $request->id])->all();
+        }catch(ErrorException $e){
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
         $responsible = '';
         foreach($responsibleArray as $resp){
             $user = $resp->getRelation('user')->one();
@@ -661,29 +666,31 @@ class RequestController extends Controller
             ChatRoom::sendChat($_POST);
 
             $message = $_POST['message'];
-            $request = Request::findOne(intval($_POST['idRequest']));
-            $userName = $_POST['userName'];
-            $responsibleArray = UsersRequest::find()->where(['request_id' => $request->id])->all();
-            $destinataries = array();
-            array_push($destinataries,$request->email);
-            foreach($responsibleArray as $resp){
-                $user = $resp->getRelation('user')->one();
-                array_push($destinataries,$user->email);
-            }
-            $url_nouser = 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/follow?token=' . $request->token;
-            $url_user = 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/view?id=' . $request->id;
-            $mailBody = "<p>El usuario $userName ha enviado el siguiente mensaje en la solicitud: $message</p>
+            if(isset($message)){
+                $request = Request::findOne(intval($_POST['idRequest']));
+                $userName = $_POST['userName'];
+                $responsibleArray = UsersRequest::find()->where(['request_id' => $request->id])->all();
+                $destinataries = array();
+                array_push($destinataries,$request->email);
+                foreach($responsibleArray as $resp){
+                    $user = $resp->getRelation('user')->one();
+                    array_push($destinataries,$user->email);
+                }
+                $url_nouser = 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/follow?token=' . $request->token;
+                $url_user = 'http://' . $_SERVER['HTTP_HOST'] . Url::base() . '/request/view?id=' . $request->id;
+                $mailBody = "<p>El usuario $userName ha enviado el siguiente mensaje en la solicitud: $message</p>
                         <p>Para enviar una respuesta, entra a la siguiente url:</p>
                         <a href='$url_user'><strong>$url_user</strong></a>
                         <p>O si no tienes cuenta de usuario, utiliza la siguiente:</p>
                         <a href='$url_nouser'><strong>$url_nouser</strong></a>
                         ";
-            Yii::$app->mailer->compose()
-                ->setFrom('sistemasolicitudesfmat@gmail.com')
-                ->setTo($destinataries)
-                ->setSubject('Mensaje enviado')
-                ->setHtmlBody($mailBody)
-                ->send();
+                Yii::$app->mailer->compose()
+                    ->setFrom('sistemasolicitudesfmat@gmail.com')
+                    ->setTo($destinataries)
+                    ->setSubject('Mensaje enviado')
+                    ->setHtmlBody($mailBody)
+                    ->send();
+            }
         }
     }
 

@@ -15,7 +15,7 @@ CrudAsset::register($this);
 ?>
 
 <?php $this->registerJs('
-    $(\'#w0\').on(\'submit\', function(e) {
+    $(\'#attend-form\').on(\'submit\', function(e) {
         var dateInit = $(\'#reportform-startdate\').val();
         var dateFinish = $(\'#reportform-enddate\').val();
 
@@ -38,7 +38,7 @@ CrudAsset::register($this);
 
     <div id="form-Attend">
         <?php $form = ActiveForm::begin([
-            'id' => 'login-form',
+            'id' => 'attend-form',
             'options' => ['class' => 'form-horizontal', 'role' => 'form'],
             'fieldConfig' => [
                 'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",

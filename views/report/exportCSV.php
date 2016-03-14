@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] =$this->title;
 ?>
 
 <?php $this->registerJs('
-    $(\'#w0\').on(\'submit\', function(e) {
+    $(\'#report-form\').on(\'submit\', function(e) {
         var dateInit = $(\'#reportform-startdate\').val();
         var dateFinish = $(\'#reportform-enddate\').val();
 
@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] =$this->title;
     <br>
 
     <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
+        'id' => 'report-form',
         'options' => ['class' => 'form-horizontal', 'role' => 'form'],
         'fieldConfig' => [
             'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
