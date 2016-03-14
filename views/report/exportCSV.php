@@ -1,3 +1,4 @@
+
 <?php
 
 use yii\bootstrap\ActiveForm;
@@ -24,7 +25,7 @@ $this->params['breadcrumbs'][] =$this->title;
                 return false;
             }
         }else{
-            alert(\'Date not valid\');
+            alert(\'Fecha no válida\');
             return false;
         }
     });
@@ -48,14 +49,14 @@ $this->params['breadcrumbs'][] =$this->title;
 
     <?= $form->field($model, 'startDate')->widget(\yii\jui\DatePicker::classname(), [
         'dateFormat' => 'yyyy-MM-dd',
-    ]) ?>
+    ])->label(Yii::t('app','Start Datea')) ?>
 
     <?= $form->field($model, 'endDate')->widget(\yii\jui\DatePicker::classname(), [
         'dateFormat' => 'yyyy-MM-dd',
-    ]) ?>
+    ])->label(Yii::t('app','End Date')) ?>
 
     <div>
-        <?= Html::submitButton('Export', ['class' => 'btn btn-primary btn-margin']) ?>
+        <?= Html::submitButton(Yii::t('app','Export'), ['class' => 'btn btn-primary btn-margin']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

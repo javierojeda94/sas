@@ -30,19 +30,19 @@ CrudAsset::register($this);
                 [
 
                     'class'=>'\kartik\grid\DataColumn',
-                    'attribute'=>'User',
+                    'attribute'=>Yii::t('app','User'),
                     'value'=>'user.first_name'
                 ],
                 [
 
                     'class'=>'\kartik\grid\DataColumn',
-                    'attribute'=>'Area name',
+                    'attribute'=>Yii::t('app','Area name'),
                     'value'=>'areaname'
                 ],
                 [
 
                     'class'=>'\kartik\grid\DataColumn',
-                    'attribute'=>'Count',
+                    'attribute'=>Yii::t('app','Count'),
                     'value'=>'cnt'
                 ],
             ],
@@ -54,7 +54,9 @@ CrudAsset::register($this);
             'responsive' => true,
             'panel' => [
                 'type' => 'default',
-                'heading' => '<h4><i class="glyphicon glyphicon-list"></i> Requests attended by personal of area</h4>',
+                'heading' => '<h4><i class="glyphicon glyphicon-list"></i> '.
+                    Yii::t('app','Requests attended by personal of are')
+                    .'</h4>',
             ]
         ]) ?>
     </div>
