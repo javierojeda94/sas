@@ -3,7 +3,6 @@ use sintret\chat\ChatRoom;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\bootstrap\ActiveForm;
-
 /* @var $this yii\web\View */
 /* @var $model app\models\request */
 
@@ -105,6 +104,31 @@ $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
             ],
         ],
     ]) ?>
+
+    <?php if(!empty ($model->attachedFiles)):	?>
+	
+	<h2>Attached files</h2>
+	<?php 
+		$numberOfFile=1;
+	foreach ($model->attachedFiles as $attachedFile): ?>
+	<?= DetailView::widget([
+		'model' => $attachedFile,
+		'attributes' => [
+			[
+				'label' => Yii::t('app','File').' '.$numberOfFile,
+				'value' => Html::a($attachedFile->url,'@web/uploads/'.$attachedFile->url),
+				'format' => 'html',
+			],
+		],
+    ]) ?>
+
+	
+	<?php 
+		$numberOfFile++;
+		endforeach;
+	 ?>
+	<?php endif; ?>
+
     <?php if ($model->status == 'Atendiendo' && $model->status != 'Finalizado') { ?>
     <div>
         <?= ChatRoom::widget([
