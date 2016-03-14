@@ -133,16 +133,23 @@ class RequestController extends Controller
 
     public function actionFollow($token){
         $request = Request::find()->where(['token' => $token])->one();
-        $responsibleArray = UsersRequest::find()->where(['request_id' => $request->id])->all();
-        $responsible = '';
-        foreach($responsibleArray as $resp){
-            $user = $resp->getRelation('user')->one();
-            $responsible = $responsible . " $user->first_name $user->lastname,";
+        if(isset($request)){
+            $responsibleArray = UsersRequest::find()->where(['request_id' => $request->id])->all();
+            $responsible = '';
+            foreach($responsibleArray as $resp){
+                $user = $resp->getRelation('user')->one();
+                $responsible = $responsible . " $user->first_name $user->lastname,";
+            }
+            return $this->render('view', [
+                'model' => $request,
+                'responsible' => $responsible,
+            ]);
         }
-        return $this->render('view', [
-            'model' => $request,
-            'responsible' => $responsible,
-        ]);
+        else{
+            return $this->render('404', [
+                'token' => $token
+            ]);
+        }
     }
 
 
