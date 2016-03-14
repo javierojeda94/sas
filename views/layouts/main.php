@@ -123,66 +123,7 @@ $logo = "<img id='logo_nav' src='".Yii::$app->homeUrl."../images/UADY_w.png'/>";
             }
         });
     }
-    var button = document.getElementById('unasign_several-from-area');
-    if(button != null){
-        button.addEventListener('click',function(e){
-            e.preventDefault();
-            if(confirm('Seguro que quieres deasignar estos usuarios?')){
-                var checkboxes = document.getElementsByClassName('checkbox');
-                var a_id = document.getElementById('unasign_several-from-area').getAttribute('data-request');
-                var url = 'remove?a_id='+a_id;
-                for (var i = 0; i < checkboxes.length; i++) {
-                    if (checkboxes[i].checked) {
-                        var ajax_url = url + '&u_id=' + checkboxes[i].value;
-                        $.ajax({
-                            url: ajax_url,
-                            method: 'get'
-                        });
-                    }
-                }
-            }
-        });
-    }
-    $('#permissionsModal').on('show.bs.modal', function (event) {
-        var target = $(event.relatedTarget);
-        var user_id = target.data('user-id');
-        var area_id = target.data('area-id');
-        var modal = $(this);
-        $.ajax({
-            url: 'permissions?u_id='+user_id+'&a_id='+area_id,
-            type: 'get',
-            beforeSend: function(){
-                modal.find('.modal-title').text('Cargando...');
-                modal.find('#area_name').text('Area: ');
-                modal.find('#personal_name').text('Personal: ');
-                modal.find('#areapersonal-permission').val(0);
-            },
-            success: function(data){
-                modal.find('.modal-title').text('Modificar permisos de personal');
-                modal.find('#areapersonal-area_id').val(data.area.id);
-                modal.find('#area_name').text('Area: ' + data.area.name);
-                modal.find('#personal_name').text('Personal: ' + data.user.name);
-                modal.find('#areapersonal-user_id').val(data.user.id);
-                modal.find('#areapersonal-permission').val(data.permission);
-            },
-            error: function(){
-
-            }
-        });
-    });
 </script>
 </body>
 </html>
 <?php $this->endPage() ?>
-<script>
-    // Filters
-    $('#filter').keyup(function () {
-
-        var rex = new RegExp($(this).val(), 'i');
-        $('.searchable tr').hide();
-        $('.searchable tr').filter(function () {
-            return rex.test($(this).text());
-        }).show();
-
-    });
-</script>

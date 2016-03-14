@@ -16,6 +16,35 @@ use yii\jui\DatePicker;
 $this->title = Yii::t('app', 'Advanced Options');
 $this->params['breadcrumbs'][] = ['label' => 'Areas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('app', $this->title);//$this->title;
+
+$this->registerJs("
+var button = document.getElementById('unasign_several-from-area');
+if(button != null){
+    button.addEventListener('click',function(e){
+        e.preventDefault();
+        if(confirm('Seguro que quieres deasignar estos usuarios?')){
+            var checkboxes = document.getElementsByClassName('checkbox');
+            var a_id = document.getElementById('unasign_several-from-area').getAttribute('data-request');
+            var url = 'remove?a_id='+a_id;
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    var ajax_url = url + '&u_id=' + checkboxes[i].value;
+                    $.ajax({
+                        url: ajax_url,
+                        method: 'get'
+                    });
+                }
+            }
+        }
+    });
+}
+$('#filter').keyup(function () {
+    var rex = new RegExp($(this).val(), 'i');
+    $('.searchable tr').hide();
+    $('.searchable tr').filter(function () {
+        return rex.test($(this).text());
+    }).show();
+});");
 ?>
 <div class="request-advanced container">
 

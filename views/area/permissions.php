@@ -11,6 +11,33 @@ use yii\helpers\Url;
 use yii\jui\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\request */
+
+$this->registerJs("
+$('#permissionsModal').on('show.bs.modal', function (event) {
+    var target = $(event.relatedTarget);
+    var user_id = target.data('user-id');
+    var area_id = target.data('area-id');
+    var modal = $(this);
+    $.ajax({
+        url: 'permissions?u_id='+user_id+'&a_id='+area_id,
+        type: 'get',
+        beforeSend: function(){
+            modal.find('.modal-title').text('Cargando...');
+            modal.find('#area_name').text('Area: ');
+            modal.find('#personal_name').text('Personal: ');
+            modal.find('#areapersonal-permission').val(0);
+        },
+        success: function(data){
+            modal.find('.modal-title').text('Modificar permisos de personal');
+            modal.find('#areapersonal-area_id').val(data.area.id);
+            modal.find('#area_name').text('Area: ' + data.area.name);
+            modal.find('#personal_name').text('Personal: ' + data.user.name);
+            modal.find('#areapersonal-user_id').val(data.user.id);
+            modal.find('#areapersonal-permission').val(data.permission);
+        },
+        error: function(){}
+    });
+});");
 ?>
 <div class="modal fade" id="permissionsModal" tabindex="-1" role="dialog" aria-labelledby="permissionsModalLabel">
     <div class="modal-dialog" role="document">
@@ -28,11 +55,8 @@ use yii\jui\DatePicker;
                 <label for="areapersonal-permission">Permission</label>
                 <select required id="areapersonal-permission" class="form-control" name="AreaPersonal[permission]">
                     <option value="0" selected disabled><?php echo Yii::t('app', 'Selection')?></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+                    <option value="1"><?= Yii::t('app','Yes') ?></option>
+                    <option value="2"><?= Yii::t('app','No') ?></option>
                 </select>
             </div>
             <div class="modal-footer">
