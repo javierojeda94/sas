@@ -169,5 +169,7 @@ return [
     'Update Category #' => 'Actualizar categoria #',
     "username" => "Nombre de usuario",
     "Please fill out the following fields to login:" => "Llena este formulario para iniciar sesion:",
-    "password" => "Contraseña"
+    "password" => "Contraseña",
+    "rememberMe" => "Recuerdame",
+    "Login" => "Iniciar Sesion"
 ];
