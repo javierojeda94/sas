@@ -167,5 +167,6 @@ return [
     'Edit' =>'Editar',
     'Create new Category' => 'Crear nueva categoria',
     'Update Category #' => 'Actualizar categoria #',
-
+    "username" => "Nombre de usuario",
+    "Please fill out the following fields to login:" => "Llena este formulario para iniciar sesion:"
 ];
