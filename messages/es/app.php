@@ -168,5 +168,6 @@ return [
     'Create new Category' => 'Crear nueva categoria',
     'Update Category #' => 'Actualizar categoria #',
     "username" => "Nombre de usuario",
-    "Please fill out the following fields to login:" => "Llena este formulario para iniciar sesion:"
+    "Please fill out the following fields to login:" => "Llena este formulario para iniciar sesion:",
+    "password" => "Contraseña"
 ];
