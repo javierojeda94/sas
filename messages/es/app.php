@@ -171,5 +171,12 @@ return [
     "Please fill out the following fields to login:" => "Llena este formulario para iniciar sesion:",
     "password" => "Contraseña",
     "rememberMe" => "Recuerdame",
-    "Login" => "Iniciar Sesion"
+    "Login" => "Iniciar Sesion",
+    "Create request success" => "Solicitud Creada Exitosamente",
+    "Create Category success" => "Categoria Creada Exitosamente",
+    "Area #" => "Area #",
+    "Create new Area" => "Crear un area nueva",
+    "Create Area success" => "Area Creada Exitosamente",
+    "Update Area #" => "Actualizar Area #",
+
 ];

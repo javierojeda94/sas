@@ -21,10 +21,22 @@ use app\models\Category;
                 'label' => Yii::t('app', 'Area'),
                 'value' => $model->idArea->name,
             ],
-            Yii::t("app", "name"),
-            Yii::t("app", "description"),
-            Yii::t("app", "service_level_agreement_asignment"),
-            Yii::t("app", "service_level_agreement_completion"),
+            [
+                'label' => Yii::t("app", "name"),
+                'value' => $model->name,
+            ],
+            [
+                'label' => Yii::t("app", "description"),
+                'value' => $model->description,
+            ],
+            [
+                'label' => Yii::t("app", "service_level_agreement_asignment"),
+                'value' => $model->service_level_agreement_asignment,
+            ],
+            [
+                'label' => Yii::t("app", "service_level_agreement_completion"),
+                'value' => $model->service_level_agreement_completion,
+            ],
         ],
     ]) ?>
 

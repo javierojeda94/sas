@@ -148,7 +148,7 @@ class CategoryController extends Controller
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> Yii::t('app',"Create new Category"),
-                    'content'=>'<span class="text-success">Create Category success</span>',
+                    'content'=>'<span class="text-success">'.Yii::t("app","Create Category success").'</span>',
                     'footer'=> 
                         Html::button(Yii::t('app','Close'), [
                             'class'=>'btn btn-default pull-left',

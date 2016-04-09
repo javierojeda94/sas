@@ -231,8 +231,8 @@ class RequestController extends Controller
 
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> Yii::t('a',"Create new request"),
-                    'content'=>'<span class="text-success">Create request success</span>',
+                    'title'=> Yii::t('app',"Create new request"),
+                    'content'=>'<span class="text-success">'.Yii::t("app", "Create request success").'</span>',
                     'footer'=> Html::button(Yii::t('app','Close'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a(Yii::t('app','Create More'),['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
 
